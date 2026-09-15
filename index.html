@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helper Home | Home Care & Domestic Services</title>
+  <meta name="description" content="Helper Home provides trusted, tailored home care and domestic services across India. From experienced maids, cooks, and babysitters to elderly and patient caretakers.">
+  <link rel="canonical" href="https://helperhome.in/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://helperhome.in/">
+  <meta property="og:title" content="Helper Home | Home Care & Domestic Services">
+  <meta property="og:description" content="Trusted help for a happier home. Domestic support, child care, and personal caretaking tailored to your household.">
+  <meta property="og:image" content="assets/images/logo-transparent.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="Helper Home | Home Care & Domestic Services">
+  <meta property="twitter:description" content="Trusted help for a happier home. Domestic support, child care, and personal caretaking tailored to your household.">
+  <meta property="twitter:image" content="assets/images/logo-transparent.png">
+
+  <link rel="icon" type="image/png" href="assets/images/logo-transparent.png?v=2">
+
+  <!-- Google Fonts: Nunito Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Compiled Tailwind CSS -->
+  <link rel="stylesheet" href="assets/css/main.css?v=20260312e">
+  <!-- Contrast overrides — must load after main.css -->
+  <link rel="stylesheet" href="assets/css/contrast-fix.css?v=20260315c">
+  <link rel="stylesheet" href="assets/css/logo.css?v=2">
+  <link rel="stylesheet" href="assets/css/nav-menu.css?v=1">
+  <!-- Hero shared alignment system -->
+  <link rel="stylesheet" href="assets/css/hero-align.css?v=20260315b">
+
+  <!-- Preload Hero Slide 1 LCP Image -->
+  <link rel="preload" as="image" href="assets/images/hero-domestic-helper.webp" type="image/webp" fetchpriority="high">
+
+  <!-- Structured Data: Organization & FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://helperhome.in/#organization",
+        "name": "Helper Home",
+        "url": "https://helperhome.in/",
+        "logo": "https://helperhome.in/assets/images/logo-transparent.png",
+        "description": "Home Care & Domestic Services across domestic support, family care, and personal caretaking categories."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What home services does Helper Home offer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Helper Home facilitates assistance across nine distinct service categories: Maid, Servant, Babysitter, Japa Maid / Nanny, Elderly Caretaker, Patient Caretaker, Cook, Driver, and Domestic Couple services."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I enquire for a maid or caretaker?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can enquire directly through our website by selecting your desired service and filling out our simple enquiry form, or by contacting our team via phone or email."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I choose the type of service I require?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Each household has unique routines and priorities. You can specify exact duties, preferred timings, and household specifics during the enquiry coordination stage."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I enquire for a babysitter?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Select the Babysitter service category in our enquiry form, share details such as child age, required hours, and daily engagement routines, and our team will coordinate suitable candidates."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What information should I provide while enquiring?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Providing your city/area, household size, required service category, preferred start date, and brief notes regarding specific routines ensures the smoothest matching process."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I enquire about multiple services?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, many households require multiple services such as a cook and maid, or an elderly caretaker and domestic support. You can note multiple needs in your enquiry message."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-brand-white text-brand-text antialiased selection:bg-brand-gold/30 selection:text-brand-black">
+
+  <!-- ==================== STICKY HEADER ==================== -->
+  <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 header-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold rounded-lg p-1" aria-label="Helper Home Homepage">
+          <img src="assets/images/logo-transparent.png?v=2" alt="Helper Home Logo" class="site-logo site-logo-header" width="200" height="200">
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center gap-8" aria-label="Main Navigation">
+          <a href="index.html" class="text-sm font-heading font-bold text-brand-gold tracking-wide transition-colors">Home</a>
+          <a href="about.html" class="text-sm font-heading font-medium text-brand-white/90 hover:text-brand-gold tracking-wide transition-colors">About Us</a>
+          
+          <!-- Services Dropdown Trigger -->
+          <div id="servicesNavItem" class="relative">
+            <button id="servicesMenuBtn" type="button" aria-expanded="false" aria-haspopup="true" class="flex items-center gap-1.5 text-sm font-heading font-medium text-brand-white/90 hover:text-brand-gold tracking-wide transition-colors focus:outline-none">
+              Services
+              <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Services Mega Dropdown -->
+            <div id="servicesDropdown" class="services-mega" role="menu" aria-label="Services menu">
+              <div class="services-mega__grid">
+                <div class="services-mega__col">
+                  <h4 class="services-mega__heading">Domestic Support</h4>
+                  <ul class="services-mega__list">
+                    <li><a href="services/maid-service.html" role="menuitem">Maid Service</a></li>
+                    <li><a href="services/servant-service.html" role="menuitem">Servant Service</a></li>
+                    <li><a href="services/cook-service.html" role="menuitem">Cook Service</a></li>
+                    <li><a href="services/domestic-couple.html" role="menuitem">Domestic Couple</a></li>
+                  </ul>
+                </div>
+                <div class="services-mega__col">
+                  <h4 class="services-mega__heading">Child &amp; Family Care</h4>
+                  <ul class="services-mega__list">
+                    <li><a href="services/babysitter-service.html" role="menuitem">Babysitter Service</a></li>
+                    <li><a href="services/japa-maid-nanny.html" role="menuitem">Japa Maid / Nanny</a></li>
+                  </ul>
+                </div>
+                <div class="services-mega__col">
+                  <h4 class="services-mega__heading">Care Support</h4>
+                  <ul class="services-mega__list">
+                    <li><a href="services/elderly-caretaker.html" role="menuitem">Elderly Caretaker</a></li>
+                    <li><a href="services/patient-caretaker.html" role="menuitem">Patient Caretaker</a></li>
+                    <li><a href="services/driver-service.html" role="menuitem">Driver Service</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="services-mega__footer">
+                <a href="services.html" class="services-mega__all">View all 9 services →</a>
+                <a href="#" class="btn-gold services-mega__cta js-open-enquiry" data-enquiry-open role="menuitem">Book a Service</a>
+              </div>
+            </div>
+          </div>
+
+          <a href="contact.html" class="text-sm font-heading font-medium text-brand-white/90 hover:text-brand-gold tracking-wide transition-colors">Contact Us</a>
+        </nav>
+
+        <!-- Right Side CTA -->
+        <div class="hidden lg:flex items-center gap-4">
+          <a href="#" class="btn-gold text-xs uppercase tracking-wider py-3 px-6 shadow-gold-sm js-open-enquiry" data-enquiry-open role="button">Book a Service</a>
+        </div>
+
+        <!-- Mobile Menu Trigger -->
+        <div class="flex lg:hidden items-center">
+          <button id="mobileMenuBtn" type="button" aria-expanded="false" aria-label="Open Navigation Menu" class="p-2.5 rounded-lg bg-brand-black/60 border border-brand-gold/30 text-brand-white hover:text-brand-gold focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Backdrop & Drawer -->
+  <div id="mobileNavBackdrop" class="fixed inset-0 bg-brand-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  <div id="mobileNavDrawer" class="fixed top-0 right-0 bottom-0 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col overflow-y-auto">
+    <div class="mobile-nav__header">
+      <img src="assets/images/logo-transparent.png?v=2" alt="Helper Home" class="site-logo site-logo-mobile" width="180" height="180">
+      <button id="closeMobileMenuBtn" type="button" aria-label="Close Navigation Menu" class="mobile-nav__close">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="mobile-nav__links" aria-label="Mobile Navigation">
+      <a href="index.html" class="text-brand-gold is-active">Home</a>
+      <a href="about.html">About Us</a>
+
+      <div>
+        <button id="mobileServicesToggle" type="button" aria-expanded="false">
+          <span>Services</span>
+          <svg id="mobileServicesIcon" class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div id="mobileServicesSubmenu" class="hidden">
+          <div class="mobile-services-group">
+            <h4 class="mobile-services-group__title">Domestic Support</h4>
+            <a href="services/maid-service.html">Maid Service</a>
+            <a href="services/servant-service.html">Servant Service</a>
+            <a href="services/cook-service.html">Cook Service</a>
+            <a href="services/domestic-couple.html">Domestic Couple</a>
+          </div>
+          <div class="mobile-services-group">
+            <h4 class="mobile-services-group__title">Child &amp; Family Care</h4>
+            <a href="services/babysitter-service.html">Babysitter Service</a>
+            <a href="services/japa-maid-nanny.html">Japa Maid / Nanny</a>
+          </div>
+          <div class="mobile-services-group">
+            <h4 class="mobile-services-group__title">Care Support</h4>
+            <a href="services/elderly-caretaker.html">Elderly Caretaker</a>
+            <a href="services/patient-caretaker.html">Patient Caretaker</a>
+            <a href="services/driver-service.html">Driver Service</a>
+          </div>
+          <a href="services.html" class="mobile-services-all">View all 9 services →</a>
+        </div>
+      </div>
+
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <div class="mobile-nav__footer">
+      <div class="mobile-nav__contact">
+        <a href="tel:+919879888478">+91 98798 88478</a>
+        <a href="mailto:helperhomeahmedabad@gmail.com">helperhomeahmedabad@gmail.com</a>
+        <span>Naranpura, Ahmedabad - 380013</span>
+      </div>
+      <a href="#" class="btn-gold js-open-enquiry" data-enquiry-open role="button">Book a Service</a>
+      <p class="mobile-nav__tagline">Helper Home · Home Care &amp; Domestic Services</p>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 1 – CINEMATIC HERO SERVICE SLIDER ==================== -->
+  <section id="heroSlider" class="hero-slider-section relative flex items-center" aria-roledescription="carousel" aria-label="Helper Home Featured Services Slider" tabindex="0">
+
+    <!-- Subtle warm gold ambient glow (restrained) -->
+    <div class="hero-gold-glow pointer-events-none z-[3]" aria-hidden="true"></div>
+    <div id="heroScrollOverlay" class="absolute inset-0 bg-black pointer-events-none opacity-0 z-[4]" aria-hidden="true"></div>
+
+    <!-- Slides -->
+    <div class="absolute inset-0 w-full h-full overflow-hidden" id="heroSlidesTrack">
+
+      <!-- SLIDE 1: HOME & DOMESTIC SUPPORT -->
+      <div class="hero-slide is-active" data-slide-index="0" role="group" aria-roledescription="slide" aria-label="1 of 4" aria-hidden="false">
+        <div class="hero-slide-bg-wrapper">
+          <picture>
+            <source srcset="assets/images/hero-domestic-helper.webp" type="image/webp" sizes="100vw">
+            <img
+              src="assets/images/hero-domestic-helper.jpg"
+              srcset="assets/images/hero-domestic-helper.jpg 1200w"
+              sizes="100vw"
+              alt="Professional domestic helper smiling warmly in a modern Indian home"
+              class="hero-slide-bg"
+              width="1200"
+              height="896"
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+              data-hero-img
+            >
+          </picture>
+        </div>
+        <div class="hero-cinematic-overlay" aria-hidden="true"></div>
+
+        <div class="hero-container hero-slide-inner">
+          <div class="hero-content hero-slide-content">
+            <p data-hero-anim="eyebrow" class="hero-eyebrow">01 — HOME &amp; DOMESTIC SUPPORT</p>
+
+            <h1 data-hero-anim="heading" class="hero-slider-title hero-title font-heading font-black text-brand-white">
+              <span class="hero-line">A Better Home Starts</span>
+              <span class="hero-line">With the <span class="hero-gold-highlight" data-hero-highlight>Right Help.</span></span>
+            </h1>
+
+            <p data-hero-anim="body" class="hero-slide-body hero-description">
+              From everyday household assistance to cooking and home support, Helper Home helps families find the right support for everyday living.
+            </p>
+
+            <div data-hero-anim="ctas" class="hero-actions hero-cta-row">
+              <a href="#" class="btn-gold js-open-enquiry" data-hero-cta data-enquiry-open role="button">Book a Service</a>
+              <a href="#services" class="btn-outline-gold" data-hero-cta>Explore Home Services</a>
+            </div>
+
+            <div data-hero-anim="tags" class="hero-services hero-service-tags">
+              <span class="hero-tag">Maid</span>
+              <span class="hero-tag">Servant</span>
+              <span class="hero-tag">Cook</span>
+              <span class="hero-tag">Domestic Couple</span>
+            </div>
+          </div>
+
+          <aside data-hero-anim="floating-card" class="hero-info-card hero-floating-card" aria-hidden="true">
+            <div class="hero-floating-icon" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="floating-card-title text-sm font-heading">Personalized Service</div>
+              <div class="floating-card-desc text-xs mt-0.5">Matched around your household needs</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: CHILD & FAMILY CARE -->
+      <div class="hero-slide" data-slide-index="1" role="group" aria-roledescription="slide" aria-label="2 of 4" aria-hidden="true">
+        <div class="hero-slide-bg-wrapper">
+          <picture>
+            <source srcset="assets/images/services/babysitter.webp" type="image/webp" sizes="100vw">
+            <img
+              src="assets/images/services/babysitter.jpg"
+              srcset="assets/images/services/babysitter.jpg 1200w"
+              sizes="100vw"
+              alt="Warm caregiver and child sharing a playful moment at home"
+              class="hero-slide-bg"
+              width="1200"
+              height="896"
+              loading="lazy"
+              decoding="async"
+              data-hero-img
+            >
+          </picture>
+        </div>
+        <div class="hero-cinematic-overlay" aria-hidden="true"></div>
+
+        <div class="hero-container hero-slide-inner">
+          <div class="hero-content hero-slide-content">
+            <p data-hero-anim="eyebrow" class="hero-eyebrow">02 — CHILD &amp; FAMILY CARE</p>
+
+            <h2 data-hero-anim="heading" class="hero-slider-title hero-title font-heading font-black text-brand-white">
+              <span class="hero-line">Care That Feels</span>
+              <span class="hero-line"><span class="hero-gold-highlight" data-hero-highlight>Closer to Family.</span></span>
+            </h2>
+
+            <p data-hero-anim="body" class="hero-slide-body hero-description">
+              Thoughtful childcare and newborn support designed around your family's routine, comfort and individual requirements.
+            </p>
+
+            <div data-hero-anim="ctas" class="hero-actions hero-cta-row">
+              <a href="services/babysitter-service.html" class="btn-gold" data-hero-cta>Find Child Care</a>
+              <a href="services/japa-maid-nanny.html" class="btn-outline-gold" data-hero-cta>View Care Services</a>
+            </div>
+
+            <div data-hero-anim="tags" class="hero-services hero-service-tags">
+              <span class="hero-tag">Babysitter</span>
+              <span class="hero-tag">Japa Maid</span>
+              <span class="hero-tag">Nanny</span>
+            </div>
+          </div>
+
+          <aside data-hero-anim="floating-card" class="hero-info-card hero-floating-card" aria-hidden="true">
+            <div class="hero-floating-icon" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="floating-card-title text-sm font-heading">Family-Focused Support</div>
+              <div class="floating-card-desc text-xs mt-0.5">Care designed around your daily routine</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: PERSONAL CARE & SUPPORT -->
+      <div class="hero-slide" data-slide-index="2" role="group" aria-roledescription="slide" aria-label="3 of 4" aria-hidden="true">
+        <div class="hero-slide-bg-wrapper">
+          <picture>
+            <source srcset="assets/images/services/elderly-care.webp" type="image/webp" sizes="100vw">
+            <img
+              src="assets/images/services/elderly-care.jpg"
+              srcset="assets/images/services/elderly-care.jpg 1200w"
+              sizes="100vw"
+              alt="Dignified caregiver offering warm everyday support to a senior at home"
+              class="hero-slide-bg"
+              width="1200"
+              height="896"
+              loading="lazy"
+              decoding="async"
+              data-hero-img
+            >
+          </picture>
+        </div>
+        <div class="hero-cinematic-overlay" aria-hidden="true"></div>
+
+        <div class="hero-container hero-slide-inner">
+          <div class="hero-content hero-slide-content">
+            <p data-hero-anim="eyebrow" class="hero-eyebrow">03 — PERSONAL CARE &amp; SUPPORT</p>
+
+            <h2 data-hero-anim="heading" class="hero-slider-title hero-title font-heading font-black text-brand-white">
+              <span class="hero-line">Because Their Comfort</span>
+              <span class="hero-line"><span class="hero-gold-highlight" data-hero-highlight>Matters Every Day.</span></span>
+            </h2>
+
+            <p data-hero-anim="body" class="hero-slide-body hero-description">
+              Compassionate everyday support for seniors and patients, helping families manage daily routines with greater comfort and confidence.
+            </p>
+
+            <div data-hero-anim="ctas" class="hero-actions hero-cta-row">
+              <a href="contact.html" class="btn-gold" data-hero-cta>Enquire Now</a>
+              <a href="services/elderly-caretaker.html" class="btn-outline-gold" data-hero-cta>Explore Care Support</a>
+            </div>
+
+            <div data-hero-anim="tags" class="hero-services hero-service-tags">
+              <span class="hero-tag">Elderly Caretaker</span>
+              <span class="hero-tag">Patient Caretaker</span>
+            </div>
+          </div>
+
+          <aside data-hero-anim="floating-card" class="hero-info-card hero-floating-card" aria-hidden="true">
+            <div class="hero-floating-icon" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="floating-card-title text-sm font-heading">Everyday Care</div>
+              <div class="floating-card-desc text-xs mt-0.5">Compassionate support for everyday needs</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: EVERYDAY MOBILITY -->
+      <div class="hero-slide" data-slide-index="3" role="group" aria-roledescription="slide" aria-label="4 of 4" aria-hidden="true">
+        <div class="hero-slide-bg-wrapper">
+          <picture>
+            <source srcset="assets/images/services/driver.webp" type="image/webp" sizes="100vw">
+            <img
+              src="assets/images/services/driver.jpg"
+              srcset="assets/images/services/driver.jpg 1200w"
+              sizes="100vw"
+              alt="Professional driver with a clean modern vehicle ready for daily travel"
+              class="hero-slide-bg"
+              width="1200"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              data-hero-img
+            >
+          </picture>
+        </div>
+        <div class="hero-cinematic-overlay" aria-hidden="true"></div>
+
+        <div class="hero-container hero-slide-inner">
+          <div class="hero-content hero-slide-content">
+            <p data-hero-anim="eyebrow" class="hero-eyebrow">04 — EVERYDAY MOBILITY</p>
+
+            <h2 data-hero-anim="heading" class="hero-slider-title hero-title font-heading font-black text-brand-white">
+              <span class="hero-line">Reliable Support,</span>
+              <span class="hero-line"><span class="hero-gold-highlight" data-hero-highlight>Wherever the Day Takes You.</span></span>
+            </h2>
+
+            <p data-hero-anim="body" class="hero-slide-body hero-description">
+              Dependable driving assistance for daily commutes, family travel and everyday local transportation requirements.
+            </p>
+
+            <div data-hero-anim="ctas" class="hero-actions hero-cta-row">
+              <a href="services/driver-service.html" class="btn-gold" data-hero-cta>Enquire for Driver</a>
+              <a href="services/driver-service.html" class="btn-outline-gold" data-hero-cta>View Driver Service</a>
+            </div>
+
+            <div data-hero-anim="tags" class="hero-services hero-service-tags">
+              <span class="hero-tag">Daily Commute</span>
+              <span class="hero-tag">Family Travel</span>
+              <span class="hero-tag">Local Travel</span>
+            </div>
+          </div>
+
+          <aside data-hero-anim="floating-card" class="hero-info-card hero-floating-card" aria-hidden="true">
+            <div class="hero-floating-icon" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="floating-card-title text-sm font-heading">Daily Mobility</div>
+              <div class="floating-card-desc text-xs mt-0.5">Travel support around your schedule</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Progress navigation + controls -->
+    <div id="heroNavContainer" class="hero-navigation absolute left-0 right-0 z-30 pointer-events-none">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-end justify-between gap-3 sm:gap-4">
+
+        <!-- Mobile simplified: 01 ━━━ 02 ━━━ 03 ━━━ 04 -->
+        <div class="hero-mobile-nav sm:hidden pointer-events-auto flex items-center gap-1.5" role="tablist" aria-label="Hero slides">
+          <button type="button" class="hero-tab-btn hero-mobile-tab is-active" data-slide-target="0" role="tab" aria-selected="true" aria-label="Slide 1: Home">
+            <span class="hero-tab-num">01</span>
+            <span class="hero-tab-progress" aria-hidden="true"><span class="hero-tab-fill"></span></span>
+          </button>
+          <button type="button" class="hero-tab-btn hero-mobile-tab" data-slide-target="1" role="tab" aria-selected="false" aria-label="Slide 2: Family">
+            <span class="hero-tab-num">02</span>
+            <span class="hero-tab-progress" aria-hidden="true"><span class="hero-tab-fill"></span></span>
+          </button>
+          <button type="button" class="hero-tab-btn hero-mobile-tab" data-slide-target="2" role="tab" aria-selected="false" aria-label="Slide 3: Care">
+            <span class="hero-tab-num">03</span>
+            <span class="hero-tab-progress" aria-hidden="true"><span class="hero-tab-fill"></span></span>
+          </button>
+          <button type="button" class="hero-tab-btn hero-mobile-tab" data-slide-target="3" role="tab" aria-selected="false" aria-label="Slide 4: Driver">
+            <span class="hero-tab-num">04</span>
+            <span class="hero-tab-progress" aria-hidden="true"><span class="hero-tab-fill"></span></span>
+          </button>
+        </div>
+
+        <div class="ml-auto flex items-center gap-3 sm:gap-5 lg:gap-8 pointer-events-auto">
+          <!-- Desktop progress tabs -->
+          <div class="hidden sm:flex items-center gap-4 lg:gap-6" role="tablist" aria-label="Hero service slides">
+            <button type="button" class="hero-tab-btn hero-desktop-tab is-active" data-slide-target="0" role="tab" aria-selected="true" aria-label="Slide 1: Home & Domestic Support">
+              <div class="hero-tab-meta">
+                <span class="hero-tab-num">01</span>
+                <span class="hero-tab-label">HOME</span>
+              </div>
+              <div class="hero-tab-progress"><div class="hero-tab-fill"></div></div>
+            </button>
+            <button type="button" class="hero-tab-btn hero-desktop-tab" data-slide-target="1" role="tab" aria-selected="false" aria-label="Slide 2: Child & Family Care">
+              <div class="hero-tab-meta">
+                <span class="hero-tab-num">02</span>
+                <span class="hero-tab-label">FAMILY</span>
+              </div>
+              <div class="hero-tab-progress"><div class="hero-tab-fill"></div></div>
+            </button>
+            <button type="button" class="hero-tab-btn hero-desktop-tab" data-slide-target="2" role="tab" aria-selected="false" aria-label="Slide 3: Personal Care & Support">
+              <div class="hero-tab-meta">
+                <span class="hero-tab-num">03</span>
+                <span class="hero-tab-label">CARE</span>
+              </div>
+              <div class="hero-tab-progress"><div class="hero-tab-fill"></div></div>
+            </button>
+            <button type="button" class="hero-tab-btn hero-desktop-tab" data-slide-target="3" role="tab" aria-selected="false" aria-label="Slide 4: Everyday Mobility">
+              <div class="hero-tab-meta">
+                <span class="hero-tab-num">04</span>
+                <span class="hero-tab-label">DRIVER</span>
+              </div>
+              <div class="hero-tab-progress"><div class="hero-tab-fill"></div></div>
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2 pl-2 sm:pl-3 border-l border-white/15">
+            <button id="heroPrevBtn" type="button" aria-label="Previous slide" class="hero-arrow-btn">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button id="heroNextBtn" type="button" aria-label="Next slide" class="hero-arrow-btn">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ==================== SECTION 2 – SERVICES GRID ==================== -->
+  <section id="services" class="py-24 bg-brand-offwhite relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
+        <div class="section-eyebrow justify-center">OUR COMPREHENSIVE SERVICE CATEGORIES</div>
+        <h2 class="section-title font-heading font-extrabold text-brand-black mb-4">
+          Help for Every Part of Home Life
+        </h2>
+        <p class="text-base sm:text-lg text-brand-text/80">
+          Explore our nine dedicated domestic and home-care service categories, each designed around realistic daily routines, mutual respect, and family comfort.
+        </p>
+      </div>
+
+      <!-- 9 Service Cards Grid: 3 cols desktop, 2 tablet, 1 mobile -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-stagger-grid>
+        
+        <!-- 01 Maid -->
+        <div class="service-card flex flex-col justify-between">
+          <div>
+            <div class="relative overflow-hidden">
+              <img src="assets/images/services/maid.jpg" alt="Maid dusting and cleaning a modern home" class="service-card-img" width="600" height="400" loading="lazy">
+              <span class="absolute top-4 left-4 bg-brand-black/80 backdrop-blur-sm text-brand-gold font-heading font-extrabold text-xs px-3 py-1 rounded-full border border-brand-gold/30">
+                01 DOMESTIC
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-heading font-bold text-brand-black mb-2">Maid Service</h3>
+              <p class="text-sm text-brand-text/80 line-clamp-3 leading-relaxed mb-4">
+                Essential housekeeping assistance including sweeping, mopping, dusting, utensil cleaning, kitchen upkeep, and everyday domestic organization.
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2 border-t border-brand-offwhite">
+            <a href="services/maid-service.html" class="inline-flex items-center gap-2 text-sm font-heading font-bold text-brand-gold-rich hover:text-brand-gold transition-colors group/link">
+              <span>Explore Service</span>
+              <svg class="w-4 h-4 transform transition-transform group-hover/link:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 02 Servant -->
+        <div class="service-card flex flex-col justify-between">
+          <div>
+            <div class="relative overflow-hidden">
+              <img src="assets/images/services/servant.jpg" alt="Servant organizing home linens and supplies" class="service-card-img" width="600" height="400" loading="lazy">
+              <span class="absolute top-4 left-4 bg-brand-black/80 backdrop-blur-sm text-brand-gold font-heading font-extrabold text-xs px-3 py-1 rounded-full border border-brand-gold/30">
+                02 HOUSEHOLD
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-heading font-bold text-brand-black mb-2">Servant Service</h3>
+              <p class="text-sm text-brand-text/80 line-clamp-3 leading-relaxed mb-4">
+                Dedicated home support covering general household routines, organization, local errand assistance, kitchen coordination, and guest hospitality.
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2 border-t border-brand-offwhite">
+            <a href="services/servant-service.html" class="inline-flex items-center gap-2 text-sm font-heading font-bold text-brand-gold-rich hover:text-brand-gold transition-colors group/link">
+              <span>Explore Service</span>
+              <svg class="w-4 h-4 transform transition-transform group-hover/link:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 03 Babysitter -->
+        <div class="service-card flex flex-col justify-between">
+          <div>
+            <div class="relative overflow-hidden">
+              <img src="assets/images/services/babysitter.jpg" alt="Babysitter reading a book with a happy child" class="service-card-img" width="600" height="400" loading="lazy">
+              <span class="absolute top-4 left-4 bg-brand-black/80 backdrop-blur-sm text-brand-gold font-heading font-extrabold text-xs px-3 py-1 rounded-full border border-brand-gold/30">
+                03 CHILD CARE
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-heading font-bold text-brand-black mb-2">Babysitter Service</h3>
+              <p class="text-sm text-brand-text/80 line-clamp-3 leading-relaxed mb-4">
+                Attentive supervision, meal feeding routines as instructed by parents, interactive play, reading, and gentle child-centered domestic support.
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2 border-t border-brand-offwhite">
+            <a href="services/babysitter-service.html" class="inline-flex items-center gap-2 text-sm font-heading font-bold text-brand-gold-rich hover:text-brand-gold transition-colors group/link">
+              <span>Explore Service</span>
+              <svg class="w-4 h-4 transform transition-transform group-hover/link:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 04 Japa Maid / Nanny -->
+        <div class="service-card flex flex-col justify-between">
+          <div>
+            <div class="relative overflow-hidden">
+              <img src="assets/images/services/japa-maid.jpg" alt="Gentle Japa nanny holding newborn infant" class="service-card-img" width="600" height="400" loading="lazy">
+              <span class="absolute top-4 left-4 bg-brand-black/80 backdrop-blur-sm text-brand-gold font-heading font-extrabold text-xs px-3 py-1 rounded-full border border-brand-gold/30">
+                04 MATERNITY
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-heading font-bold text-brand-black mb-2">Japa Maid / Nanny</h3>
+              <p class="text-sm text-brand-text/80 line-clamp-3 leading-relaxed mb-4">
+                Non-medical postpartum support for mother and newborn during the first crucial weeks at home, assisting with baby routines, rest, and comfort.
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2 border-t border-brand-offwhite">
+            <a href="services/japa-maid-nanny.html" class="inline-flex items-center gap-2 text-sm font-heading font-bold text-brand-gold-rich hover:text-brand-gold transition-colors group/link">
+              <span>Explore Service</span>
+              <svg class="w-4 h-4 transform transition-transform group-hover/link:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 05 Elderly Caretaker -->
+        <div class="service-card flex flex-col justify-between">
+          <div>
+            <div class="relative overflow-hidden">
+              <img src="assets/images/services/elderly-care.jpg" alt="Caregiver walking gently with senior grandfather" class="service-card-img" width="600" height="400" loading="lazy">
+              <span class="absolute top-4 left-4 bg-brand-black/80 backdrop-blur-sm text-brand-gold font-heading font-extrabold text-xs px-3 py-1 rounded-full border border-brand-gold/30">
+                05 SENIOR CARE
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-heading font-bold text-brand-black mb-2">Elderly Caretaker</h3>
+              <p class="text-sm text-brand-text/80 line-clamp-3 leading-relaxed mb-4">
+                Respectful companionship, gentle mobility support, meal assistance, routine organization, and compassionate presence for aging parents and seniors.
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2 border-t border-brand-offwhite">
+            <a href="services/elderly-caretaker.html" class="inline-flex items-center gap-2 text-sm font-heading font-bold text-brand-gold-rich hover:text-brand-gold transition-colors group/link">
+              <span>Explore Service</span>
+              <svg class="w-4 h-4 transform transition-transform group-hover/link:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 06 Patient Caretaker -->
+        <div class="service-card flex flex-col justify-between">
+          <div>
+            <div class="relative overflow-hidden">
+              <img src="assets/images/services/patient-care.jpg" alt="Home patient caretaker offering supportive care" class="service-card-img" width="600" height="400" loading="lazy">
+              <span class="absolute top-4 left-4 bg-brand-black/80 backdrop-blur-sm text-brand-gold font-heading font-extrabold text-xs px-3 py-1 rounded-full border border-brand-gold/30">
+                06 SUPPORT
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-heading font-bold text-brand-black mb-2">Patient Caretaker</h3>
+              <p class="text-sm text-brand-text/80 line-clamp-3 leading-relaxed mb-4">
+                Attentive non-clinical bedside assistance, mobility comfort, personal routine assistance, and family coordination for individuals recovering at home.
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2 border-t border-brand-offwhite">
+            <a href="services/patient-caretaker.html" class="inline-flex items-center gap-2 text-sm font-heading font-bold text-brand-gold-rich hover:text-brand-gold transition-colors group/link">
+              <span>Explore Service</span>
+              <svg class="w-4 h-4 transform transition-transform group-hover/link:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 07 Cook -->
+        <div class="service-card flex flex-col justify-between">
+          <div>
+            <div class="relative overflow-hidden">
+              <img src="assets/images/services/cook.jpg" alt="Home cooked Indian meals and spices" class="service-card-img" width="600" height="400" loading="lazy">
+              <span class="absolute top-4 left-4 bg-brand-black/80 backdrop-blur-sm text-brand-gold font-heading font-extrabold text-xs px-3 py-1 rounded-full border border-brand-gold/30">
+                07 CULINARY
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-heading font-bold text-brand-black mb-2">Cook Service</h3>
+              <p class="text-sm text-brand-text/80 line-clamp-3 leading-relaxed mb-4">
+                Delicious, fresh home-cooked meals prepared according to family dietary instructions, regional tastes, and daily breakfast, lunch, or dinner schedules.
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2 border-t border-brand-offwhite">
+            <a href="services/cook-service.html" class="inline-flex items-center gap-2 text-sm font-heading font-bold text-brand-gold-rich hover:text-brand-gold transition-colors group/link">
+              <span>Explore Service</span>
+              <svg class="w-4 h-4 transform transition-transform group-hover/link:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 08 Driver -->
+        <div class="service-card flex flex-col justify-between">
+          <div>
+            <div class="relative overflow-hidden">
+              <img src="assets/images/services/driver.jpg" alt="Professional driver hands on vehicle steering" class="service-card-img" width="600" height="400" loading="lazy">
+              <span class="absolute top-4 left-4 bg-brand-black/80 backdrop-blur-sm text-brand-gold font-heading font-extrabold text-xs px-3 py-1 rounded-full border border-brand-gold/30">
+                08 MOBILITY
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-heading font-bold text-brand-black mb-2">Driver Service</h3>
+              <p class="text-sm text-brand-text/80 line-clamp-3 leading-relaxed mb-4">
+                Experienced personal and family drivers for daily office commutes, school drops, family travel, errands, and reliable local transit requirements.
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2 border-t border-brand-offwhite">
+            <a href="services/driver-service.html" class="inline-flex items-center gap-2 text-sm font-heading font-bold text-brand-gold-rich hover:text-brand-gold transition-colors group/link">
+              <span>Explore Service</span>
+              <svg class="w-4 h-4 transform transition-transform group-hover/link:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 09 Domestic Couple -->
+        <div class="service-card flex flex-col justify-between">
+          <div>
+            <div class="relative overflow-hidden">
+              <img src="assets/images/services/domestic-couple.jpg" alt="Beautiful modern home managed by household staff" class="service-card-img" width="600" height="400" loading="lazy">
+              <span class="absolute top-4 left-4 bg-brand-black/80 backdrop-blur-sm text-brand-gold font-heading font-extrabold text-xs px-3 py-1 rounded-full border border-brand-gold/30">
+                09 COMBINED
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-heading font-bold text-brand-black mb-2">Domestic Couple Service</h3>
+              <p class="text-sm text-brand-text/80 line-clamp-3 leading-relaxed mb-4">
+                Two dedicated staff members working in harmony to manage combined housekeeping, cooking, maintenance, and comprehensive household responsibilities.
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2 border-t border-brand-offwhite">
+            <a href="services/domestic-couple.html" class="inline-flex items-center gap-2 text-sm font-heading font-bold text-brand-gold-rich hover:text-brand-gold transition-colors group/link">
+              <span>Explore Service</span>
+              <svg class="w-4 h-4 transform transition-transform group-hover/link:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 3 – ABOUT PREVIEW ==================== -->
+  <section class="py-24 bg-brand-ivory relative overflow-hidden">
+    <!-- Faded Decorative Typography -->
+    <div class="absolute -top-12 -left-10 text-9xl sm:text-[14rem] font-heading font-black text-brand-gold/5 select-none pointer-events-none tracking-tighter">
+      HELP
+    </div>
+    <div class="absolute -bottom-16 -right-10 text-9xl sm:text-[14rem] font-heading font-black text-brand-gold/5 select-none pointer-events-none tracking-tighter">
+      HOME
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        <!-- Image Side -->
+        <div class="lg:col-span-6" data-reveal>
+          <div class="editorial-frame bg-brand-white border border-[#E7CD9F]/60">
+            <img src="assets/images/editorial/about-care.jpg" alt="Modern sunlit Indian home interior with peaceful living atmosphere" class="w-full h-[400px] sm:h-[480px] object-cover" width="700" height="500" loading="lazy">
+          </div>
+        </div>
+
+        <!-- Text Side -->
+        <div class="lg:col-span-6" data-reveal>
+          <div class="section-eyebrow">ABOUT HELPER HOME</div>
+          <h2 class="section-title font-heading font-extrabold text-brand-black mb-6">
+            Care That Makes<br>
+            Everyday Life Easier.
+          </h2>
+          <p class="text-base sm:text-lg text-brand-text/85 mb-6 leading-relaxed">
+            Running a modern household involves dozens of moving parts — from daily cleaning and meal preparation to looking after growing children and caring for aging parents. Helper Home was founded to make finding domestic support organized, transparent, and dignified.
+          </p>
+          <p class="text-base sm:text-lg text-brand-text/80 mb-8 leading-relaxed">
+            We focus on understanding your specific requirements rather than offering generic placements. Through clear communication, mutual respect, and tailored coordination, we help bring peace of mind into your daily living space.
+          </p>
+          <a href="about.html" class="btn-dark">Discover Our Story</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 4 – FEATURED SERVICES (EDITORIAL ALTERNATING) ==================== -->
+  <section class="py-24 bg-brand-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+      
+      <!-- Section Intro -->
+      <div class="text-center max-w-3xl mx-auto" data-reveal>
+        <div class="section-eyebrow justify-center">FEATURED SPECIALIZATIONS</div>
+        <h2 class="section-title font-heading font-extrabold text-brand-black">
+          Tailored Around Your Family's Routine
+        </h2>
+      </div>
+
+      <!-- Feature 1: Maid (Image Left, Text Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" data-reveal>
+        <div class="lg:col-span-6">
+          <div class="editorial-frame">
+            <img src="assets/images/services/maid.jpg" alt="Maid dusting and cleaning shelves" class="w-full h-[380px] sm:h-[440px] object-cover" width="700" height="500" loading="lazy">
+          </div>
+        </div>
+        <div class="lg:col-span-6 lg:pl-6">
+          <span class="text-xs font-heading font-extrabold text-brand-gold uppercase tracking-widest">01 / DOMESTIC SUPPORT</span>
+          <h3 class="subsection-title font-heading font-extrabold text-brand-black mt-2 mb-4">
+            Reliable Maid Services for a Pristine Home
+          </h3>
+          <p class="text-base text-brand-text/80 mb-6 leading-relaxed">
+            Keep your residence fresh, organized, and inviting every day. Our maid service coordination adapts to your household layout and preferred daily schedules.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Thorough sweeping, mopping, and vacuuming of all living zones</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Dusting furniture, bookshelves, decorative surfaces, and window sills</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Kitchen surface sanitizing, utensil washing, and routine upkeep</span>
+            </li>
+          </ul>
+          <a href="services/maid-service.html" class="inline-flex items-center gap-2 font-heading font-bold text-brand-gold-rich hover:text-brand-gold">
+            Learn more about Maid Service &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Feature 2: Babysitter (Text Left, Image Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" data-reveal>
+        <div class="lg:col-span-6 lg:order-2">
+          <div class="editorial-frame">
+            <img src="assets/images/services/babysitter.jpg" alt="Babysitter engaged in child storybook time" class="w-full h-[380px] sm:h-[440px] object-cover" width="700" height="500" loading="lazy">
+          </div>
+        </div>
+        <div class="lg:col-span-6 lg:order-1 lg:pr-6">
+          <span class="text-xs font-heading font-extrabold text-brand-gold uppercase tracking-widest">02 / CHILD & FAMILY CARE</span>
+          <h3 class="subsection-title font-heading font-extrabold text-brand-black mt-2 mb-4">
+            Loving, Attentive Babysitting for Your Children
+          </h3>
+          <p class="text-base text-brand-text/80 mb-6 leading-relaxed">
+            Parenting is demanding. Our babysitting coordination connects your family with patient caregivers dedicated to safe supervision and interactive engagement in the comfort of your home.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Continuous, focused supervision in a safe home environment</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Nutritious feeding assistance following parental diet preferences</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Educational play, puzzle solving, story reading, and nap coordination</span>
+            </li>
+          </ul>
+          <a href="services/babysitter-service.html" class="inline-flex items-center gap-2 font-heading font-bold text-brand-gold-rich hover:text-brand-gold">
+            Learn more about Babysitter Service &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Feature 3: Elderly Care (Image Left, Text Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" data-reveal>
+        <div class="lg:col-span-6">
+          <div class="editorial-frame">
+            <img src="assets/images/services/elderly-care.jpg" alt="Elderly care companion walking on garden verandah" class="w-full h-[380px] sm:h-[440px] object-cover" width="700" height="500" loading="lazy">
+          </div>
+        </div>
+        <div class="lg:col-span-6 lg:pl-6">
+          <span class="text-xs font-heading font-extrabold text-brand-gold uppercase tracking-widest">03 / SENIOR SUPPORT</span>
+          <h3 class="subsection-title font-heading font-extrabold text-brand-black mt-2 mb-4">
+            Dignified Elderly Care & Gentle Companionship
+          </h3>
+          <p class="text-base text-brand-text/80 mb-6 leading-relaxed">
+            Our elderly care coordination focuses on personal respect, companionship, and everyday independence, giving families complete confidence that elders are cherished and supported.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Warm companionship, conversation, reading, and gentle walking assistance</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Assistance with timely meals, hydration, and physician-prescribed medication reminders</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Personal routine dignity and accompaniment to planned visits where agreed</span>
+            </li>
+          </ul>
+          <a href="services/elderly-caretaker.html" class="inline-flex items-center gap-2 font-heading font-bold text-brand-gold-rich hover:text-brand-gold">
+            Learn more about Elderly Care &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Feature 4: Cook Service (Text Left, Image Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" data-reveal>
+        <div class="lg:col-span-6 lg:order-2">
+          <div class="editorial-frame">
+            <img src="assets/images/services/cook.jpg" alt="Fresh home-cooked Indian meals" class="w-full h-[380px] sm:h-[440px] object-cover" width="700" height="500" loading="lazy">
+          </div>
+        </div>
+        <div class="lg:col-span-6 lg:order-1 lg:pr-6">
+          <span class="text-xs font-heading font-extrabold text-brand-gold uppercase tracking-widest">04 / CULINARY EXCELLENCE</span>
+          <h3 class="subsection-title font-heading font-extrabold text-brand-black mt-2 mb-4">
+            Fresh, Wholesome Home-Cooked Meals Daily
+          </h3>
+          <p class="text-base text-brand-text/80 mb-6 leading-relaxed">
+            Nothing compares to the comfort of fresh home-cooked food prepared exactly the way your family enjoys it — with the right spices, oil balance, and dietary choices.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Daily preparation for breakfast, lunch, or dinner on agreed schedules</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Customized according to North Indian, South Indian, or regional preferences</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold-rich mt-0.5 shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <span class="text-sm font-medium text-brand-text">Ingredient prep, chopping, and cooking-related counter organization</span>
+            </li>
+          </ul>
+          <a href="services/cook-service.html" class="inline-flex items-center gap-2 font-heading font-bold text-brand-gold-rich hover:text-brand-gold">
+            Learn more about Cook Service &rarr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 5 – PROCESS ==================== -->
+  <section class="py-24 bg-brand-black text-brand-white relative overflow-hidden">
+    <!-- Ambient Glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-brand-gold/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="text-center max-w-3xl mx-auto mb-20" data-reveal>
+        <div class="section-eyebrow justify-center">HOW IT WORKS</div>
+        <h2 class="section-title font-heading font-extrabold text-brand-white mb-4">
+          Finding Help Should Be Simple
+        </h2>
+        <p class="text-base sm:text-lg text-brand-white/80">
+          Our straightforward three-step process is structured to understand your specific requirements and ensure complete alignment before service commences.
+        </p>
+      </div>
+
+      <!-- Process Steps Container -->
+      <div class="process-container relative">
+        
+        <!-- Desktop Connecting Gold Line -->
+        <div class="hidden md:block process-line">
+          <div class="process-line-fill h-full bg-gold-gradient transition-all duration-1000"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 relative z-10">
+          
+          <!-- Step 01 -->
+          <div class="text-center md:text-left flex flex-col items-center md:items-start" data-reveal>
+            <div class="w-20 h-20 rounded-full bg-brand-dark border-2 border-brand-gold flex items-center justify-center text-xl font-heading font-black text-brand-gold mb-6 shadow-gold-sm">
+              01
+            </div>
+            <h3 class="text-xl font-heading font-bold text-brand-white mb-3">Choose a Service</h3>
+            <p class="text-sm text-brand-white/70 leading-relaxed max-w-xs">
+              Review our nine service categories and select the primary domestic or caretaking assistance your home requires.
+            </p>
+          </div>
+
+          <!-- Step 02 -->
+          <div class="text-center md:text-left flex flex-col items-center md:items-start" data-reveal>
+            <div class="w-20 h-20 rounded-full bg-brand-dark border-2 border-brand-gold flex items-center justify-center text-xl font-heading font-black text-brand-gold mb-6 shadow-gold-sm">
+              02
+            </div>
+            <h3 class="text-xl font-heading font-bold text-brand-white mb-3">Tell Us Your Requirements</h3>
+            <p class="text-sm text-brand-white/70 leading-relaxed max-w-xs">
+              Fill out our simple enquiry form detailing your locality, timings, family preferences, and specific task expectations.
+            </p>
+          </div>
+
+          <!-- Step 03 -->
+          <div class="text-center md:text-left flex flex-col items-center md:items-start" data-reveal>
+            <div class="w-20 h-20 rounded-full bg-brand-dark border-2 border-brand-gold flex items-center justify-center text-xl font-heading font-black text-brand-gold mb-6 shadow-gold-sm">
+              03
+            </div>
+            <h3 class="text-xl font-heading font-bold text-brand-white mb-3">Confirm Your Service</h3>
+            <p class="text-sm text-brand-white/70 leading-relaxed max-w-xs">
+              Our care coordinator reviews your needs, shares suitable matches, and coordinates mutually agreed start details.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Process CTA button -->
+      <div class="mt-16 text-center" data-reveal>
+        <a href="contact.html" class="btn-gold">Start Your Enquiry Now</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 6 – SERVICE GROUPS ==================== -->
+  <section class="py-24 bg-brand-offwhite">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
+        <div class="section-eyebrow justify-center">SERVICE CLUSTERS</div>
+        <h2 class="section-title font-heading font-extrabold text-brand-black mb-4">
+          Organized Across Three Dedicated Pillars
+        </h2>
+        <p class="text-base sm:text-lg text-brand-text/80">
+          Whether you need day-to-day housekeeping, nurturing family attention, or dedicated personal assistance, our services are organized for seamless coordination.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" data-stagger-grid>
+        
+        <!-- Pillar 1: Home Assistance -->
+        <div class="bg-brand-white rounded-2xl p-8 border border-[#E7CD9F]/50 shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-12 h-12 rounded-xl bg-brand-gold/15 text-brand-gold-rich flex items-center justify-center mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-heading font-extrabold text-brand-black mb-3">Home Assistance</h3>
+          <p class="text-sm text-brand-text/80 mb-6 leading-relaxed">
+            Essential housekeeping, general upkeep, kitchen support, and property routines that keep your residence impeccably organized.
+          </p>
+          <ul class="space-y-2 border-t border-brand-offwhite pt-4">
+            <li><a href="services/maid-service.html" class="text-sm font-medium text-brand-text hover:text-brand-gold-rich flex items-center justify-between py-1.5"><span>Maid Service</span> &rarr;</a></li>
+            <li><a href="services/servant-service.html" class="text-sm font-medium text-brand-text hover:text-brand-gold-rich flex items-center justify-between py-1.5"><span>Servant Service</span> &rarr;</a></li>
+            <li><a href="services/cook-service.html" class="text-sm font-medium text-brand-text hover:text-brand-gold-rich flex items-center justify-between py-1.5"><span>Cook Service</span> &rarr;</a></li>
+            <li><a href="services/domestic-couple.html" class="text-sm font-medium text-brand-text hover:text-brand-gold-rich flex items-center justify-between py-1.5"><span>Domestic Couple Service</span> &rarr;</a></li>
+          </ul>
+        </div>
+
+        <!-- Pillar 2: Family & Child Care -->
+        <div class="bg-brand-white rounded-2xl p-8 border border-[#E7CD9F]/50 shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-12 h-12 rounded-xl bg-brand-gold/15 text-brand-gold-rich flex items-center justify-center mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-heading font-extrabold text-brand-black mb-3">Family & Child Care</h3>
+          <p class="text-sm text-brand-text/80 mb-6 leading-relaxed">
+            Gentle, dependable assistance for young children and new mothers, focusing on safe engagement, routines, and rest.
+          </p>
+          <ul class="space-y-2 border-t border-brand-offwhite pt-4">
+            <li><a href="services/babysitter-service.html" class="text-sm font-medium text-brand-text hover:text-brand-gold-rich flex items-center justify-between py-1.5"><span>Babysitter Service</span> &rarr;</a></li>
+            <li><a href="services/japa-maid-nanny.html" class="text-sm font-medium text-brand-text hover:text-brand-gold-rich flex items-center justify-between py-1.5"><span>Japa Maid / Nanny</span> &rarr;</a></li>
+          </ul>
+        </div>
+
+        <!-- Pillar 3: Personal Care & Support -->
+        <div class="bg-brand-white rounded-2xl p-8 border border-[#E7CD9F]/50 shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-12 h-12 rounded-xl bg-brand-gold/15 text-brand-gold-rich flex items-center justify-center mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-heading font-extrabold text-brand-black mb-3">Personal Care & Support</h3>
+          <p class="text-sm text-brand-text/80 mb-6 leading-relaxed">
+            Respectful non-clinical companionship, daily mobility assistance for elders and patients, and dependable driving solutions.
+          </p>
+          <ul class="space-y-2 border-t border-brand-offwhite pt-4">
+            <li><a href="services/elderly-caretaker.html" class="text-sm font-medium text-brand-text hover:text-brand-gold-rich flex items-center justify-between py-1.5"><span>Elderly Caretaker</span> &rarr;</a></li>
+            <li><a href="services/patient-caretaker.html" class="text-sm font-medium text-brand-text hover:text-brand-gold-rich flex items-center justify-between py-1.5"><span>Patient Caretaker</span> &rarr;</a></li>
+            <li><a href="services/driver-service.html" class="text-sm font-medium text-brand-text hover:text-brand-gold-rich flex items-center justify-between py-1.5"><span>Driver Service</span> &rarr;</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 7 – WHY HELPER HOME ==================== -->
+  <section class="py-24 bg-brand-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
+        <div class="section-eyebrow justify-center">OUR FOUNDATIONAL COMMITMENT</div>
+        <h2 class="section-title font-heading font-extrabold text-brand-black mb-4">
+          Helping You Find the Right Support for Your Home.
+        </h2>
+        <p class="text-base sm:text-lg text-brand-text/80">
+          We believe good domestic assistance begins with honest communication, realistic scope definition, and dedicated coordination tailored to how your household actually lives.
+        </p>
+      </div>
+
+      <!-- 4 Core Factual Pillars (strictly unsupported claims avoided) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" data-stagger-grid>
+        
+        <div class="p-6 rounded-2xl bg-brand-offwhite border border-brand-gold/20 flex flex-col justify-between">
+          <div>
+            <div class="text-3xl font-heading font-black text-brand-gold mb-3">01</div>
+            <h3 class="text-lg font-heading font-bold text-brand-black mb-2">Personal Requirement Understanding</h3>
+            <p class="text-sm text-brand-text/80 leading-relaxed">
+              We take the time to listen to your household routines, culinary habits, family dynamics, and expectations before suggesting assistance.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-offwhite border border-brand-gold/20 flex flex-col justify-between">
+          <div>
+            <div class="text-3xl font-heading font-black text-brand-gold mb-3">02</div>
+            <h3 class="text-lg font-heading font-bold text-brand-black mb-2">Multiple Home-Service Categories</h3>
+            <p class="text-sm text-brand-text/80 leading-relaxed">
+              From everyday sweeping and home-cooked meals to specialized infant or senior companionship, our breadth spans 9 focused service scopes.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-offwhite border border-brand-gold/20 flex flex-col justify-between">
+          <div>
+            <div class="text-3xl font-heading font-black text-brand-gold mb-3">03</div>
+            <h3 class="text-lg font-heading font-bold text-brand-black mb-2">Simple Enquiry Process</h3>
+            <p class="text-sm text-brand-text/80 leading-relaxed">
+              No complicated bureaucratic portals. An accessible, human-centric enquiry pathway that gets you connected to a coordinator swiftly.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-offwhite border border-brand-gold/20 flex flex-col justify-between">
+          <div>
+            <div class="text-3xl font-heading font-black text-brand-gold mb-3">04</div>
+            <h3 class="text-lg font-heading font-bold text-brand-black mb-2">Support for Different Household Needs</h3>
+            <p class="text-sm text-brand-text/80 leading-relaxed">
+              Whether you live in a compact apartment or manage a spacious bungalow with multiple generations, our solutions scale gracefully.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 8 – LIFESTYLE CTA ==================== -->
+  <section class="relative py-28 bg-brand-black text-brand-white overflow-hidden">
+    <!-- Background Image with Gradient Mask -->
+    <div class="absolute inset-0 z-0">
+      <img src="assets/images/editorial/lifestyle-cta.jpg" alt="Beautiful Indian home interior" class="w-full h-full object-cover opacity-30" width="1600" height="900" loading="lazy">
+      <div class="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/90 to-brand-black/60"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-reveal>
+      <div class="max-w-2xl">
+        <div class="section-eyebrow">A BETTER WAY OF LIVING</div>
+        <h2 class="section-title font-heading font-extrabold text-brand-white mb-6">
+          The Right Help Can Change Your Everyday Life.
+        </h2>
+        <p class="text-base sm:text-lg text-brand-white/80 mb-8 leading-relaxed">
+          Reclaim your valuable time for family, career, and personal rest. Let Helper Home assist you in finding dependable domestic hands to care for your home.
+        </p>
+        <a href="contact.html" class="btn-gold">Talk to Helper Home</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 9 – TESTIMONIALS (DEVELOPMENT PLACEHOLDERS) ==================== -->
+  <section class="py-24 bg-brand-ivory">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
+        <div class="section-eyebrow justify-center">HOUSEHOLD EXPERIENCES</div>
+        <h2 class="section-title font-heading font-extrabold text-brand-black mb-4">
+          Trusted by Families Across the City
+        </h2>
+        <p class="text-sm text-brand-text/60 italic">
+          [Development Note: Displaying structured testimonial placeholders. Client verified household feedback will replace these cards.]
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-stagger-grid>
+        
+        <!-- Placeholder Review 1 -->
+        <div class="bg-brand-white p-8 rounded-2xl border border-brand-gold/30 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-1 text-brand-gold mb-4">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+            </div>
+            <p class="text-sm text-brand-text/85 italic mb-6 leading-relaxed">
+              "Helper Home took the time to understand our family routine before recommending our cook. The coordination was prompt and transparent throughout."
+            </p>
+          </div>
+          <div class="border-t border-brand-offwhite pt-4">
+            <div class="font-heading font-bold text-sm text-brand-black">[Client Feedback Placeholder]</div>
+            <div class="text-xs text-brand-gold-rich">Cook Service Enquiry &bull; Metro Household</div>
+          </div>
+        </div>
+
+        <!-- Placeholder Review 2 -->
+        <div class="bg-brand-white p-8 rounded-2xl border border-brand-gold/30 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-1 text-brand-gold mb-4">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+            </div>
+            <p class="text-sm text-brand-text/85 italic mb-6 leading-relaxed">
+              "Finding a respectful caretaker for my elderly mother brought tremendous peace of mind. The process was respectful and dignified from day one."
+            </p>
+          </div>
+          <div class="border-t border-brand-offwhite pt-4">
+            <div class="font-heading font-bold text-sm text-brand-black">[Client Feedback Placeholder]</div>
+            <div class="text-xs text-brand-gold-rich">Elderly Caretaker &bull; Family Residence</div>
+          </div>
+        </div>
+
+        <!-- Placeholder Review 3 -->
+        <div class="bg-brand-white p-8 rounded-2xl border border-brand-gold/30 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-1 text-brand-gold mb-4">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+            </div>
+            <p class="text-sm text-brand-text/85 italic mb-6 leading-relaxed">
+              "The babysitter engaged so naturally with our toddler. The clear guidelines set before she started made everything smooth and stress-free."
+            </p>
+          </div>
+          <div class="border-t border-brand-offwhite pt-4">
+            <div class="font-heading font-bold text-sm text-brand-black">[Client Feedback Placeholder]</div>
+            <div class="text-xs text-brand-gold-rich">Babysitter Service &bull; Apartment Complex</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 10 – FAQ ACCORDION ==================== -->
+  <section class="py-24 bg-brand-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-16" data-reveal>
+        <div class="section-eyebrow justify-center">CLEAR ANSWERS</div>
+        <h2 class="section-title font-heading font-extrabold text-brand-black mb-4">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-base sm:text-lg text-brand-text/80">
+          Have questions about how we coordinate domestic and care support? Here are helpful answers to common enquiries.
+        </p>
+      </div>
+
+      <!-- Accordion Container -->
+      <div class="space-y-4" data-accordion="single">
+        
+        <!-- Question 1 -->
+        <div class="accordion-item border border-brand-gold/30 rounded-2xl p-6 bg-brand-white transition-colors duration-200">
+          <button type="button" class="accordion-trigger w-full flex items-center justify-between text-left focus:outline-none" aria-expanded="false">
+            <span class="text-lg font-heading font-bold text-brand-black pr-4">What home services does Helper Home offer?</span>
+            <svg class="accordion-icon w-5 h-5 text-brand-gold-rich shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p class="text-sm sm:text-base text-brand-text/80 pt-4 leading-relaxed border-t border-brand-offwhite mt-4">
+              Helper Home facilitates assistance across nine distinct service categories: Maid, Servant, Babysitter, Japa Maid / Nanny, Elderly Caretaker, Patient Caretaker, Cook, Driver, and Domestic Couple services. Each category is customized to your household requirements.
+            </p>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="accordion-item border border-brand-gold/30 rounded-2xl p-6 bg-brand-white transition-colors duration-200">
+          <button type="button" class="accordion-trigger w-full flex items-center justify-between text-left focus:outline-none" aria-expanded="false">
+            <span class="text-lg font-heading font-bold text-brand-black pr-4">How do I enquire for a maid or caretaker?</span>
+            <svg class="accordion-icon w-5 h-5 text-brand-gold-rich shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p class="text-sm sm:text-base text-brand-text/80 pt-4 leading-relaxed border-t border-brand-offwhite mt-4">
+              You can submit your details directly via our online enquiry form on the Contact page, or call our care coordination team. We collect your requirements, timings, and expectations, and follow up promptly to discuss matching domestic support.
+            </p>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="accordion-item border border-brand-gold/30 rounded-2xl p-6 bg-brand-white transition-colors duration-200">
+          <button type="button" class="accordion-trigger w-full flex items-center justify-between text-left focus:outline-none" aria-expanded="false">
+            <span class="text-lg font-heading font-bold text-brand-black pr-4">Can I choose the type of service I require?</span>
+            <svg class="accordion-icon w-5 h-5 text-brand-gold-rich shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p class="text-sm sm:text-base text-brand-text/80 pt-4 leading-relaxed border-t border-brand-offwhite mt-4">
+              Yes, absolutely. Household needs vary widely. You specify the required scope — whether part-time morning assistance, full-day household routines, cooking only, or dedicated elderly companionship.
+            </p>
+          </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="accordion-item border border-brand-gold/30 rounded-2xl p-6 bg-brand-white transition-colors duration-200">
+          <button type="button" class="accordion-trigger w-full flex items-center justify-between text-left focus:outline-none" aria-expanded="false">
+            <span class="text-lg font-heading font-bold text-brand-black pr-4">How can I enquire for a babysitter?</span>
+            <svg class="accordion-icon w-5 h-5 text-brand-gold-rich shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p class="text-sm sm:text-base text-brand-text/80 pt-4 leading-relaxed border-t border-brand-offwhite mt-4">
+              Select the Babysitter category on our enquiry form. Share details including your child's age, daily schedule, language preferences, and any specific dietary or play guidelines. We will align with candidates suited for child engagement.
+            </p>
+          </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="accordion-item border border-brand-gold/30 rounded-2xl p-6 bg-brand-white transition-colors duration-200">
+          <button type="button" class="accordion-trigger w-full flex items-center justify-between text-left focus:outline-none" aria-expanded="false">
+            <span class="text-lg font-heading font-bold text-brand-black pr-4">What information should I provide while enquiring?</span>
+            <svg class="accordion-icon w-5 h-5 text-brand-gold-rich shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p class="text-sm sm:text-base text-brand-text/80 pt-4 leading-relaxed border-t border-brand-offwhite mt-4">
+              Providing your city/area, home size (BHK), desired working hours, target start date, and specific daily responsibilities (e.g., mopping, meal types, child supervision) enables us to guide you accurately.
+            </p>
+          </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="accordion-item border border-brand-gold/30 rounded-2xl p-6 bg-brand-white transition-colors duration-200">
+          <button type="button" class="accordion-trigger w-full flex items-center justify-between text-left focus:outline-none" aria-expanded="false">
+            <span class="text-lg font-heading font-bold text-brand-black pr-4">Can I enquire about multiple services?</span>
+            <svg class="accordion-icon w-5 h-5 text-brand-gold-rich shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="accordion-content">
+            <p class="text-sm sm:text-base text-brand-text/80 pt-4 leading-relaxed border-t border-brand-offwhite mt-4">
+              Yes. Many homes require combined support — such as a cook alongside a morning maid, or an elderly caretaker plus weekend driver. Simply detail your requirements in the message section of the enquiry form.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 11 – FINAL CTA ==================== -->
+  <section class="py-24 bg-brand-black text-brand-white relative overflow-hidden border-t border-brand-gold/20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10" data-reveal>
+      <div class="section-eyebrow justify-center">GET STARTED TODAY</div>
+      <h2 class="section-title font-heading font-extrabold text-brand-white mb-6">
+        Looking for Reliable<br>
+        <span class="text-transparent bg-clip-text bg-gold-gradient">Help at Home?</span>
+      </h2>
+      <p class="text-base sm:text-lg text-brand-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
+        Let Helper Home coordinate trusted, dignified domestic assistance and home care services tailored specifically for your family.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="#" class="btn-gold js-open-enquiry" data-enquiry-open role="button">Book a Service</a>
+        <a href="contact.html" class="btn-outline-gold">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-brand-black text-brand-white/80 pt-16 pb-8 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+        
+        <!-- Brand Column -->
+        <div class="lg:col-span-4">
+          <a href="index.html" class="inline-block mb-4">
+            <img src="assets/images/logo-transparent.png?v=2" alt="Helper Home" class="site-logo site-logo-footer" width="220" height="220">
+          </a>
+          <p class="text-xs uppercase tracking-widest text-brand-gold font-heading font-bold mb-3">
+            Home Care & Domestic Services
+          </p>
+          <p class="text-sm text-brand-white/70 leading-relaxed max-w-sm mb-6">
+            Providing tailored domestic support, child care, and personal caretaking coordination for homes across India.
+          </p>
+        </div>
+
+        <!-- Column 1: Company -->
+        <div class="lg:col-span-2">
+          <h4 class="text-xs font-heading font-extrabold uppercase tracking-widest text-brand-gold mb-4">Company</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-brand-gold transition-colors">Home</a></li>
+            <li><a href="about.html" class="hover:text-brand-gold transition-colors">About Us</a></li>
+            <li><a href="services.html" class="hover:text-brand-gold transition-colors">Services</a></li>
+            <li><a href="contact.html" class="hover:text-brand-gold transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 2: Services Part 1 -->
+        <div class="lg:col-span-2">
+          <h4 class="text-xs font-heading font-extrabold uppercase tracking-widest text-brand-gold mb-4">Services</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="services/maid-service.html" class="hover:text-brand-gold transition-colors">Maid Service</a></li>
+            <li><a href="services/servant-service.html" class="hover:text-brand-gold transition-colors">Servant Service</a></li>
+            <li><a href="services/babysitter-service.html" class="hover:text-brand-gold transition-colors">Babysitter Service</a></li>
+            <li><a href="services/japa-maid-nanny.html" class="hover:text-brand-gold transition-colors">Japa Maid / Nanny</a></li>
+            <li><a href="services/elderly-caretaker.html" class="hover:text-brand-gold transition-colors">Elderly Caretaker</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: More Services -->
+        <div class="lg:col-span-2">
+          <h4 class="text-xs font-heading font-extrabold uppercase tracking-widest text-brand-gold mb-4">More Services</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="services/patient-caretaker.html" class="hover:text-brand-gold transition-colors">Patient Caretaker</a></li>
+            <li><a href="services/cook-service.html" class="hover:text-brand-gold transition-colors">Cook Service</a></li>
+            <li><a href="services/driver-service.html" class="hover:text-brand-gold transition-colors">Driver Service</a></li>
+            <li><a href="services/domestic-couple.html" class="hover:text-brand-gold transition-colors">Domestic Couple</a></li>
+            <li><a href="services.html" class="text-brand-gold hover:underline transition-colors font-medium">All 9 Services &rarr;</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact Placeholders -->
+        <div class="lg:col-span-2">
+          <h4 class="text-xs font-heading font-extrabold uppercase tracking-widest text-brand-gold mb-4">Contact Info</h4>
+          <div class="space-y-3 text-xs text-brand-white/70">
+            <div>
+              <span class="block text-brand-gold font-semibold">Phone:</span>
+              <span><a href="tel:+919879888478" class="hover:text-brand-gold transition-colors">+91 98798 88478</a></span>
+            </div>
+            <div>
+              <span class="block text-brand-gold font-semibold">Email:</span>
+              <span><a href="mailto:helperhomeahmedabad@gmail.com" class="hover:text-brand-gold transition-colors break-all">helperhomeahmedabad@gmail.com</a></span>
+            </div>
+            <div>
+              <span class="block text-brand-gold font-semibold">Office Address:</span>
+              <span>A - 318/319 Swaminarayan Avenue, Nr AEC Cross Road, Naranpura, Ahmedabad - 380013</span>
+            </div>
+            <div>
+              <span class="block text-brand-gold font-semibold">Working Hours:</span>
+              <span>Mon – Sat, 9:00 AM – 7:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Row -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-brand-white/50">
+        <div>
+          &copy; 2026 Helper Home. All rights reserved.
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="privacy-policy.html" class="hover:text-brand-gold transition-colors">Privacy Policy</a>
+          <a href="terms-and-conditions.html" class="hover:text-brand-gold transition-colors">Terms &amp; Conditions</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- GSAP & ScrollTrigger with Fallback Support -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <!-- Site Scripts -->
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

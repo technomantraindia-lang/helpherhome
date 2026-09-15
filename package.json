@@ -1,0 +1,12 @@
+{
+  "name": "helperhome-website",
+  "version": "1.0.0",
+  "description": "Helper Home - Home Care & Domestic Services Premium Website",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/main.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/main.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

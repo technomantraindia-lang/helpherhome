@@ -1,0 +1,468 @@
+/**
+ * Helper Home — Hero Alignment System
+ * Shared layout for ALL slider slides. Load after main.css.
+ */
+
+:root {
+  --header-height: 112px;
+  --mobile-header-height: 88px;
+  --hero-header-clearance: calc(var(--header-height) + 55px);
+  --hero-bottom-safe: 130px;
+  --hero-content-max: 760px;
+  --hero-desc-max: 620px;
+  --hero-container-max: 1320px;
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --hero-header-clearance: calc(var(--header-height) + 65px);
+  }
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --hero-header-clearance: calc(var(--header-height) + 40px);
+    --hero-bottom-safe: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --hero-header-clearance: calc(var(--mobile-header-height) + 32px);
+    --hero-bottom-safe: 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --hero-header-clearance: calc(var(--mobile-header-height) + 30px);
+    --hero-bottom-safe: 100px;
+  }
+}
+
+/* ---- Section / slide shell ---- */
+#heroSlider.hero-slider-section,
+.hero-slider-section {
+  position: relative;
+  width: 100%;
+  min-height: 820px;
+  height: 100svh;
+  max-height: none;
+  overflow: hidden;
+  display: block;
+}
+
+@media (max-height: 800px) {
+  #heroSlider.hero-slider-section,
+  .hero-slider-section {
+    min-height: 720px;
+  }
+}
+
+@media (max-width: 768px) {
+  #heroSlider.hero-slider-section,
+  .hero-slider-section {
+    min-height: 100svh;
+    height: 100svh;
+  }
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Shared container — identical on every slide */
+.hero-container,
+.hero-slide-inner {
+  width: min(var(--hero-container-max), calc(100% - 48px));
+  max-width: var(--hero-container-max);
+  margin-inline: auto;
+  height: 100%;
+  min-height: 100%;
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start; /* fixed top rhythm — NOT center (heading height must not shift Y) */
+  box-sizing: border-box;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (min-width: 640px) {
+  .hero-container,
+  .hero-slide-inner {
+    width: min(var(--hero-container-max), calc(100% - 64px));
+  }
+}
+
+/* Shared content block — never repositioned per slide */
+.hero-content,
+.hero-slide-content {
+  width: min(var(--hero-content-max), 100%);
+  max-width: var(--hero-content-max);
+  margin: 0;
+  padding-top: var(--hero-header-clearance);
+  padding-bottom: var(--hero-bottom-safe);
+  position: relative;
+  z-index: 5;
+  transform: none !important; /* prevent leftover animation offset */
+  box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .hero-content,
+  .hero-slide-content {
+    width: min(760px, 58%);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-container,
+  .hero-slide-inner {
+    align-items: flex-start;
+    width: min(100% - 32px, var(--hero-container-max));
+  }
+
+  .hero-content,
+  .hero-slide-content {
+    width: 100%;
+    max-width: 100%;
+    padding-top: var(--hero-header-clearance);
+    padding-bottom: calc(var(--hero-bottom-safe) + 12px);
+  }
+}
+
+/* ---- Vertical rhythm (identical every slide) ---- */
+.hero-eyebrow {
+  display: inline-flex !important;
+  align-items: center;
+  min-height: 40px;
+  margin: 0 0 22px 0 !important;
+  padding: 0 18px !important;
+  border: 1px solid rgba(230, 185, 105, 0.42) !important;
+  border-radius: 999px;
+  box-sizing: border-box;
+}
+
+.hero-slider-title,
+.hero-content .hero-slider-title,
+.hero-slide-content .hero-slider-title {
+  max-width: 760px !important;
+  width: 100%;
+  margin: 0 0 26px 0 !important;
+  font-size: clamp(52px, 5.2vw, 88px) !important;
+  line-height: 0.96 !important;
+  letter-spacing: -0.045em !important;
+  font-weight: 900;
+}
+
+@media (max-height: 800px) {
+  .hero-slider-title,
+  .hero-content .hero-slider-title,
+  .hero-slide-content .hero-slider-title {
+    font-size: clamp(46px, 4.6vw, 72px) !important;
+  }
+
+  .hero-eyebrow {
+    margin-bottom: 16px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-slider-title,
+  .hero-content .hero-slider-title,
+  .hero-slide-content .hero-slider-title {
+    font-size: clamp(42px, 11vw, 58px) !important;
+    line-height: 0.98 !important;
+    max-width: 100% !important;
+    margin-bottom: 18px !important;
+  }
+
+  .hero-eyebrow {
+    min-height: 36px;
+    margin-bottom: 16px !important;
+    padding: 0 14px !important;
+  }
+}
+
+.hero-slider-title .hero-line {
+  display: block;
+}
+
+.hero-description,
+.hero-slide-body {
+  max-width: var(--hero-desc-max) !important;
+  width: 100%;
+  margin: 0 0 30px 0 !important;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+@media (min-width: 640px) {
+  .hero-description,
+  .hero-slide-body {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-description,
+  .hero-slide-body {
+    font-size: 16px !important;
+    margin-bottom: 22px !important;
+  }
+}
+
+.hero-cta-row,
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0 0 34px 0 !important;
+}
+
+@media (max-width: 480px) {
+  .hero-cta-row,
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 26px !important;
+  }
+}
+
+.hero-service-tags,
+.hero-services {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  max-width: var(--hero-content-max);
+  margin: 0 !important;
+  padding-top: 20px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ---- Floating info card — one shared anchor ---- */
+.hero-floating-card,
+.hero-info-card {
+  display: none;
+  position: absolute !important;
+  right: max(2%, 24px);
+  bottom: 145px !important;
+  left: auto !important;
+  top: auto !important;
+  z-index: 10;
+  margin: 0 !important;
+  transform: none !important;
+  max-width: 280px;
+}
+
+@media (min-width: 1280px) {
+  .hero-floating-card,
+  .hero-info-card {
+    display: flex !important;
+    right: max(5%, 40px);
+    bottom: 145px !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero-floating-card,
+  .hero-info-card {
+    right: max(7vw, 70px);
+    bottom: 145px !important;
+  }
+}
+
+@media (max-width: 1279px) {
+  .hero-floating-card,
+  .hero-info-card {
+    display: none !important;
+  }
+}
+
+/* ---- Bottom navigation — fixed to hero bottom ---- */
+#heroNavContainer,
+.hero-navigation {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  bottom: 34px !important;
+  top: auto !important;
+  z-index: 30;
+  transform: none !important;
+  opacity: 1 !important;
+  pointer-events: none;
+}
+
+#heroNavContainer > div {
+  width: min(var(--hero-container-max), calc(100% - 48px));
+  margin-inline: auto;
+}
+
+@media (min-width: 640px) {
+  #heroNavContainer > div {
+    width: min(var(--hero-container-max), calc(100% - 64px));
+  }
+}
+
+@media (max-width: 768px) {
+  #heroNavContainer,
+  .hero-navigation {
+    bottom: 20px !important;
+  }
+}
+
+/* ---- Z-index contract ---- */
+#mainHeader {
+  z-index: 100;
+}
+
+/* Keep faces out of the nav band: soft dark scrim behind header */
+#mainHeader.header-transparent {
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 5, 0.88) 0%,
+    rgba(5, 5, 5, 0.62) 55%,
+    rgba(5, 5, 5, 0.22) 88%,
+    rgba(5, 5, 5, 0) 100%
+  ) !important;
+  border-bottom-color: transparent !important;
+}
+
+.hero-slide-bg-wrapper {
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Crop/shift photo so subject heads sit BELOW the header, not under nav */
+.hero-slide-bg {
+  inset: auto !important;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  width: 100%;
+  /* Start image below header band — faces live only in the hero body */
+  top: calc(var(--header-height) * 0.72);
+  height: calc(100% - var(--header-height) * 0.35);
+  object-fit: cover;
+  object-position: 68% 22%;
+}
+
+@media (max-width: 768px) {
+  .hero-slide-bg {
+    top: calc(var(--mobile-header-height) * 0.7);
+    height: calc(100% - var(--mobile-header-height) * 0.32);
+  }
+}
+
+.hero-cinematic-overlay {
+  z-index: 1;
+  /* Extra top band matching header so heads never read as “cut by nav” */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 5, 5, 0.92) 0%,
+      rgba(5, 5, 5, 0.72) calc(var(--header-height) * 0.75),
+      rgba(5, 5, 5, 0.28) calc(var(--header-height) + 36px),
+      rgba(5, 5, 5, 0) calc(var(--header-height) + 110px)
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.93) 0%,
+      rgba(0, 0, 0, 0.82) 32%,
+      rgba(0, 0, 0, 0.52) 60%,
+      rgba(0, 0, 0, 0.20) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.22) 0%,
+      rgba(0, 0, 0, 0.08) 50%,
+      rgba(0, 0, 0, 0.42) 100%
+    ) !important;
+}
+
+@media (max-width: 768px) {
+  .hero-cinematic-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(5, 5, 5, 0.94) 0%,
+        rgba(5, 5, 5, 0.78) calc(var(--mobile-header-height) * 0.85),
+        rgba(5, 5, 5, 0.45) calc(var(--mobile-header-height) + 48px),
+        rgba(5, 5, 5, 0.2) 42%,
+        rgba(5, 5, 5, 0.72) 72%,
+        rgba(5, 5, 5, 0.94) 100%
+      ) !important;
+  }
+}
+
+.hero-gold-glow {
+  z-index: 2;
+}
+
+.hero-container,
+.hero-slide-inner,
+.hero-content,
+.hero-slide-content {
+  z-index: 5;
+}
+
+.hero-floating-card,
+.hero-info-card {
+  z-index: 10;
+}
+
+#heroNavContainer {
+  z-index: 30;
+}
+
+/* ---- Per-slide image position: keep faces in hero body ---- */
+.hero-slide[data-slide-index="0"] .hero-slide-bg {
+  object-position: 70% 28%;
+}
+
+.hero-slide[data-slide-index="1"] .hero-slide-bg {
+  object-position: 72% 30%;
+}
+
+.hero-slide[data-slide-index="2"] .hero-slide-bg {
+  object-position: 74% 26%;
+}
+
+.hero-slide[data-slide-index="3"] .hero-slide-bg {
+  object-position: 70% 34%;
+}
+
+@media (max-width: 768px) {
+  .hero-slide[data-slide-index="0"] .hero-slide-bg {
+    object-position: 78% 36%;
+  }
+  .hero-slide[data-slide-index="1"] .hero-slide-bg {
+    object-position: 80% 38%;
+  }
+  .hero-slide[data-slide-index="2"] .hero-slide-bg {
+    object-position: 82% 34%;
+  }
+  .hero-slide[data-slide-index="3"] .hero-slide-bg {
+    object-position: 72% 42%;
+  }
+}
+
+/* Animation end-state: never leave a slide offset */
+.hero-slide.is-active .hero-content,
+.hero-slide.is-active .hero-slide-content,
+.hero-slide.is-active .hero-floating-card,
+.hero-slide.is-active [data-hero-anim] {
+  transform: none;
+}
+
+.hero-slide.is-active .hero-content [data-hero-anim],
+.hero-slide.is-active .hero-slide-content [data-hero-anim] {
+  /* opacity handled elsewhere; position must settle at origin */
+  transform: translateY(0) !important;
+}

@@ -1,0 +1,355 @@
+/**
+ * Helper Home — Contrast Fix (loads AFTER main.css)
+ * Forces readable light text on every dark surface.
+ * Do not move this into @layer — it must win the cascade.
+ */
+
+/* ========== HERO SLIDER ========== */
+#heroSlider,
+.hero-slider-section {
+  color: #FFFDF8 !important;
+}
+
+#heroSlider .hero-eyebrow,
+.hero-slider-section .hero-eyebrow {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+}
+
+#heroSlider .hero-slider-title,
+#heroSlider .hero-slider-title .hero-line,
+#heroSlider .hero-slider-title .hero-word:not(.is-highlight),
+.hero-slider-section .hero-slider-title,
+.hero-slider-section .hero-slider-title .hero-line,
+.hero-slider-section .hero-slider-title .hero-word:not(.is-highlight) {
+  color: #FFFDF8 !important;
+  -webkit-text-fill-color: #FFFDF8 !important;
+}
+
+#heroSlider .hero-gold-highlight,
+#heroSlider .hero-word.is-highlight,
+.hero-slider-section .hero-gold-highlight,
+.hero-slider-section .hero-word.is-highlight {
+  background: linear-gradient(90deg, #C38F38, #E6B969, #F0D399, #D49A3B) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+#heroSlider .hero-slide-body,
+#heroSlider .hero-description,
+#heroSlider .hero-tag,
+.hero-slider-section .hero-slide-body,
+.hero-slider-section .hero-description,
+.hero-slider-section .hero-tag {
+  color: rgba(255, 253, 248, 0.90) !important;
+  -webkit-text-fill-color: rgba(255, 253, 248, 0.90) !important;
+}
+
+#heroSlider .hero-service-tags::before,
+.hero-slider-section .hero-service-tags::before {
+  color: #E6B969 !important;
+}
+
+#heroSlider .floating-card-title,
+.hero-slider-section .floating-card-title {
+  color: #FFFDF8 !important;
+  -webkit-text-fill-color: #FFFDF8 !important;
+}
+
+#heroSlider .floating-card-desc,
+.hero-slider-section .floating-card-desc {
+  color: rgba(255, 253, 248, 0.78) !important;
+  -webkit-text-fill-color: rgba(255, 253, 248, 0.78) !important;
+}
+
+#heroSlider .hero-tab-num,
+#heroSlider .hero-tab-label,
+.hero-slider-section .hero-tab-num,
+.hero-slider-section .hero-tab-label {
+  color: rgba(255, 255, 255, 0.82) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.82) !important;
+}
+
+#heroSlider .hero-tab-btn.is-active .hero-tab-num,
+#heroSlider .hero-tab-btn.is-active .hero-tab-label,
+.hero-slider-section .hero-tab-btn.is-active .hero-tab-num,
+.hero-slider-section .hero-tab-btn.is-active .hero-tab-label {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+}
+
+#heroSlider .hero-arrow-btn,
+.hero-slider-section .hero-arrow-btn {
+  color: #FFFDF8 !important;
+}
+
+#heroSlider .btn-outline-gold,
+.hero-slider-section .btn-outline-gold {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+  background-color: transparent !important;
+}
+
+#heroSlider .btn-outline-gold:hover,
+#heroSlider .btn-outline-gold:focus,
+#heroSlider .btn-outline-gold:focus-visible,
+#heroSlider .btn-outline-gold:active,
+.hero-slider-section .btn-outline-gold:hover,
+.hero-slider-section .btn-outline-gold:focus,
+.hero-slider-section .btn-outline-gold:focus-visible,
+.hero-slider-section .btn-outline-gold:active {
+  color: #11100D !important;
+  -webkit-text-fill-color: #11100D !important;
+  background-color: #E6B969 !important;
+  border-color: #E6B969 !important;
+}
+
+#heroSlider .btn-gold,
+.hero-slider-section .btn-gold,
+#heroSlider .btn-gold:hover,
+#heroSlider .btn-gold:focus,
+#heroSlider .btn-gold:active,
+.hero-slider-section .btn-gold:hover,
+.hero-slider-section .btn-gold:focus,
+.hero-slider-section .btn-gold:active {
+  color: #11100D !important;
+  -webkit-text-fill-color: #11100D !important;
+}
+
+/* ========== ALL BLACK / DARK SECTIONS ========== */
+.bg-brand-black,
+.bg-brand-dark,
+section.bg-brand-black,
+section.bg-brand-dark {
+  color: #FFFDF8 !important;
+}
+
+.bg-brand-black h1,
+.bg-brand-black h2,
+.bg-brand-black h3,
+.bg-brand-black h4,
+.bg-brand-black h5,
+.bg-brand-black h6,
+.bg-brand-black .section-title,
+.bg-brand-black .subsection-title,
+.bg-brand-black .hero-title,
+.bg-brand-dark h1,
+.bg-brand-dark h2,
+.bg-brand-dark h3,
+.bg-brand-dark h4,
+.bg-brand-dark .section-title {
+  color: #FFFDF8 !important;
+  -webkit-text-fill-color: #FFFDF8 !important;
+}
+
+.bg-brand-black p,
+.bg-brand-black li,
+.bg-brand-black span:not(.text-transparent):not(.hero-gold-highlight):not(.hero-word.is-highlight),
+.bg-brand-black label,
+.bg-brand-dark p,
+.bg-brand-dark li {
+  color: rgba(255, 253, 248, 0.88) !important;
+  -webkit-text-fill-color: rgba(255, 253, 248, 0.88) !important;
+}
+
+.bg-brand-black a:not(.btn-gold):not(.btn-outline-gold),
+.bg-brand-dark a:not(.btn-gold):not(.btn-outline-gold) {
+  color: rgba(255, 253, 248, 0.88) !important;
+  -webkit-text-fill-color: rgba(255, 253, 248, 0.88) !important;
+}
+
+.bg-brand-black a:not(.btn-gold):hover,
+.bg-brand-dark a:not(.btn-gold):hover {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+}
+
+/* Kill dark utility classes inside dark sections */
+.bg-brand-black .text-brand-black,
+.bg-brand-black .text-brand-text,
+.bg-brand-black .text-brand-text\/80,
+.bg-brand-black .text-brand-text\/85,
+.bg-brand-black .text-brand-text\/60,
+.bg-brand-black [class*="text-brand-text"],
+.bg-brand-dark .text-brand-black,
+.bg-brand-dark .text-brand-text,
+.bg-brand-dark [class*="text-brand-text"] {
+  color: #FFFDF8 !important;
+  -webkit-text-fill-color: #FFFDF8 !important;
+}
+
+.bg-brand-black .text-brand-white,
+.bg-brand-black .text-brand-white\/90,
+.bg-brand-black .text-brand-white\/80,
+.bg-brand-black .text-brand-white\/70,
+.bg-brand-black .text-brand-white\/60,
+.bg-brand-black .text-brand-white\/50,
+.bg-brand-dark .text-brand-white,
+.bg-brand-dark [class*="text-brand-white"] {
+  color: #FFFDF8 !important;
+  -webkit-text-fill-color: #FFFDF8 !important;
+}
+
+.bg-brand-black .text-brand-white\/70,
+.bg-brand-black .text-brand-white\/80 {
+  color: rgba(255, 253, 248, 0.88) !important;
+  -webkit-text-fill-color: rgba(255, 253, 248, 0.88) !important;
+}
+
+.bg-brand-black .text-brand-white\/50,
+.bg-brand-black .text-brand-white\/60 {
+  color: rgba(255, 253, 248, 0.70) !important;
+  -webkit-text-fill-color: rgba(255, 253, 248, 0.70) !important;
+}
+
+/* Gold accents on dark (keep brand gold, not dark brown) */
+.bg-brand-black .text-brand-gold,
+.bg-brand-black .text-brand-gold-rich,
+.bg-brand-black .section-eyebrow,
+.bg-brand-black [class*="text-brand-gold"],
+.bg-brand-dark .text-brand-gold,
+.bg-brand-dark .section-eyebrow {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+}
+
+.bg-brand-black .section-eyebrow::before,
+.bg-brand-dark .section-eyebrow::before {
+  background: #E6B969 !important;
+}
+
+/* Gold gradient clipped text (e.g. "Help at Home?") */
+.bg-brand-black .text-transparent.bg-clip-text,
+.bg-brand-black .bg-clip-text.text-transparent,
+.bg-brand-black span.text-transparent {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.bg-brand-black .btn-gold,
+.bg-brand-dark .btn-gold,
+.btn-gold,
+.btn-gold:hover,
+.btn-gold:focus,
+.btn-gold:active {
+  color: #11100D !important;
+  -webkit-text-fill-color: #11100D !important;
+}
+
+.bg-brand-black .btn-outline-gold,
+.bg-brand-dark .btn-outline-gold {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+  background-color: transparent !important;
+}
+
+.bg-brand-black .btn-outline-gold:hover,
+.bg-brand-black .btn-outline-gold:focus,
+.bg-brand-black .btn-outline-gold:focus-visible,
+.bg-brand-black .btn-outline-gold:active,
+.bg-brand-dark .btn-outline-gold:hover,
+.bg-brand-dark .btn-outline-gold:focus,
+.bg-brand-dark .btn-outline-gold:focus-visible,
+.bg-brand-dark .btn-outline-gold:active,
+.btn-outline-gold:hover,
+.btn-outline-gold:focus,
+.btn-outline-gold:focus-visible,
+.btn-outline-gold:active {
+  color: #11100D !important;
+  -webkit-text-fill-color: #11100D !important;
+  background-color: #E6B969 !important;
+  border-color: #E6B969 !important;
+}
+
+/* ========== FOOTER ========== */
+footer,
+footer.bg-brand-black {
+  color: rgba(255, 253, 248, 0.88) !important;
+}
+
+footer h1,
+footer h2,
+footer h3,
+footer h4,
+footer h5,
+footer h6 {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+}
+
+footer p,
+footer li,
+footer span,
+footer a,
+footer .text-sm,
+footer .text-xs {
+  color: rgba(255, 253, 248, 0.88) !important;
+  -webkit-text-fill-color: rgba(255, 253, 248, 0.88) !important;
+}
+
+footer a:hover {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+}
+
+footer .text-brand-gold,
+footer [class*="text-brand-gold"] {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+}
+
+footer .text-brand-white\/50,
+footer .text-brand-white\/60 {
+  color: rgba(255, 253, 248, 0.70) !important;
+  -webkit-text-fill-color: rgba(255, 253, 248, 0.70) !important;
+}
+
+/* ========== HEADER / MENUS ========== */
+#mainHeader a:not(.btn-gold),
+#mainHeader button:not(.btn-gold) {
+  color: rgba(255, 255, 255, 0.92) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.92) !important;
+}
+
+#mainHeader a.text-brand-gold,
+#mainHeader .text-brand-gold {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+}
+
+#mainHeader .btn-gold {
+  color: #11100D !important;
+  -webkit-text-fill-color: #11100D !important;
+}
+
+#servicesDropdown,
+#servicesDropdown a,
+#servicesDropdown h4,
+#servicesDropdown span,
+#mobileNavDrawer,
+#mobileNavDrawer a,
+#mobileNavDrawer button,
+#mobileNavDrawer p,
+#mobileNavDrawer span {
+  color: rgba(255, 255, 255, 0.90) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.90) !important;
+}
+
+#servicesDropdown h4,
+#servicesDropdown .text-brand-gold,
+#mobileNavDrawer .text-brand-gold,
+#servicesDropdown a:hover,
+#mobileNavDrawer a:hover {
+  color: #E6B969 !important;
+  -webkit-text-fill-color: #E6B969 !important;
+}
+
+/* ========== 404 ========== */
+body.bg-brand-black h1,
+body.bg-brand-black h2,
+body.bg-brand-black p {
+  color: #FFFDF8 !important;
+  -webkit-text-fill-color: #FFFDF8 !important;
+}

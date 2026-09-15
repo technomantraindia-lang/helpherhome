@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# Private SMTP credentials — never commit real App Passwords
+api/config.php
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
