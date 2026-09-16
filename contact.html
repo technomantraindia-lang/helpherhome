@@ -22,6 +22,8 @@
   <link rel="stylesheet" href="assets/css/contrast-fix.css?v=20260315c">
   <link rel="stylesheet" href="assets/css/logo.css?v=2">
   <link rel="stylesheet" href="assets/css/nav-menu.css?v=1">
+  <link rel="stylesheet" href="assets/css/site-extras.css?v=1">
+  <link rel="stylesheet" href="assets/css/footer.css?v=2">
 
   <script type="application/ld+json">
   {
@@ -86,7 +88,7 @@
                 </div>
               </div>
               <div class="services-mega__footer">
-                <a href="services.html" class="services-mega__all">View all 9 services â†’</a>
+                <a href="services.html" class="services-mega__all">View all 9 services →</a>
                 <a href="#" class="btn-gold services-mega__cta js-open-enquiry" data-enquiry-open role="menuitem">Book a Service</a>
               </div>
             </div>
@@ -97,6 +99,7 @@
         </nav>
 
         <div class="hidden lg:flex items-center gap-4">
+          <a href="#" class="btn-call header-call-btn" data-hh-call data-keep-label="true">Call Now</a>
           <a href="#" class="btn-gold text-xs uppercase tracking-wider py-3 px-6 js-open-enquiry" data-enquiry-open role="button">Book a Service</a>
         </div>
 
@@ -152,7 +155,7 @@
             <a href="services/patient-caretaker.html">Patient Caretaker</a>
             <a href="services/driver-service.html">Driver Service</a>
           </div>
-          <a href="services.html" class="mobile-services-all">View all 9 services â†’</a>
+          <a href="services.html" class="mobile-services-all">View all 9 services →</a>
         </div>
       </div>
 
@@ -161,12 +164,13 @@
 
     <div class="mobile-nav__footer">
       <div class="mobile-nav__contact">
-        <a href="tel:+919879888478">+91 98798 88478</a>
+        <a href="#" data-hh-call data-hh-phone-text>+91 98798 88478</a>
+        <a href="#" data-hh-whatsapp>WhatsApp Chat</a>
         <a href="mailto:helperhomeahmedabad@gmail.com">helperhomeahmedabad@gmail.com</a>
         <span>Naranpura, Ahmedabad - 380013</span>
       </div>
       <a href="#" class="btn-gold js-open-enquiry" data-enquiry-open role="button">Book a Service</a>
-      <p class="mobile-nav__tagline">Helper Home Â· Home Care &amp; Domestic Services</p>
+      <p class="mobile-nav__tagline">Helper Home · Home Care &amp; Domestic Services</p>
     </div>
   </div>
 
@@ -191,6 +195,14 @@
       </div>
     </div>
   </section>
+
+  
+  <div class="trust-strip is-light max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10" aria-label="Verification trust strip">
+    <div class="trust-strip__item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg><span>Document Verified</span></div>
+    <div class="trust-strip__item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 11c0 3-4 5-4 5s4 2 4 5 4-2 4-5-4-2-4-5zm0-8a4 4 0 110 8 4 4 0 010-8z"/></svg><span>Police Verified</span></div>
+    <div class="trust-strip__item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"/></svg><span>Background Verified</span></div>
+    <div class="trust-strip__item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg><span>Replacement Assistance</span></div>
+  </div>
 
   <!-- ==================== TWO-COLUMN CONTACT & ENQUIRY FORM ==================== -->
   <section class="py-24 bg-brand-offwhite">
@@ -219,7 +231,7 @@
                 </div>
                 <div>
                   <h3 class="text-xs uppercase tracking-wider text-brand-text/60 font-heading font-bold">Phone Number</h3>
-                  <p class="text-sm sm:text-base font-semibold text-brand-black mt-0.5"><a href="tel:+919879888478" class="text-brand-black hover:text-brand-gold-rich transition-colors">+91 98798 88478</a></p>
+                  <p class="text-sm sm:text-base font-semibold text-brand-black mt-0.5"><a href="#" data-hh-call data-hh-phone-text class="text-brand-black hover:text-brand-gold-rich transition-colors">+91 98798 88478</a></p>
                   <p class="text-xs text-brand-text/60">Mon &ndash; Sat, 9:00 AM &ndash; 7:00 PM</p>
                 </div>
               </div>
@@ -262,11 +274,24 @@
                 </div>
                 <div>
                   <h3 class="text-xs uppercase tracking-wider text-brand-text/60 font-heading font-bold">Operational Hours</h3>
-                  <p class="text-sm sm:text-base font-semibold text-brand-black mt-0.5">Mon â€“ Sat, 9:00 AM â€“ 7:00 PM</p>
+                  <p class="text-sm sm:text-base font-semibold text-brand-black mt-0.5">Mon – Sat, 9:00 AM – 7:00 PM</p>
                   <p class="text-xs text-brand-text/60">Closed on Sundays &amp; Public Holidays</p>
                 </div>
               </div>
             </div>
+              <div class="mt-8 pt-6 border-t border-brand-offwhite">
+                <h3 class="text-xs uppercase tracking-wider text-brand-text/60 font-heading font-bold mb-3">Follow Helper Home</h3>
+                <div class="hh-social" aria-label="Social media">
+                  <a href="#" data-hh-social="facebook" aria-label="Facebook"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.5V12H17l-.4 3h-2.3v7A10 10 0 0022 12z"/></svg></a>
+                  <a href="#" data-hh-social="instagram" aria-label="Instagram"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 5a5 5 0 100 10 5 5 0 000-10zm6.5-.9a1.1 1.1 0 10-2.2 0 1.1 1.1 0 002.2 0zM12 9a3 3 0 110 6 3 3 0 010-6z"/></svg></a>
+                  <a href="#" data-hh-social="twitter" aria-label="X / Twitter"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M18.9 2H21l-6.6 7.5L22 22h-6.2l-4.9-6.4L5.3 22H3.2l7-8L2 2h6.4l4.4 5.8L18.9 2zm-1.1 18h1.7L7.3 3.9H5.5L17.8 20z"/></svg></a>
+                  <a href="#" data-hh-social="youtube" aria-label="YouTube"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.5 31.5 0 000 12a31.5 31.5 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31.5 31.5 0 0024 12a31.5 31.5 0 00-.5-5.8zM9.8 15.5v-7l6.3 3.5-6.3 3.5z"/></svg></a>
+                </div>
+                <div class="mt-5 flex flex-wrap gap-3">
+                  <a href="#" class="btn-call" data-hh-call data-keep-label="true">Call Now</a>
+                  <a href="#" class="btn-whatsapp" data-hh-whatsapp data-keep-label="true">WhatsApp Us</a>
+                </div>
+              </div>
 
           </div>
         </div>
@@ -402,6 +427,27 @@
                 </div>
               </div>
 
+
+              <div class="duty-hours-field">
+                <label class="block text-xs font-heading font-bold uppercase tracking-wider text-brand-text mb-2">
+                  Duty Hours <span class="text-red-500">*</span>
+                </label>
+                <div class="duty-hours-options" role="radiogroup" aria-label="Duty Hours">
+                  <label class="duty-hours-option">
+                    <input type="radio" name="dutyHours" value="part_time" required>
+                    <span>Part Time</span>
+                  </label>
+                  <label class="duty-hours-option">
+                    <input type="radio" name="dutyHours" value="full_time">
+                    <span>Full Time</span>
+                  </label>
+                  <label class="duty-hours-option">
+                    <input type="radio" name="dutyHours" value="live_in_24_hours">
+                    <span>24 Hours / Live-In</span>
+                  </label>
+                </div>
+              </div>
+
               <!-- Message / Requirements -->
               <div>
                 <label for="requirements" class="block text-xs font-heading font-bold uppercase tracking-wider text-brand-text mb-2">
@@ -436,60 +482,68 @@
     </div>
   </section>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="bg-brand-black text-brand-white/80 pt-16 pb-8 border-t border-white/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10">
-        <div class="lg:col-span-4">
-          <a href="index.html" class="inline-block mb-4">
-            <img src="assets/images/logo-transparent.png?v=2" alt="Helper Home" class="site-logo site-logo-footer" width="220" height="220">
+    <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-col footer-col--brand">
+          <a href="index.html" class="footer-brand-link">
+            <img src="assets/images/logo-transparent.png?v=2" alt="Helper Home" class="site-logo site-logo-footer" width="180" height="140">
           </a>
-          <p class="text-xs uppercase tracking-widest text-brand-gold font-heading font-bold mb-3">Home Care &amp; Domestic Services</p>
-          <p class="text-sm text-brand-white/70 leading-relaxed max-w-sm">Providing tailored domestic support, child care, and personal caretaking coordination for homes across India.</p>
+          <p class="footer-brand-desc">Verified domestic staff coordination with flexible duty hours and replacement assistance.</p>
         </div>
-        <div class="lg:col-span-2">
-          <h4 class="text-xs font-heading font-extrabold uppercase tracking-widest text-brand-gold mb-4">Company</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="index.html" class="hover:text-brand-gold transition-colors">Home</a></li>
-            <li><a href="about.html" class="hover:text-brand-gold transition-colors">About Us</a></li>
-            <li><a href="services.html" class="hover:text-brand-gold transition-colors">Services</a></li>
-            <li><a href="contact.html" class="hover:text-brand-gold transition-colors">Contact</a></li>
+
+        <div class="footer-col footer-col--company">
+          <h4 class="footer-heading">Company</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
           </ul>
         </div>
-        <div class="lg:col-span-2">
-          <h4 class="text-xs font-heading font-extrabold uppercase tracking-widest text-brand-gold mb-4">Services</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="services/maid-service.html" class="hover:text-brand-gold transition-colors">Maid Service</a></li>
-            <li><a href="services/servant-service.html" class="hover:text-brand-gold transition-colors">Servant Service</a></li>
-            <li><a href="services/babysitter-service.html" class="hover:text-brand-gold transition-colors">Babysitter Service</a></li>
-            <li><a href="services/japa-maid-nanny.html" class="hover:text-brand-gold transition-colors">Japa Maid / Nanny</a></li>
-            <li><a href="services/elderly-caretaker.html" class="hover:text-brand-gold transition-colors">Elderly Caretaker</a></li>
+
+        <div class="footer-col footer-col--contact">
+          <h4 class="footer-heading">Contact</h4>
+          <ul class="footer-contact">
+            <li class="contact-item">Phone: <a href="#" data-hh-call data-hh-phone-text>+91 98798 88478</a></li>
+            <li class="contact-item">WhatsApp: <a href="#" data-hh-whatsapp>Chat with us</a></li>
+            <li class="contact-item contact-item--email">Email: <a href="mailto:helperhomeahmedabad@gmail.com" data-hh-email>helperhomeahmedabad@gmail.com</a></li>
           </ul>
+          <p class="footer-address">
+            <span>A-318/319,</span>
+            <span>Swaminarayan Avenue,</span>
+            <span>Nr AEC Cross Road,</span>
+            <span>Naranpura, Ahmedabad – 380013</span>
+          </p>
         </div>
-        <div class="lg:col-span-2">
-          <h4 class="text-xs font-heading font-extrabold uppercase tracking-widest text-brand-gold mb-4">More Services</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="services/patient-caretaker.html" class="hover:text-brand-gold transition-colors">Patient Caretaker</a></li>
-            <li><a href="services/cook-service.html" class="hover:text-brand-gold transition-colors">Cook Service</a></li>
-            <li><a href="services/driver-service.html" class="hover:text-brand-gold transition-colors">Driver Service</a></li>
-            <li><a href="services/domestic-couple.html" class="hover:text-brand-gold transition-colors">Domestic Couple</a></li>
+
+        <div class="footer-col footer-col--follow footer-follow-block">
+          <h4 class="footer-heading">Follow Us</h4>
+          <ul class="footer-links">
+            <li><a href="#" data-hh-social="facebook">Facebook</a></li>
+            <li><a href="#" data-hh-social="instagram">Instagram</a></li>
+            <li><a href="#" data-hh-social="twitter">X / Twitter</a></li>
+            <li><a href="#" data-hh-social="youtube">YouTube</a></li>
           </ul>
-        </div>
-        <div class="lg:col-span-2">
-          <h4 class="text-xs font-heading font-extrabold uppercase tracking-widest text-brand-gold mb-4">Contact Info</h4>
-          <div class="space-y-3 text-xs text-brand-white/70">
-            <div><span class="block text-brand-gold font-semibold">Phone:</span><span><a href="tel:+919879888478" class="hover:text-brand-gold transition-colors">+91 98798 88478</a></span></div>
-            <div><span class="block text-brand-gold font-semibold">Email:</span><span><a href="mailto:helperhomeahmedabad@gmail.com" class="hover:text-brand-gold transition-colors break-all">helperhomeahmedabad@gmail.com</a></span></div>
-            <div><span class="block text-brand-gold font-semibold">Office Address:</span><span>A - 318/319 Swaminarayan Avenue, Nr AEC Cross Road, Naranpura, Ahmedabad - 380013</span></div>
-            <div><span class="block text-brand-gold font-semibold">Working Hours:</span><span>Mon â€“ Sat, 9:00 AM â€“ 7:00 PM</span></div>
-          </div>
+
+          <h4 class="footer-heading footer-subheading">Trust / Support</h4>
+          <ul class="footer-trust">
+            <li>Verified Staff</li>
+            <li>
+              Flexible Duty Hours
+              <span class="duty-line">Part Time · Full Time · 24 Hours / Live-In</span>
+            </li>
+            <li>Replacement Assistance</li>
+            <li><a href="terms-and-conditions.html#replacement-policy">Replacement Policy</a></li>
+          </ul>
         </div>
       </div>
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-brand-white/50">
+
+      <div class="footer-bottom">
         <div>&copy; 2026 Helper Home. All rights reserved.</div>
-        <div class="flex items-center gap-6">
-          <a href="privacy-policy.html" class="hover:text-brand-gold transition-colors">Privacy Policy</a>
-          <a href="terms-and-conditions.html" class="hover:text-brand-gold transition-colors">Terms &amp; Conditions</a>
+        <div class="footer-bottom-links">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
         </div>
       </div>
     </div>
@@ -497,6 +551,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="assets/js/site-config.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

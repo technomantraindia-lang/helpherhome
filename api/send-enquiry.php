@@ -46,6 +46,7 @@ $phone           = field($data, 'phone');
 $email           = field($data, 'email');
 $cityArea        = field($data, 'cityArea');
 $serviceRequired = field($data, 'serviceRequired');
+$dutyHours       = field($data, 'dutyHours');
 $startDate       = field($data, 'startDate');
 $requirements    = field($data, 'requirements');
 $honeypot        = field($data, 'website'); // bots fill this
@@ -70,6 +71,10 @@ if (mb_strlen($cityArea) < 2) {
 }
 if ($serviceRequired === '') {
     $errors[] = 'Please select a service.';
+}
+$allowedDuty = ['part_time', 'full_time', 'live_in_24_hours'];
+if (!in_array($dutyHours, $allowedDuty, true)) {
+    $errors[] = 'Please select Duty Hours.';
 }
 
 if ($errors) {
@@ -101,7 +106,13 @@ $serviceLabels = [
     'driver'          => 'Driver Service',
     'domestic-couple' => 'Domestic Couple Service',
 ];
+$dutyLabels = [
+    'part_time'         => 'Part Time',
+    'full_time'         => 'Full Time',
+    'live_in_24_hours'  => '24 Hours / Live-In',
+];
 $serviceLabel = $serviceLabels[$serviceRequired] ?? $serviceRequired;
+$dutyLabel = $dutyLabels[$dutyHours] ?? $dutyHours;
 $safe = static function (string $value): string {
     return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 };
@@ -120,16 +131,17 @@ $adminHtml = '
     <tr style="background:#f7f4ef;"><td><strong>Email</strong></td><td>' . $safe($email) . '</td></tr>
     <tr><td><strong>City / Area</strong></td><td>' . $safe($cityArea) . '</td></tr>
     <tr style="background:#f7f4ef;"><td><strong>Service</strong></td><td>' . $safe($serviceLabel) . '</td></tr>
-    <tr><td><strong>Preferred Start</strong></td><td>' . $safe($startDate !== '' ? $startDate : 'Not specified') . '</td></tr>
-    <tr style="background:#f7f4ef;"><td><strong>Requirements</strong></td><td>' . nl2br($safe($requirements !== '' ? $requirements : '—')) . '</td></tr>
-    <tr><td><strong>Submitted</strong></td><td>' . $safe($submittedAt) . '</td></tr>
+    <tr><td><strong>Duty Hours</strong></td><td>' . $safe($dutyLabel) . '</td></tr>
+    <tr style="background:#f7f4ef;"><td><strong>Preferred Start</strong></td><td>' . $safe($startDate !== '' ? $startDate : 'Not specified') . '</td></tr>
+    <tr><td><strong>Requirements</strong></td><td>' . nl2br($safe($requirements !== '' ? $requirements : '—')) . '</td></tr>
+    <tr style="background:#f7f4ef;"><td><strong>Submitted</strong></td><td>' . $safe($submittedAt) . '</td></tr>
   </table>
 </body></html>';
 
 $customerHtml = '
 <!DOCTYPE html><html><body style="font-family:Arial,sans-serif;color:#171512;line-height:1.6;">
   <h2 style="color:#C38F38;margin:0 0 12px;">Thank you, ' . $safe($fullName) . '</h2>
-  <p>We have received your enquiry for <strong>' . $safe($serviceLabel) . '</strong>.</p>
+  <p>We have received your enquiry for <strong>' . $safe($serviceLabel) . '</strong> (<strong>' . $safe($dutyLabel) . '</strong>).</p>
   <p>Our coordination team will review your requirements and contact you shortly on <strong>' . $safe($phone) . '</strong> or <strong>' . $safe($email) . '</strong>.</p>
   <p style="margin-top:20px;"><strong>Helper Home</strong><br>
   Home Care &amp; Domestic Services<br>

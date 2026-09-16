@@ -55,18 +55,18 @@
   max-width: 300px;
 }
 
-/* Footer — prominent brand mark */
+/* Footer — kept moderate so it never overlaps columns */
 .site-logo-footer {
-  height: 120px;
-  max-height: 120px;
-  max-width: 360px;
+  height: auto;
+  max-height: 96px;
+  max-width: 180px;
 }
 
 @media (min-width: 768px) {
   .site-logo-footer {
-    height: 140px;
-    max-height: 140px;
-    max-width: 420px;
+    height: auto;
+    max-height: 96px;
+    max-width: 180px;
   }
 }
 

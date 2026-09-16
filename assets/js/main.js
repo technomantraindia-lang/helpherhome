@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initServicesDropdown();
   initHeroSlider();
   initAccordions();
+  initContactActions();
   initEnquiryModal();
   initEnquiryForm();
   initServicePreselection();
@@ -659,6 +660,23 @@ function enquiryFieldMarkup(idPrefix) {
         <input type="date" id="${p}-startDate" name="startDate" class="enquiry-input">
       </div>
     </div>
+    <div class="duty-hours-field">
+      <label class="enquiry-label">Duty Hours <span>*</span></label>
+      <div class="duty-hours-options" role="radiogroup" aria-label="Duty Hours">
+        <label class="duty-hours-option">
+          <input type="radio" name="dutyHours" value="part_time" required>
+          <span>Part Time</span>
+        </label>
+        <label class="duty-hours-option">
+          <input type="radio" name="dutyHours" value="full_time">
+          <span>Full Time</span>
+        </label>
+        <label class="duty-hours-option">
+          <input type="radio" name="dutyHours" value="live_in_24_hours">
+          <span>24 Hours / Live-In</span>
+        </label>
+      </div>
+    </div>
     <div>
       <label for="${p}-requirements" class="enquiry-label">Household Requirements &amp; Timings</label>
       <textarea id="${p}-requirements" name="requirements" rows="3" placeholder="Working hours, home size, family needs..." class="enquiry-input"></textarea>
@@ -682,6 +700,9 @@ function validateEnquiryPayload(payload) {
   }
   if (!payload.serviceRequired) {
     return 'Please select the service you require.';
+  }
+  if (!payload.dutyHours) {
+    return 'Please select Duty Hours.';
   }
   return '';
 }
@@ -754,12 +775,16 @@ async function submitEnquiry(payload, { submitBtn, errorBox, successBox, form, o
 
 function readEnquiryForm(form) {
   const get = (name) => (form.querySelector(`[name="${name}"]`)?.value || '').trim();
+  const duty = form.querySelector('[name="dutyHours"]:checked')?.value
+    || form.querySelector('[name="dutyHours"]')?.value
+    || '';
   return {
     fullName: get('fullName'),
     phone: get('phone'),
     email: get('email'),
     cityArea: get('cityArea'),
     serviceRequired: get('serviceRequired'),
+    dutyHours: duty,
     startDate: get('startDate'),
     requirements: get('requirements'),
     website: get('website')
@@ -1011,5 +1036,151 @@ function initScrollAnimations() {
       el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-8');
       observer.observe(el);
     });
+  }
+}
+/* ----------------------------------------------------
+   8. CALL / WHATSAPP / SOCIAL / STICKY BAR
+---------------------------------------------------- */
+function getSiteConfig() {
+  return window.HelperHomeConfig || {};
+}
+
+function getServiceLabelFromPage() {
+  const meta = document.querySelector('meta[name="hh-service-name"]');
+  if (meta?.content) return meta.content.trim();
+  const data = document.body?.dataset?.serviceName;
+  if (data) return data.trim();
+  const h1 = document.querySelector('h1');
+  return '';
+}
+
+function buildWhatsAppUrl(serviceName) {
+  const cfg = getSiteConfig();
+  const num = String(cfg.whatsappNumber || '').replace(/\D/g, '');
+  if (!num) return '';
+  let message = cfg.whatsappDefaultMessage || 'Hello Helper Home, I am interested in your services.';
+  if (serviceName) {
+    message = `Hello Helper Home,\nI am interested in ${serviceName}. Please share more details.`;
+  }
+  return `https://wa.me/${num}?text=${encodeURIComponent(message)}`;
+}
+
+function initContactActions() {
+  const cfg = getSiteConfig();
+  const phoneTel = cfg.phoneTel || '';
+  const phoneDisplay = cfg.phoneDisplay || '';
+  const serviceName = getServiceLabelFromPage();
+  const waUrl = buildWhatsAppUrl(serviceName);
+
+  document.querySelectorAll('[data-hh-call]').forEach((el) => {
+    if (!phoneTel) {
+      el.classList.add('is-hidden');
+      el.removeAttribute('href');
+      return;
+    }
+    el.href = `tel:${phoneTel}`;
+    if (el.dataset.hhCallLabel !== 'false' && !el.dataset.keepLabel) {
+      if (el.childElementCount === 0) el.textContent = el.dataset.hhCall || 'Call Now';
+    }
+    el.classList.remove('is-hidden');
+  });
+
+  document.querySelectorAll('[data-hh-whatsapp]').forEach((el) => {
+    if (!waUrl) {
+      el.classList.add('is-hidden');
+      el.removeAttribute('href');
+      return;
+    }
+    el.href = waUrl;
+    el.target = '_blank';
+    el.rel = 'noopener noreferrer';
+    el.classList.remove('is-hidden');
+  });
+
+  document.querySelectorAll('[data-hh-phone-text]').forEach((el) => {
+    if (phoneDisplay) el.textContent = phoneDisplay;
+  });
+
+  document.querySelectorAll('[data-hh-email]').forEach((el) => {
+    if (!cfg.email) {
+      el.classList.add('is-hidden');
+      return;
+    }
+    el.href = `mailto:${cfg.email}`;
+    if (!el.textContent.trim()) el.textContent = cfg.email;
+  });
+
+  // Social links — hide empty URLs
+  const socialMap = {
+    facebook: cfg.social?.facebook || '',
+    instagram: cfg.social?.instagram || '',
+    twitter: cfg.social?.twitter || '',
+    youtube: cfg.social?.youtube || ''
+  };
+
+  document.querySelectorAll('[data-hh-social]').forEach((el) => {
+    const key = el.getAttribute('data-hh-social');
+    const url = socialMap[key] || '';
+    if (!url) {
+      el.classList.add('is-hidden');
+      el.removeAttribute('href');
+      return;
+    }
+    el.href = url;
+    el.target = '_blank';
+    el.rel = 'noopener noreferrer';
+    el.classList.remove('is-hidden');
+  });
+
+  document.querySelectorAll('.hh-social').forEach((wrap) => {
+    const visible = wrap.querySelectorAll('a:not(.is-hidden)');
+    wrap.classList.toggle('is-empty', visible.length === 0);
+  });
+
+  document.querySelectorAll('.footer-follow-block').forEach((wrap) => {
+    const visible = wrap.querySelectorAll('[data-hh-social]:not(.is-hidden)');
+    wrap.classList.toggle('is-empty', visible.length === 0);
+  });
+
+  // Inject sticky + floating contact chrome once
+  if (!document.getElementById('hhStickyBar')) {
+    const sticky = document.createElement('div');
+    sticky.id = 'hhStickyBar';
+    sticky.className = 'hh-sticky-bar';
+    sticky.innerHTML = `
+      <a class="btn-call" data-hh-call data-keep-label="true" href="#">Call Now</a>
+      <a class="btn-whatsapp" data-hh-whatsapp data-keep-label="true" href="#">WhatsApp</a>
+    `;
+    document.body.appendChild(sticky);
+
+    const float = document.createElement('div');
+    float.id = 'hhFloatContact';
+    float.className = 'hh-float-contact';
+    float.innerHTML = `
+      <a class="btn-call" data-hh-call data-keep-label="true" href="#">Call</a>
+      <a class="btn-whatsapp" data-hh-whatsapp data-keep-label="true" href="#">WhatsApp</a>
+    `;
+    document.body.appendChild(float);
+
+    // Re-bind newly injected nodes
+    sticky.querySelectorAll('[data-hh-call], [data-hh-whatsapp]').forEach(() => {});
+    if (phoneTel) {
+      sticky.querySelectorAll('[data-hh-call]').forEach((el) => { el.href = `tel:${phoneTel}`; });
+      float.querySelectorAll('[data-hh-call]').forEach((el) => { el.href = `tel:${phoneTel}`; });
+    } else {
+      sticky.querySelectorAll('[data-hh-call]').forEach((el) => el.classList.add('is-hidden'));
+      float.querySelectorAll('[data-hh-call]').forEach((el) => el.classList.add('is-hidden'));
+    }
+    if (waUrl) {
+      sticky.querySelectorAll('[data-hh-whatsapp]').forEach((el) => {
+        el.href = waUrl; el.target = '_blank'; el.rel = 'noopener noreferrer';
+      });
+      float.querySelectorAll('[data-hh-whatsapp]').forEach((el) => {
+        el.href = waUrl; el.target = '_blank'; el.rel = 'noopener noreferrer';
+      });
+    } else {
+      sticky.querySelectorAll('[data-hh-whatsapp]').forEach((el) => el.classList.add('is-hidden'));
+      float.querySelectorAll('[data-hh-whatsapp]').forEach((el) => el.classList.add('is-hidden'));
+    }
   }
 }
