@@ -1,0 +1,8 @@
+<?php
+namespace App\Services;
+use App\Models\PaymentReceipt; use Dompdf\Dompdf; use Dompdf\Options; use Illuminate\Support\Facades\DB; use Illuminate\Support\Facades\Storage; use Illuminate\Validation\ValidationException;
+class PaymentReceiptPdfService {
+ public function generate(PaymentReceipt $receipt,int $actorId):PaymentReceipt { return DB::transaction(function()use($receipt,$actorId){$receipt=PaymentReceipt::with(['payment','invoice'])->whereKey($receipt->id)->lockForUpdate()->firstOrFail(); if($receipt->payment?->status?->value==='refunded')throw ValidationException::withMessages(['pdf'=>'Refunded receipts cannot be regenerated.']); $version=$receipt->pdf_version+1; $html=view('admin.payment-receipts.document',$this->data($receipt))->render(); $o=new Options();$o->set('defaultFont','DejaVu Sans');$o->set('isRemoteEnabled',false);$pdf=new Dompdf($o);$pdf->loadHtml($html,'UTF-8');$pdf->setPaper('A4','portrait');$pdf->render();$path="payment-receipts/{$receipt->receipt_number}/receipt-v{$version}.pdf";Storage::disk('local')->put($path,$pdf->output());$receipt->update(['pdf_path'=>$path,'pdf_generated_at'=>now(),'pdf_version'=>$version]);return $receipt->fresh();}); }
+ public function data(PaymentReceipt $receipt):array{return ['receipt'=>$receipt,'signatureData'=>$this->uri($receipt->signature_path_snapshot),'stampData'=>$this->uri($receipt->stamp_path_snapshot)];}
+ private function uri(?string $path):?string{if(!$path||!Storage::disk('local')->exists($path))return null;$mime=Storage::disk('local')->mimeType($path)?:'image/png';return 'data:'.$mime.';base64,'.base64_encode(Storage::disk('local')->get($path));}
+}

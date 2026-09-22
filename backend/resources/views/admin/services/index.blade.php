@@ -1,0 +1,8 @@
+@extends('layouts.admin')
+@section('title','Services') @section('heading','Services') @section('subheading','Manage the service categories offered by Helper Home.')
+@section('actions') @if(auth()->user()->hasPermission('services.create'))<a href="{{ route('admin.services.create') }}" class="btn-primary">+ Add service</a>@endif @endsection
+@section('content')
+<div class="card overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="border-b border-neutral-200 bg-neutral-50 text-xs uppercase tracking-wider text-neutral-500"><tr><th class="px-6 py-4">Name</th><th class="px-6 py-4">Slug</th><th class="px-6 py-4">Status</th><th class="px-6 py-4">Sort order</th><th class="px-6 py-4 text-right">Actions</th></tr></thead><tbody class="divide-y divide-neutral-100">
+@forelse($services as $service)<tr class="hover:bg-neutral-50/70"><td class="px-6 py-4 font-bold text-neutral-900">{{ $service->name }}</td><td class="px-6 py-4 font-mono text-xs text-neutral-500">{{ $service->slug }}</td><td class="px-6 py-4"><span class="{{ $service->is_active ? 'badge-active' : 'badge-inactive' }}">{{ $service->is_active ? 'Active' : 'Inactive' }}</span></td><td class="px-6 py-4">{{ $service->sort_order }}</td><td class="px-6 py-4 text-right">@if(auth()->user()->hasPermission('services.edit'))<a class="font-bold text-gold-500 hover:underline" href="{{ route('admin.services.edit',$service) }}">Edit</a>@endif</td></tr>@empty<tr><td colspan="5" class="px-6 py-12 text-center text-neutral-500">No services found.</td></tr>@endforelse
+</tbody></table></div>@if($services->hasPages())<div class="border-t border-neutral-100 px-6 py-4">{{ $services->links() }}</div>@endif</div>
+@endsection

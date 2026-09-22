@@ -1,0 +1,1 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Customer Registration Form</title><style>@media print{.no-print{display:none}}body{margin:0}</style></head><body>@include('admin.customers.documents.registration-pdf')<script>window.addEventListener('load',()=>window.print())</script></body></html>

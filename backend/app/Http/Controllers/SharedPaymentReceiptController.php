@@ -1,0 +1,3 @@
+<?php
+namespace App\Http\Controllers; use App\Models\DocumentShareLink; use App\Models\PaymentReceipt; use Illuminate\Support\Facades\Storage;
+class SharedPaymentReceiptController extends Controller { public function __invoke(string $token):mixed{$link=DocumentShareLink::where('token',$token)->where('document_type','payment_receipt')->where('is_active',true)->firstOrFail();abort_if($link->expires_at&&$link->expires_at->isPast(),410);$receipt=PaymentReceipt::findOrFail($link->document_id);abort_unless($receipt->pdf_path&&Storage::disk('local')->exists($receipt->pdf_path),404);return Storage::disk('local')->download($receipt->pdf_path,$receipt->receipt_number.'.pdf',['Content-Type'=>'application/pdf']);} }

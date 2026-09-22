@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 /**
- * Helper Home — Enquiry endpoint
+ * Helper Home â€” Enquiry endpoint
  * Receives JSON POST, emails business + customer via Gmail SMTP.
  */
 
@@ -119,7 +119,7 @@ $safe = static function (string $value): string {
 
 $submittedAt = date('d M Y, h:i A') . ' IST';
 $officeAddress = 'A - 318/319 Swaminarayan Avenue, Nr AEC Cross Road, Naranpura, Ahmedabad - 380013';
-$officePhone = '+91 98798 88478';
+$officePhone = '+91 87995 44275';
 
 $adminHtml = '
 <!DOCTYPE html><html><body style="font-family:Arial,sans-serif;color:#171512;line-height:1.5;">
@@ -133,7 +133,7 @@ $adminHtml = '
     <tr style="background:#f7f4ef;"><td><strong>Service</strong></td><td>' . $safe($serviceLabel) . '</td></tr>
     <tr><td><strong>Duty Hours</strong></td><td>' . $safe($dutyLabel) . '</td></tr>
     <tr style="background:#f7f4ef;"><td><strong>Preferred Start</strong></td><td>' . $safe($startDate !== '' ? $startDate : 'Not specified') . '</td></tr>
-    <tr><td><strong>Requirements</strong></td><td>' . nl2br($safe($requirements !== '' ? $requirements : '—')) . '</td></tr>
+    <tr><td><strong>Requirements</strong></td><td>' . nl2br($safe($requirements !== '' ? $requirements : 'â€”')) . '</td></tr>
     <tr style="background:#f7f4ef;"><td><strong>Submitted</strong></td><td>' . $safe($submittedAt) . '</td></tr>
   </table>
 </body></html>';
@@ -146,7 +146,7 @@ $customerHtml = '
   <p style="margin-top:20px;"><strong>Helper Home</strong><br>
   Home Care &amp; Domestic Services<br>
   ' . $safe($officeAddress) . '<br>
-  Phone: <a href="tel:+919879888478">' . $safe($officePhone) . '</a><br>
+  Phone: <a href="tel:+918799544275">' . $safe($officePhone) . '</a><br>
   Email: <a href="mailto:helperhomeahmedabad@gmail.com">helperhomeahmedabad@gmail.com</a></p>
   <p style="color:#666;font-size:12px;margin-top:24px;">This is an automated confirmation. Please do not reply to this email unless instructed.</p>
 </body></html>';
@@ -165,7 +165,7 @@ try {
         $config['from_name'],
         $config['to_email'],
         $config['to_name'],
-        'New Enquiry: ' . $serviceLabel . ' — ' . $fullName,
+        'New Enquiry: ' . $serviceLabel . ' â€” ' . $fullName,
         $adminHtml,
         '',
         $email,
@@ -190,7 +190,8 @@ try {
     http_response_code(500);
     echo json_encode([
         'ok' => false,
-        'error' => 'Unable to send email right now. Please call +91 98798 88478 or try again later.',
+        'error' => 'Unable to send email right now. Please call +91 87995 44275 or try again later.',
         'detail' => $e->getMessage(),
     ]);
 }
+

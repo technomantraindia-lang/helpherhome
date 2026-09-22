@@ -1,10 +1,13 @@
 {
-  "name": "helperhome-website",
+  "name": "helperhome-frontend",
   "version": "1.0.0",
-  "description": "Helper Home - Home Care & Domestic Services Premium Website",
+  "private": true,
+  "description": "Helper Home static Vercel website",
   "scripts": {
+    "build": "npm run build:css",
     "build:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/main.css --minify",
-    "watch:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/main.css --watch"
+    "watch:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/main.css --watch",
+    "verify": "node verify_links.js"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17"

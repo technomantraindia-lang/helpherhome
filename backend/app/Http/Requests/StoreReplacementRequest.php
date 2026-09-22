@@ -1,0 +1,3 @@
+<?php
+namespace App\Http\Requests;use Illuminate\Foundation\Http\FormRequest;
+class StoreReplacementRequest extends FormRequest { public function authorize():bool{return $this->user()?->hasPermission('replacements.create')??false;}public function rules():array{return ['reason'=>['required','in:worker_left,customer_not_satisfied,worker_not_suitable,worker_unavailable,health_personal,performance_issue,requirement_changed,other'],'reason_details'=>['nullable','string','max:5000'],'requested_date'=>['required','date'],'replacement_required_date'=>['nullable','date','after_or_equal:requested_date'],'remarks'=>['nullable','string','max:5000']];} }

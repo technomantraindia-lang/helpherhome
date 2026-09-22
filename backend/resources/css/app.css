@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+
+@source '../views/**/*.blade.php';
+
+@theme {
+    --color-gold-400: #d6ad60;
+    --color-gold-500: #b88a35;
+    --color-ivory-50: #fbfaf6;
+    --color-charcoal-900: #171717;
+    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+    body { @apply bg-ivory-50 text-neutral-800 antialiased; }
+    input, select, textarea { @apply w-full rounded-xl border border-neutral-200 bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-gold-500 focus:ring-3 focus:ring-gold-400/15; }
+    label { @apply mb-1.5 block text-sm font-semibold text-neutral-700; }
+}
+
+@layer components {
+    .btn-primary { @apply inline-flex items-center justify-center rounded-xl bg-gold-500 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#9d742b] focus:ring-3 focus:ring-gold-400/30; }
+    .btn-secondary { @apply inline-flex items-center justify-center rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50; }
+    .card { @apply rounded-2xl border border-neutral-200/80 bg-white shadow-sm; }
+    .nav-link { @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-neutral-300 transition hover:bg-white/8 hover:text-white; }
+    .nav-link-active { @apply bg-gold-500/15 text-gold-400; }
+    .field-error { @apply mt-1 text-xs font-medium text-red-600; }
+    .badge-active { @apply inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700; }
+    .badge-inactive { @apply inline-flex rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-600; }
+    .badge-green { @apply inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700; }
+    .badge-neutral { @apply inline-flex rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-600; }
+    .badge-red { @apply inline-flex rounded-full bg-red-50 px-2.5 py-1 text-xs font-semibold text-red-700; }
+    .badge-gold { @apply inline-flex rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700; }
+    .badge-blue { @apply inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700; }
+    .badge-purple { @apply inline-flex rounded-full bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-700; }
+    .badge-orange { @apply inline-flex rounded-full bg-orange-50 px-2.5 py-1 text-xs font-semibold text-orange-700; }
+}

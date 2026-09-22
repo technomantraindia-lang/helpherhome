@@ -1,0 +1,4 @@
+<?php
+namespace App\Http\Requests;
+use Illuminate\Foundation\Http\FormRequest; use Illuminate\Validation\Rule;
+class StorePaymentRequest extends FormRequest { public function authorize():bool{return $this->user()?->hasPermission('payments.create')??false;} public function rules():array{return ['payment_date'=>['required','date'],'amount'=>['required','numeric','gt:0','decimal:0,2'],'payment_mode'=>['required',Rule::in(['cash','upi','bank_transfer','cheque','other'])],'transaction_reference'=>['nullable','string','max:255'],'bank_reference'=>['nullable','string','max:255'],'upi_reference'=>['nullable','string','max:255'],'cheque_number'=>['nullable','string','max:100'],'cheque_date'=>['nullable','date'],'received_by'=>['nullable','exists:users,id'],'status'=>['nullable',Rule::in(['pending','completed','failed'])],'hold_cheque'=>['nullable','boolean'],'notes'=>['nullable','string','max:5000']];} }

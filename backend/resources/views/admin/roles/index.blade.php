@@ -1,0 +1,5 @@
+@extends('layouts.admin')
+@section('title','Roles & Permissions') @section('heading','Roles & Permissions') @section('subheading','System roles are protected; their permission assignments remain configurable.')
+@section('content')
+<div class="grid gap-5 md:grid-cols-3">@foreach($roles as $role)<article class="card p-6"><div class="flex items-start justify-between gap-4"><div><h2 class="text-lg font-black">{{ $role->name }}</h2><p class="mt-1 text-sm text-neutral-500">{{ $role->description }}</p></div>@if($role->is_system)<span class="badge-inactive">System</span>@endif</div><dl class="mt-6 grid grid-cols-2 gap-3 border-t border-neutral-100 pt-5"><div><dt class="text-xs text-neutral-400">Users</dt><dd class="text-xl font-black">{{ $role->users_count }}</dd></div><div><dt class="text-xs text-neutral-400">Permissions</dt><dd class="text-xl font-black">{{ $role->permissions_count }}</dd></div></dl>@if(auth()->user()->hasPermission('roles.edit'))<a href="{{ route('admin.roles.edit',$role) }}" class="btn-secondary mt-5 w-full">Manage permissions</a>@endif</article>@endforeach</div>
+@endsection

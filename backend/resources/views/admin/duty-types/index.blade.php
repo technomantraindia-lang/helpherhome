@@ -1,0 +1,8 @@
+@extends('layouts.admin')
+@section('title','Duty Types') @section('heading','Duty Types') @section('subheading','Manage working arrangements and shift types.')
+@section('actions') @if(auth()->user()->hasPermission('duty-types.create'))<a href="{{ route('admin.duty-types.create') }}" class="btn-primary">+ Add duty type</a>@endif @endsection
+@section('content')
+<div class="card overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="border-b border-neutral-200 bg-neutral-50 text-xs uppercase tracking-wider text-neutral-500"><tr><th class="px-6 py-4">Name</th><th class="px-6 py-4">Slug</th><th class="px-6 py-4">Status</th><th class="px-6 py-4">Sort order</th><th class="px-6 py-4 text-right">Actions</th></tr></thead><tbody class="divide-y divide-neutral-100">
+@forelse($dutyTypes as $dutyType)<tr class="hover:bg-neutral-50/70"><td class="px-6 py-4 font-bold text-neutral-900">{{ $dutyType->name }}</td><td class="px-6 py-4 font-mono text-xs text-neutral-500">{{ $dutyType->slug }}</td><td class="px-6 py-4"><span class="{{ $dutyType->is_active ? 'badge-active' : 'badge-inactive' }}">{{ $dutyType->is_active ? 'Active' : 'Inactive' }}</span></td><td class="px-6 py-4">{{ $dutyType->sort_order }}</td><td class="px-6 py-4 text-right">@if(auth()->user()->hasPermission('duty-types.edit'))<a class="font-bold text-gold-500 hover:underline" href="{{ route('admin.duty-types.edit',$dutyType) }}">Edit</a>@endif</td></tr>@empty<tr><td colspan="5" class="px-6 py-12 text-center text-neutral-500">No duty types found.</td></tr>@endforelse
+</tbody></table></div>@if($dutyTypes->hasPages())<div class="border-t border-neutral-100 px-6 py-4">{{ $dutyTypes->links() }}</div>@endif</div>
+@endsection

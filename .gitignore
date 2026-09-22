@@ -1,10 +1,44 @@
-# Dependencies
+# Dependencies and generated assets
 node_modules/
+frontend/node_modules/
+backend/node_modules/
+backend/vendor/
+backend/public/build/
+backend/public/hot
 
-# Private SMTP credentials — never commit real App Passwords
+# Environment and credentials
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
 api/config.php
 
-# OS / editor
+# Laravel runtime files and private uploads
+backend/storage/logs/*
+backend/storage/framework/cache/*
+backend/storage/framework/sessions/*
+backend/storage/framework/views/*
+backend/storage/framework/testing/*
+backend/storage/app/private/*
+backend/storage/app/public/*
+backend/public/storage
+backend/.phpunit.result.cache
+backend/.phpunit.cache/
+
+# Local databases, backups, archives, and logs
+*.sqlite
+*.sqlite-*
+*.sql
+*.zip
+*.log
+
+# OS/editor files
 .DS_Store
 Thumbs.db
-*.log
+/.fleet/
+/.idea/
+/.nova/
+/.vscode/
+/.zed/

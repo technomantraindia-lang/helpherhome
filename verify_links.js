@@ -1,4 +1,4 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const path = require('path');
 
 const rootDir = __dirname;
@@ -38,7 +38,7 @@ for (const filePath of htmlFiles) {
   const hrefMatches = [...content.matchAll(/href=["']([^"']+)["']/g)];
   for (const match of hrefMatches) {
     const link = match[1];
-    if (link.startsWith('http') || link.startsWith('mailto:') || link.startsWith('tel:') || link.startsWith('#')) {
+    if (link.startsWith('http') || link.startsWith('mailto:') || link.startsWith('tel:') || link.startsWith('javascript:') || link.startsWith('#')) {
       continue;
     }
     checkedLinks++;
@@ -75,3 +75,4 @@ if (errors === 0) {
   console.error(`FAILED: Found ${errors} issues.`);
   process.exit(1);
 }
+

@@ -1,0 +1,4 @@
+<?php
+namespace App\Http\Requests;
+use Illuminate\Foundation\Http\FormRequest;
+class StoreAssignmentRequest extends FormRequest { public function authorize():bool{return $this->user()?->hasPermission('assignments.create')??false;}protected function prepareForValidation():void{$this->merge(['service_override'=>$this->boolean('service_override')]);}public function rules():array{return ['assignment_start_date'=>['required','date'],'assignment_end_date'=>['nullable','date','after_or_equal:assignment_start_date'],'duty_type_id'=>['nullable','exists:duty_types,id'],'working_hours_text'=>['nullable','string','max:255'],'monthly_salary'=>['nullable','numeric','min:0'],'agency_service_charge'=>['nullable','numeric','min:0'],'work_location'=>['nullable','string','max:255'],'notes'=>['nullable','string','max:5000'],'service_override'=>['boolean'],'override_reason'=>['nullable','string','max:1000']];} }

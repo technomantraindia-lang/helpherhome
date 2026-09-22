@@ -1,0 +1,8 @@
+﻿@extends('layouts.admin')
+@section('title','Worker Verification')
+@section('heading','Worker Verification')
+@section('subheading','Track document, police, and background verification.')
+@section('content')
+<form class="card mb-5 flex flex-wrap gap-3 p-4" method="GET"><select name="status"><option value="">All overall statuses</option>@foreach(App\Enums\OverallVerificationStatus::cases() as $status)<option value="{{ $status->value }}" @selected(request('status') === $status->value)>{{ str($status->value)->headline() }}</option>@endforeach</select><button class="btn-primary">Filter</button></form>
+<div class="card overflow-x-auto"><table class="w-full min-w-[850px] text-left text-sm"><thead><tr><th class="p-3">Worker</th><th>Document</th><th>Police</th><th>Background</th><th>Overall</th><th>Action</th></tr></thead><tbody class="divide-y">@forelse($workers as $worker)<tr><td class="p-3">{{ $worker->name }}<div class="text-xs text-neutral-500">{{ $worker->worker_code }}</div></td><td>{{ str($worker->verification?->document_verification_status?->value ?: 'pending')->headline() }}</td><td>{{ str($worker->verification?->police_verification_status?->value ?: 'pending')->headline() }}</td><td>{{ str($worker->verification?->background_verification_status?->value ?: 'pending')->headline() }}</td><td>{{ str($worker->verification?->overall_verification_status?->value ?: 'pending')->headline() }}</td><td><a class="font-bold text-gold-600" href="{{ route('admin.workers.verification.edit',$worker) }}">Review</a></td></tr>@empty<tr><td colspan="6" class="p-8 text-center text-neutral-500">No workers found.</td></tr>@endforelse</tbody></table></div><div class="mt-4">{{ $workers->links() }}</div>
+@endsection

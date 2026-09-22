@@ -1,0 +1,3 @@
+<?php
+namespace App\Http\Requests;use Illuminate\Foundation\Http\FormRequest;
+class StoreAgreementSignatureRequest extends FormRequest {public function authorize():bool{return $this->user()?->hasPermission('agreements.sign')??false;}public function rules():array{return ['signature'=>['nullable','image','mimes:png,jpg,jpeg,webp','max:2048'],'signature_data'=>['nullable','string','max:3000000'],'stamp'=>['nullable','image','mimes:png,jpg,jpeg,webp','max:2048']];}public function withValidator($validator):void{$validator->after(fn($v)=>!$this->hasFile('signature')&&!$this->filled('signature_data')&&!$this->hasFile('stamp')?$v->errors()->add('signature','Provide a signature or stamp.'):null);}}

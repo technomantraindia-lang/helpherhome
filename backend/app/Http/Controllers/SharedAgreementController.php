@@ -1,0 +1,3 @@
+<?php
+namespace App\Http\Controllers;use App\Models\Agreement;use App\Models\DocumentShareLink;use Illuminate\Support\Facades\Storage;
+class SharedAgreementController extends Controller {public function __invoke(string $token):mixed{$link=DocumentShareLink::where('token',$token)->where('document_type','agreement')->where('is_active',true)->firstOrFail();abort_if($link->expires_at&&$link->expires_at->isPast(),410);$agreement=Agreement::findOrFail($link->document_id);abort_unless($agreement->pdf_path&&Storage::disk('local')->exists($agreement->pdf_path),404);return Storage::disk('local')->download($agreement->pdf_path,$agreement->agreement_code.'.pdf',['Content-Type'=>'application/pdf']);}}

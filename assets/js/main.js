@@ -1,10 +1,12 @@
-/**
+﻿/**
  * HELPER HOME - Main JavaScript Engine
  * Handles navigation, sticky header, accessible accordions,
  * modal dialogs, enquiry forms, and scroll interactions.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  loadPublicCatalog().then(() => populatePublicCatalogFields());
+  loadPublicContactSettings().then(() => initContactActions());
   initStickyHeader();
   initMobileNav();
   initServicesDropdown();
@@ -458,7 +460,7 @@ function initHeroSlider() {
 
     if (isReducedMotion) return;
 
-    // Only scale background — do NOT offset text (keeps alignment identical)
+    // Only scale background â€” do NOT offset text (keeps alignment identical)
     const activeSlide = slides[currentIndex];
     const bg = activeSlide?.querySelector('.hero-slide-bg');
     const content = activeSlide?.querySelector('.hero-content, .hero-slide-content');
@@ -605,329 +607,132 @@ function initAccordions() {
 }
 
 /* ----------------------------------------------------
-   5. ENQUIRY MODAL + FORM (SMTP via api/send-enquiry.php)
+   5. ENQUIRY MODAL + FORM (Laravel public API)
 ---------------------------------------------------- */
 function siteRootPrefix() {
-  const path = window.location.pathname.replace(/\\/g, '/');
-  return path.includes('/services/') ? '../' : '';
+  return window.location.pathname.replace(/\\/g, '/').includes('/services/') ? '../' : '';
 }
 
 function enquiryApiUrl() {
-  return `${siteRootPrefix()}api/send-enquiry.php`;
+  const configured = window.HelperHomeConfig?.apiBaseUrl || window.HELPER_HOME_API_BASE_URL || '';
+  const base = configured || '/api';
+  return `${String(base).replace(/\/$/, '')}/public/enquiries`;
 }
 
+let publicCatalog = { services: [], dutyTypes: [] };
+let publicCatalogPromise;
+function publicApiBase() {
+  const configured = window.HelperHomeConfig?.apiBaseUrl || window.HELPER_HOME_API_BASE_URL || '';
+  return String(configured || '/api').replace(/\/$/, '');
+}
+async function loadPublicCatalog() {
+  if (publicCatalogPromise) return publicCatalogPromise;
+  publicCatalogPromise = Promise.all([
+    fetch(`${publicApiBase()}/public/services`, { headers: { Accept: 'application/json' } }).then(r => r.ok ? r.json() : Promise.reject(r)).then(r => { publicCatalog.services = r.data || []; }),
+    fetch(`${publicApiBase()}/public/duty-types`, { headers: { Accept: 'application/json' } }).then(r => r.ok ? r.json() : Promise.reject(r)).then(r => { publicCatalog.dutyTypes = r.data || []; })
+  ]).catch(() => publicCatalog);
+  return publicCatalogPromise;
+}
+let publicSettingsPromise;
+async function loadPublicContactSettings() {
+  if (publicSettingsPromise) return publicSettingsPromise;
+  publicSettingsPromise = fetch(`${publicApiBase()}/public/settings/contact`, { headers: { Accept: 'application/json' } })
+    .then(r => r.ok ? r.json() : Promise.reject(r))
+    .then(r => {
+      const data = r.data || {};
+      const cfg = window.HelperHomeConfig || (window.HelperHomeConfig = {});
+      if (data.phone_primary) {
+        const rawPhone = String(data.phone_primary).replace(/\D/g, '');
+        const internationalPhone = rawPhone.length === 11 && rawPhone.startsWith('0') ? `+91${rawPhone.slice(1)}` : (rawPhone.startsWith('91') ? `+${rawPhone}` : `+91${rawPhone}`);
+        cfg.phoneTel = internationalPhone;
+        cfg.phoneDisplay = internationalPhone.replace(/^\+91(\d{5})(\d{5})$/, '+91 $1 $2');
+      }
+      if (data.whatsapp_number) cfg.whatsappNumber = data.whatsapp_number;
+      if (data.email) cfg.email = data.email;
+      cfg.social = { ...(cfg.social || {}), facebook: data.facebook_url || cfg.social?.facebook || '', instagram: data.instagram_url || cfg.social?.instagram || '', twitter: data.twitter_url || cfg.social?.twitter || '', youtube: data.youtube_url || cfg.social?.youtube || '' };
+      return data;
+    }).catch(() => ({}));
+  return publicSettingsPromise;
+}
+function populatePublicCatalogFields(root = document) {
+  root.querySelectorAll('select[name="serviceRequired"]').forEach(select => {
+    const current = select.value;
+    if (!publicCatalog.services.length) {
+      select.innerHTML = '<option value="">Services are temporarily unavailable — please call us.</option>';
+      select.value = '';
+      select.disabled = true;
+      return;
+    }
+    select.disabled = false;
+    select.innerHTML = '<option value="" disabled>-- Select a Service --</option>';
+    publicCatalog.services.forEach(service => { const option = document.createElement('option'); option.value = service.slug; option.textContent = service.name; select.appendChild(option); });
+    select.value = current || '';
+  });
+  root.querySelectorAll('[data-duty-hours]').forEach(group => {
+    if (!publicCatalog.dutyTypes.length) {
+      group.innerHTML = '<span class="text-sm text-gray-500">Duty types are temporarily unavailable — please call us.</span>';
+      return;
+    }
+    group.innerHTML = '';
+    publicCatalog.dutyTypes.forEach((duty, index) => { group.insertAdjacentHTML('beforeend', `<label class="duty-hours-option"><input type="radio" name="dutyHours" value="${duty.slug}" ${index === 0 ? 'required' : ''}><span>${duty.name}</span></label>`); });
+  });
+}
 function enquiryFieldMarkup(idPrefix) {
   const p = idPrefix;
-  return `
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div>
-        <label for="${p}-fullName" class="enquiry-label">Full Name <span>*</span></label>
-        <input type="text" id="${p}-fullName" name="fullName" required autocomplete="name" placeholder="e.g. Ramesh Sharma" class="enquiry-input">
-      </div>
-      <div>
-        <label for="${p}-phone" class="enquiry-label">Phone Number <span>*</span></label>
-        <input type="tel" id="${p}-phone" name="phone" required autocomplete="tel" placeholder="e.g. 9876543210" class="enquiry-input">
-      </div>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div>
-        <label for="${p}-email" class="enquiry-label">Email Address <span>*</span></label>
-        <input type="email" id="${p}-email" name="email" required autocomplete="email" placeholder="e.g. ramesh@example.com" class="enquiry-input">
-      </div>
-      <div>
-        <label for="${p}-cityArea" class="enquiry-label">City / Area <span>*</span></label>
-        <input type="text" id="${p}-cityArea" name="cityArea" required placeholder="e.g. Naranpura, Ahmedabad" class="enquiry-input">
-      </div>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div>
-        <label for="${p}-serviceRequired" class="enquiry-label">Service Required <span>*</span></label>
-        <select id="${p}-serviceRequired" name="serviceRequired" required class="enquiry-input">
-          <option value="" disabled selected>-- Select a Service --</option>
-          <option value="maid">Maid Service</option>
-          <option value="servant">Servant Service</option>
-          <option value="babysitter">Babysitter Service</option>
-          <option value="japa-maid">Japa Maid / Nanny</option>
-          <option value="elderly-care">Elderly Caretaker</option>
-          <option value="patient-care">Patient Caretaker</option>
-          <option value="cook">Cook Service</option>
-          <option value="driver">Driver Service</option>
-          <option value="domestic-couple">Domestic Couple Service</option>
-        </select>
-      </div>
-      <div>
-        <label for="${p}-startDate" class="enquiry-label">Preferred Start Date</label>
-        <input type="date" id="${p}-startDate" name="startDate" class="enquiry-input">
-      </div>
-    </div>
-    <div class="duty-hours-field">
-      <label class="enquiry-label">Duty Hours <span>*</span></label>
-      <div class="duty-hours-options" role="radiogroup" aria-label="Duty Hours">
-        <label class="duty-hours-option">
-          <input type="radio" name="dutyHours" value="part_time" required>
-          <span>Part Time</span>
-        </label>
-        <label class="duty-hours-option">
-          <input type="radio" name="dutyHours" value="full_time">
-          <span>Full Time</span>
-        </label>
-        <label class="duty-hours-option">
-          <input type="radio" name="dutyHours" value="live_in_24_hours">
-          <span>24 Hours / Live-In</span>
-        </label>
-      </div>
-    </div>
-    <div>
-      <label for="${p}-requirements" class="enquiry-label">Household Requirements &amp; Timings</label>
-      <textarea id="${p}-requirements" name="requirements" rows="3" placeholder="Working hours, home size, family needs..." class="enquiry-input"></textarea>
-    </div>
-    <input type="text" name="website" tabindex="-1" autocomplete="off" class="enquiry-honeypot" aria-hidden="true">
-  `;
+  return `<div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label for="${p}-fullName" class="enquiry-label">Full Name <span>*</span></label><input type="text" id="${p}-fullName" name="fullName" required autocomplete="name" class="enquiry-input"></div><div><label for="${p}-phone" class="enquiry-label">Phone Number <span>*</span></label><input type="tel" id="${p}-phone" name="phone" required autocomplete="tel" class="enquiry-input"></div></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label for="${p}-email" class="enquiry-label">Email Address</label><input type="email" id="${p}-email" name="email" autocomplete="email" class="enquiry-input"></div><div><label for="${p}-cityArea" class="enquiry-label">City / Area <span>*</span></label><input type="text" id="${p}-cityArea" name="cityArea" required class="enquiry-input"></div></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label for="${p}-serviceRequired" class="enquiry-label">Service Required <span>*</span></label><select id="${p}-serviceRequired" name="serviceRequired" required class="enquiry-input"><option value="" disabled selected>Loading services…</option></select></div><div><label for="${p}-startDate" class="enquiry-label">Preferred Start Date</label><input type="date" id="${p}-startDate" name="startDate" class="enquiry-input"></div></div><div class="duty-hours-field"><label class="enquiry-label">Duty Hours <span>*</span></label><div class="duty-hours-options" data-duty-hours role="radiogroup" aria-label="Duty Hours"><span>Loading duty types…</span></div></div><div><label for="${p}-requirements" class="enquiry-label">Household Requirements &amp; Timings</label><textarea id="${p}-requirements" name="requirements" rows="3" class="enquiry-input"></textarea></div><input type="text" name="website" tabindex="-1" autocomplete="off" class="enquiry-honeypot" aria-hidden="true">`;
 }
-
 function validateEnquiryPayload(payload) {
-  if (!payload.fullName || payload.fullName.length < 2) {
-    return 'Please enter your full name.';
-  }
-  if (!/^[0-9+\-\s]{10,15}$/.test(payload.phone || '')) {
-    return 'Please enter a valid 10-digit mobile number.';
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email || '')) {
-    return 'Please enter a valid email address.';
-  }
-  if (!payload.cityArea || payload.cityArea.length < 2) {
-    return 'Please enter your city or locality.';
-  }
-  if (!payload.serviceRequired) {
-    return 'Please select the service you require.';
-  }
-  if (!payload.dutyHours) {
-    return 'Please select Duty Hours.';
-  }
+  if (!payload.fullName || payload.fullName.length < 2) return 'Please enter your full name.';
+  if (!/^\d{10,15}$/.test(String(payload.phone || '').replace(/\D/g, ''))) return 'Please enter a valid mobile number.';
+  if (payload.email && !/^\S+@\S+\.\S+$/.test(payload.email)) return 'Please enter a valid email address.';
+  if (!payload.cityArea || payload.cityArea.length < 2) return 'Please enter your city or locality.';
+  if (!payload.serviceRequired) return 'Please select the service you require.';
+  if (!payload.dutyHours) return 'Please select Duty Hours.';
   return '';
 }
-
+function apiErrorMessage(data, status) {
+  if (status === 429) return 'Too many requests. Please try again shortly.';
+  if (data?.errors) return Object.values(data.errors).flat().join(' ');
+  return data?.message || 'We could not submit your enquiry right now. Please call or WhatsApp us.';
+}
 async function submitEnquiry(payload, { submitBtn, errorBox, successBox, form, onSuccess }) {
-  if (errorBox) {
-    errorBox.classList.add('hidden');
-    errorBox.textContent = '';
-  }
-  if (successBox) successBox.classList.add('hidden');
-
+  errorBox?.classList.add('hidden'); successBox?.classList.add('hidden');
   const errorMessage = validateEnquiryPayload(payload);
-  if (errorMessage) {
-    if (errorBox) {
-      errorBox.textContent = errorMessage;
-      errorBox.classList.remove('hidden');
-    } else {
-      alert(errorMessage);
-    }
-    return false;
-  }
-
-  const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
-  if (submitBtn) {
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = 'Sending Enquiry...';
-  }
-
+  if (errorMessage) { if (errorBox) { errorBox.textContent = errorMessage; errorBox.classList.remove('hidden'); } return false; }
+  const originalBtnText = submitBtn?.innerHTML || '';
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = 'Sending Enquiry…'; }
   try {
-    const res = await fetch(enquiryApiUrl(), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    let data = {};
-    try {
-      data = await res.json();
-    } catch (_) {
-      data = {};
-    }
-
-    if (!res.ok || !data.ok) {
-      throw new Error(data.error || 'Unable to send enquiry. Please try again.');
-    }
-
+    const params = new URLSearchParams(window.location.search);
+    const body = { name: payload.fullName, mobile_number: payload.phone, email: payload.email || null, city: payload.cityArea, area: '', service_slug: payload.serviceRequired, duty_type_slug: payload.dutyHours, preferred_start_date: payload.startDate || null, message: payload.requirements || null, source_page: window.location.href, referrer: document.referrer || null, utm_source: params.get('utm_source'), utm_medium: params.get('utm_medium'), utm_campaign: params.get('utm_campaign'), utm_term: params.get('utm_term'), utm_content: params.get('utm_content'), website: payload.website || '' };
+    const res = await fetch(enquiryApiUrl(), { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.success) throw new Error(apiErrorMessage(data, res.status));
     if (form) form.reset();
-    if (successBox) {
-      successBox.classList.remove('hidden');
-      successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-    if (typeof onSuccess === 'function') onSuccess(data);
-    return true;
-  } catch (err) {
-    const msg = err.message || 'Unable to send enquiry. Please call +91 98798 88478.';
-    if (errorBox) {
-      errorBox.textContent = msg;
-      errorBox.classList.remove('hidden');
-    } else {
-      alert(msg);
-    }
-    return false;
-  } finally {
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalBtnText;
-    }
-  }
+    if (successBox) { successBox.textContent = data.data?.enquiry_code ? `Thank you for contacting Helper Home. Your enquiry has been received successfully. Enquiry ID: ${data.data.enquiry_code}` : 'Thank you for contacting Helper Home. Your enquiry has been received successfully.'; successBox.classList.remove('hidden'); successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+    onSuccess?.(data); return true;
+  } catch (err) { if (errorBox) { errorBox.textContent = err.message || 'We could not submit your enquiry right now. Please call or WhatsApp us.'; errorBox.classList.remove('hidden'); } return false; }
+  finally { if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalBtnText; } }
 }
-
-function readEnquiryForm(form) {
-  const get = (name) => (form.querySelector(`[name="${name}"]`)?.value || '').trim();
-  const duty = form.querySelector('[name="dutyHours"]:checked')?.value
-    || form.querySelector('[name="dutyHours"]')?.value
-    || '';
-  return {
-    fullName: get('fullName'),
-    phone: get('phone'),
-    email: get('email'),
-    cityArea: get('cityArea'),
-    serviceRequired: get('serviceRequired'),
-    dutyHours: duty,
-    startDate: get('startDate'),
-    requirements: get('requirements'),
-    website: get('website')
-  };
-}
-
+function readEnquiryForm(form) { const get = name => (form.querySelector(`[name="${name}"]`)?.value || '').trim(); return { fullName: get('fullName'), phone: get('phone'), email: get('email'), cityArea: get('cityArea'), serviceRequired: get('serviceRequired'), dutyHours: form.querySelector('[name="dutyHours"]:checked')?.value || '', startDate: get('startDate'), requirements: get('requirements'), website: get('website') }; }
 function initEnquiryModal() {
   if (document.getElementById('enquiryModal')) return;
-
-  if (!document.getElementById('enquiryModalStyles')) {
-    const link = document.createElement('link');
-    link.id = 'enquiryModalStyles';
-    link.rel = 'stylesheet';
-    link.href = `${siteRootPrefix()}assets/css/enquiry-modal.css?v=1`;
-    document.head.appendChild(link);
-  }
-
-  const modal = document.createElement('div');
-  modal.id = 'enquiryModal';
-  modal.className = 'enquiry-modal';
-  modal.setAttribute('aria-hidden', 'true');
-  modal.innerHTML = `
-    <div class="enquiry-modal__backdrop" data-enquiry-close tabindex="-1"></div>
-    <div class="enquiry-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="enquiryModalTitle">
-      <button type="button" class="enquiry-modal__close" data-enquiry-close aria-label="Close enquiry form">&times;</button>
-      <div class="enquiry-modal__header">
-        <p class="enquiry-modal__eyebrow">Helper Home</p>
-        <h2 id="enquiryModalTitle" class="enquiry-modal__title">Book a Service</h2>
-        <p class="enquiry-modal__subtitle">Share your details and our team will contact you shortly.</p>
-        <p class="enquiry-modal__contact">
-          <a href="tel:+919879888478">+91 98798 88478</a>
-          ·
-          <a href="mailto:helperhomeahmedabad@gmail.com">helperhomeahmedabad@gmail.com</a>
-        </p>
-      </div>
-      <div id="enquiryModalError" class="enquiry-alert enquiry-alert--error hidden" role="alert"></div>
-      <div id="enquiryModalSuccess" class="enquiry-alert enquiry-alert--success hidden" role="status">
-        Enquiry sent. You will also receive a confirmation email shortly.
-      </div>
-      <form id="enquiryModalForm" class="enquiry-modal__form" novalidate>
-        ${enquiryFieldMarkup('modal')}
-        <button type="submit" class="btn-gold enquiry-modal__submit">Send Enquiry</button>
-        <p class="enquiry-modal__note">Emails go to Helper Home via secure SMTP. You will get a copy at your email.</p>
-      </form>
-    </div>
-  `;
-  document.body.appendChild(modal);
-
-  const form = modal.querySelector('#enquiryModalForm');
-  const errorBox = modal.querySelector('#enquiryModalError');
-  const successBox = modal.querySelector('#enquiryModalSuccess');
-  const serviceSelect = modal.querySelector('#modal-serviceRequired');
-  let lastFocus = null;
-
-  const openModal = (serviceValue = '') => {
-    lastFocus = document.activeElement;
-    successBox.classList.add('hidden');
-    errorBox.classList.add('hidden');
-    if (serviceValue && serviceSelect) {
-      serviceSelect.value = serviceValue;
-    }
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('enquiry-modal-open');
-    const first = modal.querySelector('input, select, textarea, button');
-    first?.focus();
-  };
-
-  const closeModal = () => {
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('enquiry-modal-open');
-    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-  };
-
+  if (!document.getElementById('enquiryModalStyles')) { const link = document.createElement('link'); link.id = 'enquiryModalStyles'; link.rel = 'stylesheet'; link.href = `${siteRootPrefix()}assets/css/enquiry-modal.css?v=1`; document.head.appendChild(link); }
+  const modal = document.createElement('div'); modal.id = 'enquiryModal'; modal.className = 'enquiry-modal'; modal.setAttribute('aria-hidden', 'true'); modal.innerHTML = `<div class="enquiry-modal__backdrop" data-enquiry-close tabindex="-1"></div><div class="enquiry-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="enquiryModalTitle"><button type="button" class="enquiry-modal__close" data-enquiry-close aria-label="Close enquiry form">&times;</button><div class="enquiry-modal__header"><p class="enquiry-modal__eyebrow">Helper Home</p><h2 id="enquiryModalTitle" class="enquiry-modal__title">Book a Service</h2><p class="enquiry-modal__subtitle">Share your details and our team will contact you shortly.</p></div><div id="enquiryModalError" class="enquiry-alert enquiry-alert--error hidden" role="alert"></div><div id="enquiryModalSuccess" class="enquiry-alert enquiry-alert--success hidden" role="status" aria-live="polite"></div><form id="enquiryModalForm" class="enquiry-modal__form" novalidate>${enquiryFieldMarkup('modal')}<button type="submit" class="btn-gold enquiry-modal__submit">Send Enquiry</button></form></div>`; document.body.appendChild(modal); populatePublicCatalogFields(modal);
+  const form = modal.querySelector('#enquiryModalForm'), errorBox = modal.querySelector('#enquiryModalError'), successBox = modal.querySelector('#enquiryModalSuccess'), serviceSelect = modal.querySelector('#modal-serviceRequired'); let lastFocus = null;
+  const openModal = (serviceValue = '') => { lastFocus = document.activeElement; errorBox.classList.add('hidden'); successBox.classList.add('hidden'); if (serviceValue && serviceSelect) { const match = publicCatalog.services.find(s => s.slug === serviceValue || s.slug.startsWith(serviceValue) || s.name.toLowerCase().includes(String(serviceValue).replace(/-/g, ' '))); serviceSelect.value = match?.slug || serviceValue; } modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false'); document.body.classList.add('enquiry-modal-open'); (modal.querySelector('input,select,textarea,button'))?.focus(); };
+  const closeModal = () => { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true'); document.body.classList.remove('enquiry-modal-open'); lastFocus?.focus?.(); };
   window.HelperHomeEnquiry = { open: openModal, close: closeModal };
-
-  document.addEventListener('click', (e) => {
-    const trigger = e.target.closest('[data-enquiry-open], .js-open-enquiry');
-    if (!trigger) return;
-    e.preventDefault();
-    const service = trigger.getAttribute('data-service') || '';
-    openModal(service);
-  });
-
-  modal.addEventListener('click', (e) => {
-    if (e.target.closest('[data-enquiry-close]')) {
-      e.preventDefault();
-      closeModal();
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
-  });
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const submitBtn = form.querySelector('button[type="submit"]');
-    await submitEnquiry(readEnquiryForm(form), {
-      submitBtn,
-      errorBox,
-      successBox,
-      form,
-      onSuccess: () => {
-        setTimeout(() => closeModal(), 2200);
-      }
-    });
-  });
+  document.addEventListener('click', e => { const trigger=e.target.closest('[data-enquiry-open], .js-open-enquiry'); if(!trigger)return; e.preventDefault(); openModal(trigger.getAttribute('data-service') || ''); });
+  modal.addEventListener('click', e => { if(e.target.closest('[data-enquiry-close]')) { e.preventDefault(); closeModal(); } });
+  document.addEventListener('keydown', e => { if(e.key==='Escape' && modal.classList.contains('is-open')) closeModal(); });
+  form.addEventListener('submit', async e => { e.preventDefault(); await submitEnquiry(readEnquiryForm(form), { submitBtn: form.querySelector('button[type="submit"]'), errorBox, successBox, form, onSuccess: () => setTimeout(closeModal, 2200) }); });
 }
-
 function initEnquiryForm() {
-  const form = document.getElementById('enquiryForm');
-  if (!form) return;
-
-  // Ensure honeypot exists on contact page form
-  if (!form.querySelector('[name="website"]')) {
-    const hp = document.createElement('input');
-    hp.type = 'text';
-    hp.name = 'website';
-    hp.tabIndex = -1;
-    hp.autocomplete = 'off';
-    hp.className = 'enquiry-honeypot';
-    hp.setAttribute('aria-hidden', 'true');
-    form.appendChild(hp);
-  }
-
-  const submitBtn = form.querySelector('button[type="submit"]');
-  const successBox = document.getElementById('formSuccessMessage');
-  const errorBox = document.getElementById('formErrorMessage');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    await submitEnquiry(readEnquiryForm(form), {
-      submitBtn,
-      errorBox,
-      successBox,
-      form
-    });
-  });
-}
-
-/* ----------------------------------------------------
+  const form = document.getElementById('enquiryForm'); if (!form) return;
+  if (!form.querySelector('[name="website"]')) { const hp=document.createElement('input'); hp.type='text'; hp.name='website'; hp.tabIndex=-1; hp.autocomplete='off'; hp.className='enquiry-honeypot'; hp.setAttribute('aria-hidden','true'); form.appendChild(hp); }
+  populatePublicCatalogFields(form); const submitBtn=form.querySelector('button[type="submit"]'), successBox=document.getElementById('formSuccessMessage'), errorBox=document.getElementById('formErrorMessage');
+  form.addEventListener('submit', async e => { e.preventDefault(); await submitEnquiry(readEnquiryForm(form), { submitBtn, errorBox, successBox, form }); });
+}/* ----------------------------------------------------
    6. PRESELECT SERVICE FROM URL PARAMS
 ---------------------------------------------------- */
 function initServicePreselection() {
@@ -1110,7 +915,7 @@ function initContactActions() {
     if (!el.textContent.trim()) el.textContent = cfg.email;
   });
 
-  // Social links — hide empty URLs
+  // Social links â€” hide empty URLs
   const socialMap = {
     facebook: cfg.social?.facebook || '',
     instagram: cfg.social?.instagram || '',
@@ -1148,8 +953,8 @@ function initContactActions() {
     sticky.id = 'hhStickyBar';
     sticky.className = 'hh-sticky-bar';
     sticky.innerHTML = `
-      <a class="btn-call" data-hh-call data-keep-label="true" href="#">Call Now</a>
-      <a class="btn-whatsapp" data-hh-whatsapp data-keep-label="true" href="#">WhatsApp</a>
+      <a class="btn-call" data-hh-call data-keep-label="true" href="javascript:void(0)">Call Now</a>
+      <a class="btn-whatsapp" data-hh-whatsapp data-keep-label="true" href="javascript:void(0)">WhatsApp</a>
     `;
     document.body.appendChild(sticky);
 
@@ -1157,8 +962,8 @@ function initContactActions() {
     float.id = 'hhFloatContact';
     float.className = 'hh-float-contact';
     float.innerHTML = `
-      <a class="btn-call" data-hh-call data-keep-label="true" href="#">Call</a>
-      <a class="btn-whatsapp" data-hh-whatsapp data-keep-label="true" href="#">WhatsApp</a>
+      <a class="btn-call" data-hh-call data-keep-label="true" href="javascript:void(0)">Call</a>
+      <a class="btn-whatsapp" data-hh-whatsapp data-keep-label="true" href="javascript:void(0)">WhatsApp</a>
     `;
     document.body.appendChild(float);
 
@@ -1184,3 +989,10 @@ function initContactActions() {
     }
   }
 }
+
+
+
+
+
+
+
