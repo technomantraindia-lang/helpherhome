@@ -79,7 +79,7 @@ class StageSixTest extends TestCase
         $worker = Worker::create(['worker_code' => 'WRK-1', 'registration_date' => today(), 'name' => 'Worker', 'mobile_number' => '9999999999', 'address_line_1' => 'Address', 'city' => 'Mumbai', 'state' => 'MH']);
         $assignment = Assignment::create(['assignment_code' => 'ASS-1', 'customer_id' => $customer->id, 'customer_requirement_id' => $requirement->id, 'worker_id' => $worker->id, 'service_id' => Service::firstOrFail()->id, 'assignment_start_date' => today(), 'monthly_salary' => 5000, 'agency_service_charge' => 200]);
         $agreement = Agreement::create(['agreement_code' => 'AGR-1', 'customer_id' => $customer->id, 'customer_requirement_id' => $requirement->id, 'assignment_id' => $assignment->id, 'agreement_date' => today()]);
-        $this->actingAs($this->admin())->get(route('admin.assignments.invoice.create', $assignment))->assertOk()->assertSee('Monthly Agency Service Charge')->assertSee('Monthly Worker Salary');
+        $this->actingAs($this->admin())->get(route('admin.assignments.invoice.create', $assignment))->assertOk()->assertSee('Agency Service Charge')->assertSee('Monthly Worker Salary');
         $this->actingAs($this->admin())->get(route('admin.agreements.invoice.create', $agreement))->assertOk();
         $data = $this->data($customer) + ['agreement_id' => $agreement->id];
         $invoice = app(InvoiceService::class)->create($data, $this->admin()->id);

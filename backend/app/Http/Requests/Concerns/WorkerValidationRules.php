@@ -34,6 +34,7 @@ trait WorkerValidationRules
             'supervisor_user_id' => ['nullable', Rule::exists('users', 'id')->where('is_active', true)],
             'executive_user_id' => ['nullable', Rule::exists('users', 'id')->where('is_active', true)],
             'registration_source' => ['nullable', Rule::in(['admin', 'staff', 'walk_in', 'website', 'other'])],
+            'registration_source_other' => ['nullable', 'required_if:registration_source,other', 'string', 'max:255'],
             'notes' => ['nullable', 'string', 'max:5000'],
             'services' => ['required', 'array', 'min:1'],
             'services.*' => ['integer', 'distinct', Rule::exists('services', 'id')->where('is_active', true)],
@@ -61,10 +62,14 @@ trait WorkerValidationRules
             return $reference;
         })->all();
 
+        $source = $this->input('registration_source');
+        $sourceOther = $source === 'other' ? trim((string) $this->input('registration_source_other')) : null;
+
         $this->merge([
             'mobile_number' => $this->digits($this->input('mobile_number')),
             'alternate_mobile_number' => $this->digits($this->input('alternate_mobile_number')),
             'references' => $references,
+            'registration_source_other' => $sourceOther,
         ]);
     }
 }

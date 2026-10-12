@@ -61,7 +61,7 @@ class InvoiceController extends Controller
         $salary = $agreement?->monthly_salary ?? $assignment?->monthly_salary;
         $charge = $agreement?->monthly_agency_service_charge ?? $assignment?->agency_service_charge;
         if ($salary !== null && (float) $salary > 0) $items[] = ['description' => 'Monthly Worker Salary', 'quantity' => 1, 'rate' => $salary, 'service_id' => $agreement?->service_id ?? $assignment?->service_id];
-        if ($charge !== null) $items[] = ['description' => 'Monthly Agency Service Charge', 'quantity' => 1, 'rate' => $charge, 'service_id' => $agreement?->service_id ?? $assignment?->service_id];
+        if ($charge !== null) $items[] = ['description' => 'Agency Service Charge', 'quantity' => 1, 'rate' => $charge, 'service_id' => $agreement?->service_id ?? $assignment?->service_id];
         $invoice = new Invoice(['invoice_date' => today(), 'tax_type' => 'none', 'tax_rate' => 0, 'cgst_rate' => 0, 'sgst_rate' => 0, 'igst_rate' => 0, 'round_off' => 0]);
         $invoice->setRelation('items', collect($items ?: [['description' => '', 'quantity' => 1, 'rate' => 0]]));
         $agency = AgencySetting::firstOrCreate([], ['business_name' => 'Helper Home']);

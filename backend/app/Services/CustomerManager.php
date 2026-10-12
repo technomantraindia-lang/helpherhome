@@ -21,8 +21,19 @@ class CustomerManager
     {
         return DB::transaction(function () use ($data, $actorId) {
             $customerData = Arr::only($data, self::CUSTOMER_FIELDS) + ['customer_code'=>'PENDING-'.Str::uuid(), 'created_by'=>$actorId, 'updated_by'=>$actorId];
+            if (isset($customerData['registration_number']) && ($customerData['registration_number'] === 'Generated after save' || trim((string)$customerData['registration_number']) === '')) {
+                unset($customerData['registration_number']);
+            }
             $customer = Customer::create($customerData);
-            $customer->forceFill(['customer_code'=>sprintf('HH-CUS-%06d', $customer->id)])->saveQuietly();
+            $customerCode = sprintf('HH-CUS-%06d', $customer->id);
+            $regNumber = $customer->registration_number;
+            if (empty($regNumber)) {
+                $regNumber = sprintf('HH-CUST-%06d', $customer->id);
+            }
+            $customer->forceFill([
+                'customer_code' => $customerCode,
+                'registration_number' => $regNumber,
+            ])->saveQuietly();
             $this->createRequirement($customer, $data, $actorId);
             return $customer->fresh(['requirements']);
         });
@@ -40,6 +51,9 @@ class CustomerManager
     {
         return DB::transaction(function () use ($customer, $data, $actorId) {
             $values = Arr::only($data, self::REQUIREMENT_FIELDS) + ['requirement_code'=>'PENDING-'.Str::uuid(), 'created_by'=>$actorId, 'updated_by'=>$actorId];
+            if (empty($values['requirement_status'])) {
+                $values['requirement_status'] = \App\Enums\RequirementStatus::Open;
+            }
             $requirement = $customer->requirements()->create($values);
             $requirement->forceFill(['requirement_code'=>sprintf('HH-REQ-%06d', $requirement->id)])->saveQuietly();
             $this->saveDetails($requirement, $data);
@@ -63,7 +77,14 @@ class CustomerManager
 
     private function saveDetails(CustomerRequirement $requirement, array $data): void
     {
-        $requirement->householdDetail()->updateOrCreate([], Arr::only($data, self::HOUSEHOLD_FIELDS));
+        $householdData = Arr::only($data, self::HOUSEHOLD_FIELDS);
+        if (!isset($householdData['children_at_home']) && isset($householdData['children_count'])) {
+            $householdData['children_at_home'] = ((int) $householdData['children_count'] > 0);
+        }
+        if (!isset($householdData['elderly_at_home']) && isset($householdData['elderly_count'])) {
+            $householdData['elderly_at_home'] = ((int) $householdData['elderly_count'] > 0);
+        }
+        $requirement->householdDetail()->updateOrCreate([], $householdData);
         $requirement->accommodationDetail()->updateOrCreate([], Arr::only($data, self::ACCOMMODATION_FIELDS));
         $requirement->workingCondition()->updateOrCreate([], Arr::only($data, self::WORKING_FIELDS));
         $requirement->workerPreference()->updateOrCreate([], Arr::only($data, self::PREFERENCE_FIELDS));

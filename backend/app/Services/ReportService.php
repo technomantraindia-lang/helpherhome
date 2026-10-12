@@ -92,7 +92,9 @@ class ReportService
 
     public function rowsForExport(string $name, array $filters = []): Collection
     {
-        if ($name === 'documents') return app(DocumentCenterService::class)->aggregate()->values();
+        if ($name === 'documents') {
+            return app(DocumentCenterService::class)->aggregate()->values()->map(fn ($row) => $this->displayRow('documents', $row));
+        }
         return $this->query($name, $filters)->get()->map(fn ($row) => $this->normalize($name, $row));
     }
 
@@ -199,5 +201,327 @@ class ReportService
     private function monthlyTrend(Carbon $start, Carbon $end): Collection
     {
         return Customer::whereBetween('registration_date', [$start->toDateString(),$end->toDateString()])->selectRaw("strftime('%Y-%m', registration_date) as month, COUNT(*) as customers")->groupBy('month')->orderBy('month')->get();
+    }
+
+    public function exportSingleExcel(string $name, array $filters = []): string
+    {
+        $columns = $this->columns($name);
+        $rows = $this->rowsForExport($name, $filters)->all();
+        $title = match ($name) {
+            'workers' => 'Worker Reports',
+            'customers' => 'Customer Reports',
+            'requirements' => 'Requirement Reports',
+            'assignments' => 'Assignment Reports',
+            'replacements' => 'Replacement Reports',
+            'agreements' => 'Agreement Reports',
+            'invoices' => 'Invoice Reports',
+            'payments' => 'Payment Reports',
+            'outstanding' => 'Outstanding Reports',
+            'documents' => 'Document Reports',
+            default => ucfirst($name).' Report',
+        };
+
+        return $this->buildExcelXml([[
+            'sheet_name' => substr($title, 0, 31),
+            'title' => 'Helper Home — '.$title,
+            'subtitle' => 'Exported on '.now()->format('d M Y, h:i A').' | Filtered live records (Total: '.count($rows).')',
+            'columns' => $columns,
+            'rows' => $rows,
+        ]]);
+    }
+
+    public function exportAllExcel(array $filters = []): string
+    {
+        $reports = ['workers','customers','requirements','assignments','replacements','agreements','invoices','payments','outstanding','documents'];
+        $sheets = [];
+
+        foreach ($reports as $name) {
+            $columns = $this->columns($name);
+            $rows = $this->rowsForExport($name, $filters)->all();
+            $title = match ($name) {
+                'workers' => 'Workers',
+                'customers' => 'Customers',
+                'requirements' => 'Requirements',
+                'assignments' => 'Assignments',
+                'replacements' => 'Replacements',
+                'agreements' => 'Agreements',
+                'invoices' => 'Invoices',
+                'payments' => 'Payments',
+                'outstanding' => 'Outstanding',
+                'documents' => 'Documents',
+                default => ucfirst($name),
+            };
+
+            $sheets[] = [
+                'sheet_name' => substr($title, 0, 31),
+                'title' => 'Helper Home — '.$title.' Report',
+                'subtitle' => 'Exported on '.now()->format('d M Y, h:i A').' | Total Records: '.count($rows),
+                'columns' => $columns,
+                'rows' => $rows,
+            ];
+        }
+
+        return $this->buildExcelXml($sheets);
+    }
+
+    public function buildExcelXml(array $sheets): string
+    {
+        $xml = [];
+        $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
+        $xml[] = '<?mso-application progid="Excel.Sheet"?>';
+        $xml[] = '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"';
+        $xml[] = ' xmlns:o="urn:schemas-microsoft-com:office:office"';
+        $xml[] = ' xmlns:x="urn:schemas-microsoft-com:office:excel"';
+        $xml[] = ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"';
+        $xml[] = ' xmlns:html="http://www.w3.org/TR/REC-html40">';
+
+        $xml[] = '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">';
+        $xml[] = ' <Title>Helper Home Reports</Title>';
+        $xml[] = ' <Author>Helper Home</Author>';
+        $xml[] = ' <Created>'.now()->toIso8601String().'</Created>';
+        $xml[] = ' <Company>Helper Home</Company>';
+        $xml[] = '</DocumentProperties>';
+
+        $xml[] = '<Styles>';
+        $xml[] = ' <Style ss:ID="Default" ss:Name="Normal">';
+        $xml[] = '  <Alignment ss:Vertical="Center"/>';
+        $xml[] = '  <Borders/>';
+        $xml[] = '  <Font ss:FontName="Calibri" ss:Size="11" ss:Color="#1F2937"/>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="BannerTitle">';
+        $xml[] = '  <Font ss:FontName="Calibri" ss:Size="15" ss:Bold="1" ss:Color="#A97718"/>';
+        $xml[] = '  <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="BannerSubtitle">';
+        $xml[] = '  <Font ss:FontName="Calibri" ss:Size="10" ss:Italic="1" ss:Color="#6B7280"/>';
+        $xml[] = '  <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="TableHeader">';
+        $xml[] = '  <Font ss:FontName="Calibri" ss:Size="11" ss:Bold="1" ss:Color="#FFFFFF"/>';
+        $xml[] = '  <Interior ss:Color="#B88A35" ss:Pattern="Solid"/>';
+        $xml[] = '  <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>';
+        $xml[] = '  <Borders>';
+        $xml[] = '   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#9B7129"/>';
+        $xml[] = '   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#9B7129"/>';
+        $xml[] = '   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#9B7129"/>';
+        $xml[] = '   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#9B7129"/>';
+        $xml[] = '  </Borders>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="CellLeft">';
+        $xml[] = '  <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>';
+        $xml[] = '  <Borders>';
+        $xml[] = '   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '  </Borders>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="CellCenter">';
+        $xml[] = '  <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>';
+        $xml[] = '  <Borders>';
+        $xml[] = '   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '  </Borders>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="CellPhone">';
+        $xml[] = '  <NumberFormat ss:Format="@"/>';
+        $xml[] = '  <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>';
+        $xml[] = '  <Borders>';
+        $xml[] = '   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '  </Borders>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="CellCode">';
+        $xml[] = '  <Font ss:FontName="Calibri" ss:Size="11" ss:Bold="1" ss:Color="#1F2937"/>';
+        $xml[] = '  <NumberFormat ss:Format="@"/>';
+        $xml[] = '  <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>';
+        $xml[] = '  <Borders>';
+        $xml[] = '   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '  </Borders>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="CellDate">';
+        $xml[] = '  <NumberFormat ss:Format="yyyy-mm-dd"/>';
+        $xml[] = '  <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>';
+        $xml[] = '  <Borders>';
+        $xml[] = '   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '  </Borders>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="CellCurrency">';
+        $xml[] = '  <NumberFormat ss:Format="&quot;₹&quot;#,##0.00"/>';
+        $xml[] = '  <Alignment ss:Horizontal="Right" ss:Vertical="Center"/>';
+        $xml[] = '  <Borders>';
+        $xml[] = '   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '  </Borders>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="BadgeGreen">';
+        $xml[] = '  <Font ss:FontName="Calibri" ss:Size="10" ss:Bold="1" ss:Color="#065F46"/>';
+        $xml[] = '  <Interior ss:Color="#D1FAE5" ss:Pattern="Solid"/>';
+        $xml[] = '  <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>';
+        $xml[] = '  <Borders>';
+        $xml[] = '   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '  </Borders>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="BadgeYellow">';
+        $xml[] = '  <Font ss:FontName="Calibri" ss:Size="10" ss:Bold="1" ss:Color="#92400E"/>';
+        $xml[] = '  <Interior ss:Color="#FEF3C7" ss:Pattern="Solid"/>';
+        $xml[] = '  <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>';
+        $xml[] = '  <Borders>';
+        $xml[] = '   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '  </Borders>';
+        $xml[] = ' </Style>';
+
+        $xml[] = ' <Style ss:ID="BadgeRed">';
+        $xml[] = '  <Font ss:FontName="Calibri" ss:Size="10" ss:Bold="1" ss:Color="#991B1B"/>';
+        $xml[] = '  <Interior ss:Color="#FEE2E2" ss:Pattern="Solid"/>';
+        $xml[] = '  <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>';
+        $xml[] = '  <Borders>';
+        $xml[] = '   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>';
+        $xml[] = '  </Borders>';
+        $xml[] = ' </Style>';
+
+        $xml[] = '</Styles>';
+
+        foreach ($sheets as $sheet) {
+            $rawSheetName = preg_replace('/[\\\\\\/?*\\[\\]:]/', '', $sheet['sheet_name'] ?? 'Report');
+            $sheetName = htmlspecialchars(substr($rawSheetName, 0, 31), ENT_XML1 | ENT_QUOTES, 'UTF-8');
+            $cols = $sheet['columns'] ?? [];
+            $rows = $sheet['rows'] ?? [];
+            $colCount = max(count($cols), 1);
+
+            $xml[] = '<Worksheet ss:Name="'.$sheetName.'">';
+            $xml[] = ' <Table>';
+
+            foreach ($cols as $col) {
+                $w = $this->columnWidth($col);
+                $xml[] = '  <Column ss:Width="'.$w.'"/>';
+            }
+
+            $mergeAcross = max(0, $colCount - 1);
+            $xml[] = '  <Row ss:Height="28">';
+            $xml[] = '   <Cell ss:MergeAcross="'.$mergeAcross.'" ss:StyleID="BannerTitle"><Data ss:Type="String">'.htmlspecialchars($sheet['title'] ?? 'Helper Home', ENT_XML1 | ENT_QUOTES, 'UTF-8').'</Data></Cell>';
+            $xml[] = '  </Row>';
+
+            $xml[] = '  <Row ss:Height="18">';
+            $xml[] = '   <Cell ss:MergeAcross="'.$mergeAcross.'" ss:StyleID="BannerSubtitle"><Data ss:Type="String">'.htmlspecialchars($sheet['subtitle'] ?? '', ENT_XML1 | ENT_QUOTES, 'UTF-8').'</Data></Cell>';
+            $xml[] = '  </Row>';
+
+            $xml[] = '  <Row ss:Height="8"/>';
+
+            $xml[] = '  <Row ss:Height="26">';
+            foreach ($cols as $col) {
+                $xml[] = '   <Cell ss:StyleID="TableHeader"><Data ss:Type="String">'.htmlspecialchars((string)$col, ENT_XML1 | ENT_QUOTES, 'UTF-8').'</Data></Cell>';
+            }
+            $xml[] = '  </Row>';
+
+            foreach ($rows as $row) {
+                $rowArr = is_array($row) ? array_values($row) : array_values((array)$row);
+                $xml[] = '  <Row ss:Height="22">';
+                foreach ($cols as $idx => $col) {
+                    $val = $rowArr[$idx] ?? null;
+                    $xml[] = '   '.$this->formatXmlCell($col, $val);
+                }
+                $xml[] = '  </Row>';
+            }
+
+            $xml[] = ' </Table>';
+            $xml[] = '</Worksheet>';
+        }
+
+        $xml[] = '</Workbook>';
+        return implode("\n", $xml);
+    }
+
+    private function columnWidth(string $col): int
+    {
+        $lower = strtolower($col);
+        if (str_contains($lower, 'mobile') || str_contains($lower, 'phone')) return 125;
+        if (str_contains($lower, 'code') || str_contains($lower, 'number') || str_contains($lower, 'id') || str_contains($lower, 'reference')) return 140;
+        if (str_contains($lower, 'date')) return 115;
+        if (str_contains($lower, 'amount') || str_contains($lower, 'salary') || str_contains($lower, 'charge') || str_contains($lower, 'budget') || str_contains($lower, 'subtotal') || str_contains($lower, 'tax') || str_contains($lower, 'total') || str_contains($lower, 'paid') || str_contains($lower, 'balance')) return 130;
+        if (str_contains($lower, 'status') || str_contains($lower, 'availability') || str_contains($lower, 'verification')) return 120;
+        if (str_contains($lower, 'name') || str_contains($lower, 'customer') || str_contains($lower, 'worker')) return 165;
+        if (str_contains($lower, 'service') || str_contains($lower, 'duty') || str_contains($lower, 'reason')) return 170;
+        if (str_contains($lower, 'city') || str_contains($lower, 'state') || str_contains($lower, 'gender')) return 115;
+        return 130;
+    }
+
+    private function formatXmlCell(string $col, mixed $val): string
+    {
+        if ($val === null || $val === '') {
+            return '<Cell ss:StyleID="CellCenter"><Data ss:Type="String">—</Data></Cell>';
+        }
+
+        $lower = strtolower($col);
+        $valStr = (string) $val;
+
+        if (str_contains($lower, 'mobile') || str_contains($lower, 'phone')) {
+            return '<Cell ss:StyleID="CellPhone"><Data ss:Type="String">'.htmlspecialchars($valStr, ENT_XML1 | ENT_QUOTES, 'UTF-8').'</Data></Cell>';
+        }
+
+        if (str_contains($lower, 'code') || str_contains($lower, 'number') || str_contains($lower, 'reference')) {
+            return '<Cell ss:StyleID="CellCode"><Data ss:Type="String">'.htmlspecialchars($valStr, ENT_XML1 | ENT_QUOTES, 'UTF-8').'</Data></Cell>';
+        }
+
+        if (str_contains($lower, 'date')) {
+            return '<Cell ss:StyleID="CellDate"><Data ss:Type="String">'.htmlspecialchars($valStr, ENT_XML1 | ENT_QUOTES, 'UTF-8').'</Data></Cell>';
+        }
+
+        if (str_contains($lower, 'amount') || str_contains($lower, 'salary') || str_contains($lower, 'charge') || str_contains($lower, 'budget') || str_contains($lower, 'subtotal') || str_contains($lower, 'tax') || str_contains($lower, 'total') || str_contains($lower, 'paid') || str_contains($lower, 'balance')) {
+            if (is_numeric($val)) {
+                return '<Cell ss:StyleID="CellCurrency"><Data ss:Type="Number">'.number_format((float)$val, 2, '.', '').'</Data></Cell>';
+            }
+        }
+
+        if (str_contains($lower, 'status') || str_contains($lower, 'verification') || str_contains($lower, 'availability')) {
+            $statusVal = strtolower(trim($valStr));
+            $style = 'CellCenter';
+            if (in_array($statusVal, ['active', 'verified', 'completed', 'signed', 'assigned', 'working'], true)) {
+                $style = 'BadgeGreen';
+            } elseif (in_array($statusVal, ['pending', 'draft', 'under_review', 'worker_search', 'shortlisted', 'open', 'available'], true)) {
+                $style = 'BadgeYellow';
+            } elseif (in_array($statusVal, ['inactive', 'cancelled', 'rejected', 'expired', 'replaced'], true)) {
+                $style = 'BadgeRed';
+            }
+            return '<Cell ss:StyleID="'.$style.'"><Data ss:Type="String">'.htmlspecialchars(str($valStr)->headline()->toString(), ENT_XML1 | ENT_QUOTES, 'UTF-8').'</Data></Cell>';
+        }
+
+        if (is_numeric($val) && (str_contains($lower, 'person') || str_contains($lower, 'experience') || str_contains($lower, 'count') || str_contains($lower, 'days') || str_contains($lower, 'active req') || str_contains($lower, 'requirements'))) {
+            return '<Cell ss:StyleID="CellCenter"><Data ss:Type="Number">'.htmlspecialchars($valStr, ENT_XML1 | ENT_QUOTES, 'UTF-8').'</Data></Cell>';
+        }
+
+        return '<Cell ss:StyleID="CellLeft"><Data ss:Type="String">'.htmlspecialchars($valStr, ENT_XML1 | ENT_QUOTES, 'UTF-8').'</Data></Cell>';
     }
 }

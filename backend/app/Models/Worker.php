@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
     'pincode', 'country', 'date_of_birth', 'age', 'gender', 'marital_status', 'years_of_experience',
     'experience_notes', 'salary_expectation', 'preferred_work_location', 'preferred_duty_type_id',
     'availability_status', 'worker_status', 'police_station_name', 'supervisor_user_id', 'executive_user_id',
-    'registration_source', 'notes', 'created_by', 'updated_by',
+    'registration_source', 'registration_source_other', 'notes', 'created_by', 'updated_by',
 ])]
 class Worker extends Model
 {

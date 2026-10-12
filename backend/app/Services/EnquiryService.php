@@ -53,7 +53,21 @@ class EnquiryService
     }
     public function resolveDutyType(array $data): ?DutyType
     {
-        return DutyType::query()->where('is_active', true)->when($data['duty_type_id'] ?? null, fn($q,$v)=>$q->whereKey($v))->when(!($data['duty_type_id'] ?? null) && ($data['duty_type_slug'] ?? null), fn($q)=>$q->where('slug',$data['duty_type_slug']))->first();
+        $id = $data['duty_type_id'] ?? null;
+        if ($id) {
+            return DutyType::where('is_active', true)->find($id) ?? DutyType::find($id);
+        }
+
+        $slug = $data['duty_type_slug'] ?? null;
+        if ($slug) {
+            $normalized = str_replace('_', '-', $slug);
+            return DutyType::where('is_active', true)->where('slug', $slug)->first()
+                ?? DutyType::where('is_active', true)->where('slug', $normalized)->first()
+                ?? DutyType::where('slug', $slug)->first()
+                ?? DutyType::where('slug', $normalized)->first();
+        }
+
+        return null;
     }
     public function normalizeMobile(string $value): string { return preg_replace('/\D+/', '', $value); }
 }

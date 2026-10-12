@@ -68,6 +68,72 @@ class WorkerGeneratedDocumentController extends Controller
         return redirect()->route('admin.worker-generated-documents.show', $document)->with('success', 'Worker registration form generated successfully.');
     }
 
+    public function downloadRegistrationForm(Worker $worker, WorkerDocumentGenerationService $service, ActivityLogger $logger): mixed
+    {
+        abort_unless(request()->user()?->hasPermission('worker-registration-documents.view'), 403);
+        $document = WorkerGeneratedDocument::where('worker_id', $worker->id)
+            ->where('document_type', WorkerGeneratedDocumentType::RegistrationForm->value)
+            ->latest('version_number')
+            ->first();
+
+        if ($this->isDocumentOutdated($document, $worker)) {
+            $document = $service->generateRegistrationForm($worker, request()->user()?->id ?? 1);
+        }
+
+        $logger->log('downloaded', 'worker-registration-documents', $document, 'Worker registration form downloaded.');
+        return Storage::disk('local')->download($document->pdf_path, ($document->document_number ?: 'worker-registration-'.$worker->worker_code).'.pdf', ['Content-Type' => 'application/pdf']);
+    }
+
+    public function downloadResume(Worker $worker, WorkerDocumentGenerationService $service, ActivityLogger $logger): mixed
+    {
+        abort_unless(request()->user()?->hasPermission('worker-resumes.view'), 403);
+        $document = WorkerGeneratedDocument::where('worker_id', $worker->id)
+            ->where('document_type', WorkerGeneratedDocumentType::Resume->value)
+            ->latest('version_number')
+            ->first();
+
+        if ($this->isDocumentOutdated($document, $worker)) {
+            $document = $service->generateResume($worker, request()->user()?->id ?? 1);
+        }
+
+        $logger->log('downloaded', 'worker-resumes', $document, 'Worker resume downloaded.');
+        return Storage::disk('local')->download($document->pdf_path, ($document->document_number ?: 'worker-resume-'.$worker->worker_code).'.pdf', ['Content-Type' => 'application/pdf']);
+    }
+
+    private function isDocumentOutdated(?WorkerGeneratedDocument $document, Worker $worker): bool
+    {
+        if (!$document || !$document->pdf_path || !Storage::disk('local')->exists($document->pdf_path)) {
+            return true;
+        }
+
+        if (request()->boolean('regenerate')) {
+            return true;
+        }
+
+        $worker->loadMissing('verification');
+        $lastWorkerChange = max(
+            $worker->updated_at?->timestamp ?? 0,
+            $worker->verification?->updated_at?->timestamp ?? 0
+        );
+
+        if ($document->generated_at && $document->generated_at->timestamp < $lastWorkerChange) {
+            return true;
+        }
+
+        $snapshot = $document->snapshot_json ?? [];
+        if (($snapshot['worker']['registration_number'] ?? '') === 'Generated after save') {
+            return true;
+        }
+
+        $docOverall = $snapshot['verification']['overall'] ?? null;
+        $actualOverall = $worker->verification?->overall_verification_status?->value ?? 'pending';
+        if ($docOverall !== $actualOverall) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function show(WorkerGeneratedDocument $document): View
     {
         $document->load(['worker', 'generator']);

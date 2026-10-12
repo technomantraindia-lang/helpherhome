@@ -148,8 +148,10 @@ Route::middleware(['auth', 'active'])->prefix('admin')->name('admin.')->group(fu
     Route::patch('/workers/{worker}/status', [WorkerController::class, 'updateStatus'])->middleware('permission:workers.status')->name('workers.status.update');
 
     Route::get('/workers/{worker}/resume/preview', [WorkerGeneratedDocumentController::class, 'resumePreview'])->middleware('permission:worker-resumes.view')->name('workers.resume.preview');
+    Route::get('/workers/{worker}/resume/download', [WorkerGeneratedDocumentController::class, 'downloadResume'])->middleware('permission:worker-resumes.view')->name('workers.resume.download');
     Route::post('/workers/{worker}/resume/generate', [WorkerGeneratedDocumentController::class, 'generateResume'])->middleware('permission:worker-resumes.generate')->name('workers.resume.generate');
     Route::get('/workers/{worker}/registration-form/preview', [WorkerGeneratedDocumentController::class, 'registrationPreview'])->middleware('permission:worker-registration-documents.view')->name('workers.registration-form.preview');
+    Route::get('/workers/{worker}/registration-form/download', [WorkerGeneratedDocumentController::class, 'downloadRegistrationForm'])->middleware('permission:worker-registration-documents.view')->name('workers.registration-form.download');
     Route::post('/workers/{worker}/registration-form/generate', [WorkerGeneratedDocumentController::class, 'generateRegistrationForm'])->middleware('permission:worker-registration-documents.generate')->name('workers.registration-form.generate');
     Route::get('/worker-generated-documents', [WorkerGeneratedDocumentController::class, 'index'])->middleware('permission:worker-generated-documents.view')->name('worker-generated-documents.index');
     Route::get('/worker-generated-documents/{document}', [WorkerGeneratedDocumentController::class, 'show'])->middleware('permission:worker-generated-documents.view')->name('worker-generated-documents.show');

@@ -178,8 +178,25 @@ class InvoiceService
 
     private function copyAssets(Invoice $invoice, AgencySetting $agency): void
     {
-        foreach (['logo_path' => 'agency_logo_snapshot', 'signature_path' => 'signature_path_snapshot', 'stamp_path' => 'stamp_path_snapshot', 'upi_qr_path' => 'upi_qr_snapshot'] as $source => $target) {
-            $disk = $source === 'logo_path' ? 'public' : (Storage::disk('local')->exists((string) $agency->$source) ? 'local' : 'public');
+        $logoCopied = false;
+        if ($agency->logo_path) {
+            $disk = Storage::disk('public')->exists($agency->logo_path) ? 'public' : (Storage::disk('local')->exists($agency->logo_path) ? 'local' : null);
+            if ($disk) {
+                $ext = pathinfo($agency->logo_path, PATHINFO_EXTENSION) ?: 'png';
+                $path = "invoices/{$invoice->invoice_number}/assets/agency_logo_snapshot.{$ext}";
+                Storage::disk('local')->put($path, Storage::disk($disk)->get($agency->logo_path));
+                $invoice->forceFill(['agency_logo_snapshot' => $path])->saveQuietly();
+                $logoCopied = true;
+            }
+        }
+        if (!$logoCopied && file_exists(public_path('images/helper-home-logo.png'))) {
+            $path = "invoices/{$invoice->invoice_number}/assets/agency_logo_snapshot.png";
+            Storage::disk('local')->put($path, file_get_contents(public_path('images/helper-home-logo.png')));
+            $invoice->forceFill(['agency_logo_snapshot' => $path])->saveQuietly();
+        }
+
+        foreach (['signature_path' => 'signature_path_snapshot', 'stamp_path' => 'stamp_path_snapshot', 'upi_qr_path' => 'upi_qr_snapshot'] as $source => $target) {
+            $disk = Storage::disk('local')->exists((string) $agency->$source) ? 'local' : 'public';
             if ($agency->$source && Storage::disk($disk)->exists($agency->$source)) {
                 $ext = pathinfo($agency->$source, PATHINFO_EXTENSION) ?: 'png';
                 $path = "invoices/{$invoice->invoice_number}/assets/{$target}.{$ext}";

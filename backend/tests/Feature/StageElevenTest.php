@@ -21,7 +21,7 @@ class StageElevenTest extends TestCase
     public function test_public_catalog_and_contact_endpoints_are_safe(): void
     {
         $this->getJson('/api/public/services')->assertOk()->assertJsonPath('success', true)->assertJsonPath('data.0.name', 'Maid');
-        $this->getJson('/api/public/duty-types')->assertOk()->assertJsonPath('data.0.name', 'Part Time');
+        $this->getJson('/api/public/duty-types')->assertOk()->assertJsonPath('data.0.name', '2 Hours');
         $this->getJson('/api/public/settings/contact')->assertOk()->assertJsonMissingPath('data.bank_account_number')->assertJsonMissingPath('data.signature_path');
     }
 

@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\VerificationStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateWorkerVerificationRequest;
+use App\Enums\WorkerGeneratedDocumentType;
 use App\Models\Worker;
+use App\Models\WorkerGeneratedDocument;
 use App\Models\WorkerVerification;
 use App\Services\ActivityLogger;
+use App\Services\WorkerDocumentGenerationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -38,7 +41,18 @@ class WorkerVerificationController extends Controller
             if ($data[$field] !== VerificationStatus::Pending->value && empty($data[$type.'_verification_date'])) $data[$type.'_verification_date'] = today();
         }
         $verification->update($data);
+        $worker->touch();
         $logger->log('updated', 'worker-verification', $verification, 'Worker verification updated.', ['overall_status' => $data['overall_verification_status']]);
+
+        $service = app(WorkerDocumentGenerationService::class);
+        $userId = $request->user()?->id ?? 1;
+        if (WorkerGeneratedDocument::where('worker_id', $worker->id)->where('document_type', WorkerGeneratedDocumentType::RegistrationForm->value)->exists()) {
+            $service->generateRegistrationForm($worker, $userId);
+        }
+        if (WorkerGeneratedDocument::where('worker_id', $worker->id)->where('document_type', WorkerGeneratedDocumentType::Resume->value)->exists()) {
+            $service->generateResume($worker, $userId);
+        }
+
         return redirect()->route('admin.workers.show', $worker)->with('success', 'Worker verification updated.');
     }
 }

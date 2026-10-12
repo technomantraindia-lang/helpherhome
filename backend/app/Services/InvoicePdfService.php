@@ -45,9 +45,39 @@ class InvoicePdfService
 
     public function documentData(Invoice $invoice): array
     {
-        return ['invoice' => $invoice, 'logoData' => $this->dataUri($invoice->agency_logo_snapshot),
-            'qrData' => $this->dataUri($invoice->upi_qr_snapshot), 'signatureData' => $this->dataUri($invoice->signature_path_snapshot),
-            'stampData' => $this->dataUri($invoice->stamp_path_snapshot)];
+        return [
+            'invoice' => $invoice,
+            'logoData' => $this->resolveLogoData($invoice),
+            'qrData' => $this->dataUri($invoice->upi_qr_snapshot),
+            'signatureData' => $this->dataUri($invoice->signature_path_snapshot),
+            'stampData' => $this->dataUri($invoice->stamp_path_snapshot),
+        ];
+    }
+
+    private function resolveLogoData(Invoice $invoice): ?string
+    {
+        if ($invoice->agency_logo_snapshot && Storage::disk('local')->exists($invoice->agency_logo_snapshot)) {
+            return $this->dataUri($invoice->agency_logo_snapshot);
+        }
+
+        $agency = \App\Models\AgencySetting::first();
+        if ($agency?->logo_path) {
+            if (Storage::disk('public')->exists($agency->logo_path)) {
+                $mime = Storage::disk('public')->mimeType($agency->logo_path) ?: 'image/png';
+                return 'data:'.$mime.';base64,'.base64_encode(Storage::disk('public')->get($agency->logo_path));
+            }
+            if (Storage::disk('local')->exists($agency->logo_path)) {
+                return $this->dataUri($agency->logo_path);
+            }
+        }
+
+        $defaultLogo = public_path('images/helper-home-logo.png');
+        if (file_exists($defaultLogo)) {
+            $mime = mime_content_type($defaultLogo) ?: 'image/png';
+            return 'data:'.$mime.';base64,'.base64_encode(file_get_contents($defaultLogo));
+        }
+
+        return null;
     }
 
     private function dataUri(?string $path): ?string

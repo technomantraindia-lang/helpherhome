@@ -69,6 +69,8 @@ class WorkerDocumentGenerationService
                 'supervisor_name' => $worker->supervisor?->name,
                 'executive_name' => $worker->executive?->name,
                 'police_station_name' => $worker->police_station_name,
+                'registration_source' => $worker->registration_source,
+                'registration_source_other' => $worker->registration_source_other,
             ],
             'references' => $worker->references->map(fn ($reference) => [
                 'name' => $reference->name,
@@ -144,9 +146,13 @@ class WorkerDocumentGenerationService
     private function workerProfile(Worker $worker, bool $internal): array
     {
         $age = $worker->date_of_birth ? Carbon::parse($worker->date_of_birth)->age : $worker->age;
+        $registrationNumber = $worker->registration_number;
+        if (empty($registrationNumber) || $registrationNumber === 'Generated after save') {
+            $registrationNumber = sprintf('HH-WRK-REG-%06d', $worker->id);
+        }
         return [
-            'worker_code' => $worker->worker_code,
-            'registration_number' => $worker->registration_number,
+            'worker_code' => $worker->worker_code ?: sprintf('HH-WRK-%06d', $worker->id),
+            'registration_number' => $registrationNumber,
             'registration_date' => $worker->registration_date?->format('Y-m-d'),
             'date_of_joining' => $worker->date_of_joining?->format('Y-m-d'),
             'name' => $worker->name,
@@ -172,6 +178,8 @@ class WorkerDocumentGenerationService
             'availability_status' => $this->value($worker->availability_status),
             'worker_status' => $this->value($worker->worker_status),
             'police_station_name' => $internal ? $worker->police_station_name : null,
+            'registration_source' => $internal ? $worker->registration_source : null,
+            'registration_source_other' => $internal ? $worker->registration_source_other : null,
             'notes' => $internal ? $worker->notes : null,
         ];
     }
