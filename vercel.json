@@ -1,6 +1,7 @@
 {
   "version": 2,
-  "name": "helpherhome",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".",
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
