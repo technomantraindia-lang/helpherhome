@@ -12,7 +12,7 @@ window.HelperHomeConfig = {
   address: 'A - 318/319 Swaminarayan Avenue, Nr AEC Cross Road, Naranpura, Ahmedabad - 380013',
   workingHours: 'Mon – Sat, 9:00 AM – 7:00 PM',
   social: {
-    facebook: '', // Set official Facebook page URL here once available
+    facebook: 'https://www.facebook.com/profile.php?id=61594594776654',
     instagram: 'https://www.instagram.com/helper_home_ahmedabad?utm_source=qr&stkn=MnEzazQxa2h3ZHY3',
     twitter: '',
     youtube: ''
