@@ -166,8 +166,8 @@
 
   @media (max-width: 768px) {
     .hero-slider-section {
-      min-height: 100svh;
-      height: 100svh;
+      min-height: max(100svh, 720px);
+      height: auto;
       max-height: none;
     }
   }
@@ -1420,9 +1420,9 @@ footer .text-brand-gold-rich {
   color: #E6B969;
 }
 /**
- * Helper Home â€” Contrast Fix (loads AFTER main.css)
+ * Helper Home &mdash; Contrast Fix (loads AFTER main.css)
  * Forces readable light text on every dark surface.
- * Do not move this into @layer â€” it must win the cascade.
+ * Do not move this into @layer &mdash; it must win the cascade.
  */
 
 /* ========== HERO SLIDER ========== */

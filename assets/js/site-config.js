@@ -1,5 +1,5 @@
-﻿/**
- * Helper Home â€” shared site configuration
+/**
+ * Helper Home — shared site configuration
  * Update phone, WhatsApp and social profile URLs here only.
  */
 window.HelperHomeConfig = {
@@ -10,10 +10,10 @@ window.HelperHomeConfig = {
   whatsappNumber: '918799544275', // country code + number, digits only
   email: 'helperhomeahmedabad@gmail.com',
   address: 'A - 318/319 Swaminarayan Avenue, Nr AEC Cross Road, Naranpura, Ahmedabad - 380013',
-  workingHours: 'Mon â€“ Sat, 9:00 AM â€“ 7:00 PM',
+  workingHours: 'Mon – Sat, 9:00 AM – 7:00 PM',
   social: {
-    facebook: '',
-    instagram: '',
+    facebook: '', // Set official Facebook page URL here once available
+    instagram: 'https://www.instagram.com/helper_home_ahmedabad?utm_source=qr&stkn=MnEzazQxa2h3ZHY3',
     twitter: '',
     youtube: ''
   },

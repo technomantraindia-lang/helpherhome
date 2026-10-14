@@ -79,6 +79,18 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://helperhome.in/services/housekeeping-service.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://helperhome.in/services/deep-cleaning-service.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://helperhome.in/privacy-policy.html</loc>
     <lastmod>2026-09-12</lastmod>
     <changefreq>yearly</changefreq>

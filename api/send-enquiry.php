@@ -1,6 +1,6 @@
 ﻿<?php
 /**
- * Helper Home â€” Enquiry endpoint
+ * Helper Home &mdash; Enquiry endpoint
  * Receives JSON POST, emails business + customer via Gmail SMTP.
  */
 
@@ -133,7 +133,7 @@ $adminHtml = '
     <tr style="background:#f7f4ef;"><td><strong>Service</strong></td><td>' . $safe($serviceLabel) . '</td></tr>
     <tr><td><strong>Duty Hours</strong></td><td>' . $safe($dutyLabel) . '</td></tr>
     <tr style="background:#f7f4ef;"><td><strong>Preferred Start</strong></td><td>' . $safe($startDate !== '' ? $startDate : 'Not specified') . '</td></tr>
-    <tr><td><strong>Requirements</strong></td><td>' . nl2br($safe($requirements !== '' ? $requirements : 'â€”')) . '</td></tr>
+    <tr><td><strong>Requirements</strong></td><td>' . nl2br($safe($requirements !== '' ? $requirements : '&mdash;')) . '</td></tr>
     <tr style="background:#f7f4ef;"><td><strong>Submitted</strong></td><td>' . $safe($submittedAt) . '</td></tr>
   </table>
 </body></html>';
@@ -165,7 +165,7 @@ try {
         $config['from_name'],
         $config['to_email'],
         $config['to_name'],
-        'New Enquiry: ' . $serviceLabel . ' â€” ' . $fullName,
+        'New Enquiry: ' . $serviceLabel . ' &mdash; ' . $fullName,
         $adminHtml,
         '',
         $email,

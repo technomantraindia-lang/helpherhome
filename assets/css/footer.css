@@ -235,7 +235,8 @@
 
 @media (max-width: 1023px) {
   .site-footer {
-    padding: 56px 0 110px;
+    padding-top: 56px;
+    padding-bottom: max(110px, calc(68px + var(--hh-sticky-bar-h, 68px) + env(safe-area-inset-bottom, 0px)));
   }
 
   .footer-container {
@@ -245,7 +246,8 @@
 
 @media (max-width: 767px) {
   .site-footer {
-    padding: 48px 0 110px;
+    padding-top: 48px;
+    padding-bottom: max(110px, calc(68px + var(--hh-sticky-bar-h, 68px) + env(safe-area-inset-bottom, 0px)));
   }
 
   .footer-container {
@@ -277,5 +279,115 @@
 @media (max-width: 380px) {
   .footer-container {
     width: calc(100% - 32px);
+  }
+}
+
+/* ====================================================
+   Helper Home — Footer Social Buttons (Instagram & Facebook)
+   ==================================================== */
+
+.site-footer .footer-social-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+  margin-bottom: 22px;
+}
+
+.site-footer .footer-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 7px 15px;
+  border-radius: 9999px;
+  border: 1px solid rgba(230, 185, 105, 0.4);
+  background: rgba(255, 255, 255, 0.03);
+  color: #e6b969 !important;
+  font-size: 13px !important;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.site-footer .footer-social-btn .footer-social-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+  color: #e6b969;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.site-footer .footer-social-btn:hover:not(.is-disabled) {
+  border-color: #e6b969;
+  background: rgba(230, 185, 105, 0.16);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(230, 185, 105, 0.22);
+}
+
+.site-footer .footer-social-btn:hover:not(.is-disabled) .footer-social-icon {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.site-footer .footer-social-btn:active:not(.is-disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(230, 185, 105, 0.15);
+}
+
+.site-footer .footer-social-btn:focus-visible {
+  outline: 2px solid #e6b969;
+  outline-offset: 3px;
+}
+
+/* Facebook disabled / placeholder state (until official URL configured) */
+.site-footer .footer-social-btn.is-disabled {
+  opacity: 0.72;
+  border-color: rgba(230, 185, 105, 0.25);
+  background: rgba(255, 255, 255, 0.015);
+  color: rgba(230, 185, 105, 0.7) !important;
+  cursor: default;
+}
+
+.site-footer .footer-social-btn.is-disabled .footer-social-icon {
+  color: rgba(230, 185, 105, 0.7);
+}
+
+.site-footer .footer-social-btn.is-disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(230, 185, 105, 0.35);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(230, 185, 105, 0.85) !important;
+}
+
+/* Fallback & legacy support */
+.site-footer .hh-social {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .site-footer .footer-social-buttons {
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .site-footer .footer-social-btn {
+    padding: 7px 13px;
+    font-size: 12.5px !important;
   }
 }

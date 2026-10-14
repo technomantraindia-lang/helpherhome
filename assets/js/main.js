@@ -1,4 +1,4 @@
-﻿/**
+/**
  * HELPER HOME - Main JavaScript Engine
  * Handles navigation, sticky header, accessible accordions,
  * modal dialogs, enquiry forms, and scroll interactions.
@@ -267,6 +267,10 @@ function initHeroSlider() {
       const fill = btn.querySelector('.hero-tab-fill');
       if (fill && !active) fill.style.width = '0%';
     });
+    const activeMobileTab = slider.querySelector(`.hero-mobile-tab[data-slide-target="${index}"]`);
+    if (activeMobileTab) {
+      activeMobileTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    }
   };
 
   const setProgress = (progress) => {
@@ -460,7 +464,7 @@ function initHeroSlider() {
 
     if (isReducedMotion) return;
 
-    // Only scale background â€” do NOT offset text (keeps alignment identical)
+    // Only scale background &mdash; do NOT offset text (keeps alignment identical)
     const activeSlide = slides[currentIndex];
     const bg = activeSlide?.querySelector('.hero-slide-bg');
     const content = activeSlide?.querySelector('.hero-content, .hero-slide-content');
@@ -619,7 +623,26 @@ function enquiryApiUrl() {
   return `${String(base).replace(/\/$/, '')}/public/enquiries`;
 }
 
-let publicCatalog = { services: [], dutyTypes: [] };
+let publicCatalog = {
+  services: [
+    { slug: 'maid', name: 'Maid Service' },
+    { slug: 'servant', name: 'Servant Service' },
+    { slug: 'cook', name: 'Cook Service' },
+    { slug: 'domestic-couple', name: 'Domestic Couple' },
+    { slug: 'housekeeping', name: 'Housekeeping Service' },
+    { slug: 'deep-cleaning', name: 'Deep Cleaning Service' },
+    { slug: 'babysitter', name: 'Babysitter Service' },
+    { slug: 'japa-maid', name: 'Japa Maid / Nanny' },
+    { slug: 'elderly-care', name: 'Elderly Caretaker' },
+    { slug: 'patient-care', name: 'Patient Caretaker' },
+    { slug: 'driver', name: 'Driver Service' }
+  ],
+  dutyTypes: [
+    { slug: 'part_time', name: 'Part Time' },
+    { slug: 'full_time', name: 'Full Time' },
+    { slug: 'live_in_24_hours', name: '24 Hours / Live-In' }
+  ]
+};
 let publicCatalogPromise;
 function publicApiBase() {
   const configured = window.HelperHomeConfig?.apiBaseUrl || window.HELPER_HOME_API_BASE_URL || '';
@@ -915,7 +938,7 @@ function initContactActions() {
     if (!el.textContent.trim()) el.textContent = cfg.email;
   });
 
-  // Social links â€” hide empty URLs
+  // Social links &mdash; hide empty URLs
   const socialMap = {
     facebook: cfg.social?.facebook || '',
     instagram: cfg.social?.instagram || '',
@@ -925,7 +948,43 @@ function initContactActions() {
 
   document.querySelectorAll('[data-hh-social]').forEach((el) => {
     const key = el.getAttribute('data-hh-social');
-    const url = socialMap[key] || '';
+    const url = (socialMap[key] || '').trim();
+    const isFooterBtn = el.classList.contains('footer-social-btn') || el.closest('.site-footer');
+
+    if (key === 'facebook') {
+      if (url) {
+        el.href = url;
+        el.target = '_blank';
+        el.rel = 'noopener noreferrer';
+        el.classList.remove('is-disabled');
+        el.removeAttribute('aria-disabled');
+        el.removeAttribute('title');
+        el.classList.remove('is-hidden');
+      } else {
+        el.href = 'javascript:void(0)';
+        el.removeAttribute('target');
+        el.removeAttribute('rel');
+        el.classList.add('is-disabled');
+        el.setAttribute('aria-disabled', 'true');
+        el.setAttribute('title', 'Official Facebook page coming soon');
+        if (isFooterBtn) {
+          el.classList.remove('is-hidden');
+        } else {
+          el.classList.add('is-hidden');
+        }
+      }
+      return;
+    }
+
+    if (key === 'instagram') {
+      const igUrl = url || 'https://www.instagram.com/helper_home_ahmedabad?utm_source=qr&stkn=MnEzazQxa2h3ZHY3';
+      el.href = igUrl;
+      el.target = '_blank';
+      el.rel = 'noopener noreferrer';
+      el.classList.remove('is-hidden');
+      return;
+    }
+
     if (!url) {
       el.classList.add('is-hidden');
       el.removeAttribute('href');
@@ -935,6 +994,13 @@ function initContactActions() {
     el.target = '_blank';
     el.rel = 'noopener noreferrer';
     el.classList.remove('is-hidden');
+  });
+
+  document.querySelectorAll('.footer-social-btn.is-disabled, [data-hh-social].is-disabled').forEach((btn) => {
+    btn.onclick = (e) => {
+      e.preventDefault();
+      return false;
+    };
   });
 
   document.querySelectorAll('.hh-social').forEach((wrap) => {
