@@ -290,17 +290,27 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-top: 2px;
   margin-bottom: 22px;
+  width: 100%;
+  max-width: 100%;
 }
 
+/* Override .hh-social a icon-circle sizing (2.4rem) so labeled pills do not overlap */
+.site-footer .footer-social-buttons.hh-social a.footer-social-btn,
+.site-footer .hh-social a.footer-social-btn,
 .site-footer .footer-social-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0;
   min-height: 36px;
+  max-width: none;
+  flex: 0 0 auto;
   padding: 7px 15px;
   border-radius: 9999px;
   border: 1px solid rgba(230, 185, 105, 0.4);
@@ -316,6 +326,9 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   user-select: none;
   white-space: nowrap;
+  overflow: visible;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .site-footer .footer-social-btn .footer-social-icon {

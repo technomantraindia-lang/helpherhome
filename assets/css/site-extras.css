@@ -368,7 +368,7 @@ a.is-hidden {
   gap: 0.65rem;
 }
 
-.hh-social a {
+.hh-social a:not(.footer-social-btn) {
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 9999px;
@@ -381,12 +381,12 @@ a.is-hidden {
   transition: background 0.2s ease, color 0.2s ease;
 }
 
-.hh-social a:hover {
+.hh-social a:not(.footer-social-btn):hover {
   background: rgba(209, 165, 92, 0.18);
   color: #f0d399 !important;
 }
 
-.hh-social a svg {
+.hh-social a:not(.footer-social-btn) svg {
   width: 1rem;
   height: 1rem;
 }
