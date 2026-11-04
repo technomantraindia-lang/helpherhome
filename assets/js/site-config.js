@@ -4,7 +4,7 @@
  */
 window.HelperHomeConfig = {
   // Set this to the deployed Laravel API base when the static site is hosted separately.
-  apiBaseUrl: '',
+  apiBaseUrl: '/index.php/api',
   phoneDisplay: '+91 87995 44275',
   phoneTel: '+918799544275',
   whatsappNumber: '918799544275', // country code + number, digits only

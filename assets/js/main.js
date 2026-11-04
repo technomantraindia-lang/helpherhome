@@ -268,8 +268,10 @@ function initHeroSlider() {
       if (fill && !active) fill.style.width = '0%';
     });
     const activeMobileTab = slider.querySelector(`.hero-mobile-tab[data-slide-target="${index}"]`);
-    if (activeMobileTab) {
-      activeMobileTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    const mobileNav = slider.querySelector('.hero-mobile-nav');
+    if (mobileNav && activeMobileTab) {
+      const left = activeMobileTab.offsetLeft - (mobileNav.clientWidth - activeMobileTab.clientWidth) / 2;
+      mobileNav.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
     }
   };
 
@@ -670,7 +672,7 @@ async function loadPublicContactSettings() {
         cfg.phoneTel = internationalPhone;
         cfg.phoneDisplay = internationalPhone.replace(/^\+91(\d{5})(\d{5})$/, '+91 $1 $2');
       }
-      if (data.whatsapp_number) cfg.whatsappNumber = data.whatsapp_number;
+      if (data.whatsapp_number) cfg.whatsappNumber = formatWhatsAppNumber(data.whatsapp_number);
       if (data.email) cfg.email = data.email;
       cfg.social = { ...(cfg.social || {}), facebook: data.facebook_url || cfg.social?.facebook || '', instagram: data.instagram_url || cfg.social?.instagram || '', twitter: data.twitter_url || cfg.social?.twitter || '', youtube: data.youtube_url || cfg.social?.youtube || '' };
       return data;
@@ -882,9 +884,20 @@ function getServiceLabelFromPage() {
   return '';
 }
 
+function formatWhatsAppNumber(phone) {
+  let cleaned = String(phone || '').replace(/\D/g, '');
+  if (!cleaned) return '';
+  if (cleaned.length === 11 && cleaned.startsWith('0')) {
+    cleaned = '91' + cleaned.slice(1);
+  } else if (cleaned.length === 10) {
+    cleaned = '91' + cleaned;
+  }
+  return cleaned;
+}
+
 function buildWhatsAppUrl(serviceName) {
   const cfg = getSiteConfig();
-  const num = String(cfg.whatsappNumber || '').replace(/\D/g, '');
+  const num = formatWhatsAppNumber(cfg.whatsappNumber);
   if (!num) return '';
   let message = cfg.whatsappDefaultMessage || 'Hello Helper Home, I am interested in your services.';
   if (serviceName) {
@@ -977,11 +990,40 @@ function initContactActions() {
     }
 
     if (key === 'instagram') {
-      const igUrl = url || 'https://www.instagram.com/helper_home_ahmedabad?utm_source=qr&stkn=MnEzazQxa2h3ZHY3';
-      el.href = igUrl;
-      el.target = '_blank';
-      el.rel = 'noopener noreferrer';
-      el.classList.remove('is-hidden');
+      let igUrl = url || cfg.social?.instagram || 'https://www.instagram.com/helper_home_ahmedabad?utm_source=qr&stkn=MnEzazQxa2h3ZHY3';
+      if (igUrl) {
+        // Strip tracking/corrupted query params (?mdxt=..., ?utm_source=..., ?stkn=..., ?igsh=...) that cause "User not found" on mobile
+        try {
+          const parsed = new URL(igUrl, window.location.origin);
+          if (parsed.hostname.includes('instagram.com')) {
+            let pathname = parsed.pathname;
+            if (!pathname.endsWith('/')) pathname += '/';
+            igUrl = `https://www.instagram.com${pathname}`;
+          }
+        } catch (_) {
+          igUrl = igUrl.split('?')[0];
+          if (!igUrl.endsWith('/')) igUrl += '/';
+        }
+        el.href = igUrl;
+        el.target = '_blank';
+        el.rel = 'noopener noreferrer';
+        el.classList.remove('is-disabled');
+        el.removeAttribute('aria-disabled');
+        el.removeAttribute('title');
+        el.classList.remove('is-hidden');
+      } else {
+        el.href = 'javascript:void(0)';
+        el.removeAttribute('target');
+        el.removeAttribute('rel');
+        el.classList.add('is-disabled');
+        el.setAttribute('aria-disabled', 'true');
+        el.setAttribute('title', 'Official Instagram page coming soon');
+        if (isFooterBtn) {
+          el.classList.remove('is-hidden');
+        } else {
+          el.classList.add('is-hidden');
+        }
+      }
       return;
     }
 
@@ -1015,12 +1057,15 @@ function initContactActions() {
 
   // Inject sticky + floating contact chrome once
   if (!document.getElementById('hhStickyBar')) {
+    const defaultTel = phoneTel ? `tel:${phoneTel}` : 'tel:+918799544275';
+    const defaultWa = waUrl || 'https://wa.me/918799544275?text=' + encodeURIComponent('Hello Helper Home,\nI am interested in your services.');
+
     const sticky = document.createElement('div');
     sticky.id = 'hhStickyBar';
     sticky.className = 'hh-sticky-bar';
     sticky.innerHTML = `
-      <a class="btn-call" data-hh-call data-keep-label="true" href="javascript:void(0)">Call Now</a>
-      <a class="btn-whatsapp" data-hh-whatsapp data-keep-label="true" href="javascript:void(0)">WhatsApp</a>
+      <a class="btn-call" data-hh-call data-keep-label="true" href="${defaultTel}">Call Now</a>
+      <a class="btn-whatsapp" data-hh-whatsapp data-keep-label="true" href="${defaultWa}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
     `;
     document.body.appendChild(sticky);
 
@@ -1028,8 +1073,8 @@ function initContactActions() {
     float.id = 'hhFloatContact';
     float.className = 'hh-float-contact';
     float.innerHTML = `
-      <a class="btn-call" data-hh-call data-keep-label="true" href="javascript:void(0)">Call</a>
-      <a class="btn-whatsapp" data-hh-whatsapp data-keep-label="true" href="javascript:void(0)">WhatsApp</a>
+      <a class="btn-call" data-hh-call data-keep-label="true" href="${defaultTel}">Call</a>
+      <a class="btn-whatsapp" data-hh-whatsapp data-keep-label="true" href="${defaultWa}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
     `;
     document.body.appendChild(float);
 
