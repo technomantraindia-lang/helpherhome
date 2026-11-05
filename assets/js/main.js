@@ -620,9 +620,13 @@ function siteRootPrefix() {
 }
 
 function enquiryApiUrl() {
-  const configured = window.HelperHomeConfig?.apiBaseUrl || window.HELPER_HOME_API_BASE_URL || '';
-  const base = configured || '/api';
-  return `${String(base).replace(/\/$/, '')}/public/enquiries`;
+  const configured = String(window.HelperHomeConfig?.apiBaseUrl || window.HELPER_HOME_API_BASE_URL || '').trim();
+  // Absolute Laravel API base, e.g. https://api.example.com/api
+  if (/^https?:\/\//i.test(configured)) {
+    return `${configured.replace(/\/$/, '')}/public/enquiries`;
+  }
+  // Vercel serverless mailer (works on static hosting)
+  return '/api/send-enquiry';
 }
 
 let publicCatalog = {
@@ -990,7 +994,7 @@ function initContactActions() {
     }
 
     if (key === 'instagram') {
-      let igUrl = url || cfg.social?.instagram || 'https://www.instagram.com/helper_home_ahmedabad?utm_source=qr&stkn=MnEzazQxa2h3ZHY3';
+      let igUrl = url || cfg.social?.instagram || 'https://www.instagram.com/helperhome.ahmedabad/';
       if (igUrl) {
         // Strip tracking/corrupted query params (?mdxt=..., ?utm_source=..., ?stkn=..., ?igsh=...) that cause "User not found" on mobile
         try {

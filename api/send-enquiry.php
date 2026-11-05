@@ -41,18 +41,18 @@ function field(array $data, string $key): string
     return trim((string) ($data[$key] ?? ''));
 }
 
-$fullName        = field($data, 'fullName');
-$phone           = field($data, 'phone');
+$fullName        = field($data, 'fullName') ?: field($data, 'name');
+$phone           = field($data, 'phone') ?: field($data, 'mobile_number');
 $email           = field($data, 'email');
-$cityArea        = field($data, 'cityArea');
-$serviceRequired = field($data, 'serviceRequired');
-$dutyHours       = field($data, 'dutyHours');
-$startDate       = field($data, 'startDate');
-$requirements    = field($data, 'requirements');
+$cityArea        = field($data, 'cityArea') ?: field($data, 'city');
+$serviceRequired = field($data, 'serviceRequired') ?: field($data, 'service_slug');
+$dutyHours       = field($data, 'dutyHours') ?: field($data, 'duty_type_slug');
+$startDate       = field($data, 'startDate') ?: field($data, 'preferred_start_date');
+$requirements    = field($data, 'requirements') ?: field($data, 'message');
 $honeypot        = field($data, 'website'); // bots fill this
 
 if ($honeypot !== '') {
-    echo json_encode(['ok' => true, 'message' => 'Enquiry received.']);
+    echo json_encode(['ok' => true, 'success' => true, 'message' => 'Enquiry received.', 'data' => ['enquiry_code' => null]]);
     exit;
 }
 
@@ -63,7 +63,7 @@ if (mb_strlen($fullName) < 2) {
 if (!preg_match('/^[0-9+\-\s]{10,15}$/', $phone)) {
     $errors[] = 'Please enter a valid phone number.';
 }
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errors[] = 'Please enter a valid email address.';
 }
 if (mb_strlen($cityArea) < 2) {
@@ -172,25 +172,31 @@ try {
         $fullName
     );
 
-    // 2) Confirmation to customer
-    $mailer->send(
-        $config['from_email'],
-        $config['from_name'],
-        $email,
-        $fullName,
-        'We received your Helper Home enquiry',
-        $customerHtml
-    );
+    // 2) Confirmation to customer (only when email provided)
+    if ($email !== '') {
+        $mailer->send(
+            $config['from_email'],
+            $config['from_name'],
+            $email,
+            $fullName,
+            'We received your Helper Home enquiry',
+            $customerHtml
+        );
+    }
 
     echo json_encode([
         'ok' => true,
-        'message' => 'Enquiry sent successfully. Our team and you will receive an email shortly.',
+        'success' => true,
+        'message' => 'Enquiry sent successfully. Our team will receive an email shortly.',
+        'data' => ['enquiry_code' => 'HH-WEB-' . substr((string) time(), -8)],
     ]);
 } catch (Throwable $e) {
     http_response_code(500);
     echo json_encode([
         'ok' => false,
+        'success' => false,
         'error' => 'Unable to send email right now. Please call +91 87995 44275 or try again later.',
+        'message' => 'Unable to send email right now. Please call +91 87995 44275 or try again later.',
         'detail' => $e->getMessage(),
     ]);
 }

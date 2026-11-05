@@ -3,8 +3,8 @@
  * Update phone, WhatsApp and social profile URLs here only.
  */
 window.HelperHomeConfig = {
-  // Set this to the deployed Laravel API base when the static site is hosted separately.
-  apiBaseUrl: '/index.php/api',
+  // Leave empty on Vercel (uses /api/send-enquiry). Set absolute Laravel API base when backend is hosted separately.
+  apiBaseUrl: '',
   phoneDisplay: '+91 87995 44275',
   phoneTel: '+918799544275',
   whatsappNumber: '918799544275', // country code + number, digits only
@@ -13,7 +13,7 @@ window.HelperHomeConfig = {
   workingHours: 'Mon – Sat, 9:00 AM – 7:00 PM',
   social: {
     facebook: 'https://www.facebook.com/profile.php?id=61594594776654',
-    instagram: 'https://www.instagram.com/helper_home_ahmedabad?utm_source=qr&stkn=MnEzazQxa2h3ZHY3',
+    instagram: 'https://www.instagram.com/helperhome.ahmedabad/',
     twitter: '',
     youtube: ''
   },

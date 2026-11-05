@@ -4,6 +4,12 @@
   "outputDirectory": ".",
   "cleanUrls": true,
   "trailingSlash": false,
+  "functions": {
+    "api/send-enquiry.js": {
+      "memory": 256,
+      "maxDuration": 20
+    }
+  },
   "rewrites": [
     { "source": "/services/(.*)", "destination": "/services/$1.html" }
   ],
