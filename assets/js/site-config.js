@@ -3,7 +3,7 @@
  * Update phone, WhatsApp and social profile URLs here only.
  */
 window.HelperHomeConfig = {
-  // Leave empty on Vercel (uses /api/send-enquiry). Set absolute Laravel API base when backend is hosted separately.
+  // Leave empty on Vercel (uses /api/enquiry). Set absolute Laravel API base when backend is hosted separately.
   apiBaseUrl: '',
   phoneDisplay: '+91 87995 44275',
   phoneTel: '+918799544275',

@@ -4,7 +4,7 @@
  *
  * Priority:
  * 1) SMTP via env (SMTP_HOST/SMTP_USER/SMTP_PASS) when configured
- * 2) FormSubmit fallback to ENQUIRY_TO_EMAIL / helperhomeahmedabad@gmail.com
+ * 2) FlowForm.to email relay (FormSubmit.co is unreliable from serverless)
  */
 
 const DEFAULT_TO = 'helperhomeahmedabad@gmail.com';
@@ -48,8 +48,8 @@ function json(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
-async function sendViaFormSubmit(toEmail, payload) {
-  const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(toEmail)}`, {
+async function sendViaFlowForm(toEmail, payload) {
+  const response = await fetch(`https://flowform.to/${encodeURIComponent(toEmail)}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -59,8 +59,8 @@ async function sendViaFormSubmit(toEmail, payload) {
   });
 
   const data = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    const message = data.message || data.error || `FormSubmit failed (${response.status})`;
+  if (!response.ok || data.success === false) {
+    const message = data.message || data.error || `Email relay failed (${response.status})`;
     throw new Error(message);
   }
   return data;
@@ -187,7 +187,7 @@ module.exports = async function handler(req, res) {
         });
       }
     } else {
-      await sendViaFormSubmit(toEmail, {
+      await sendViaFlowForm(toEmail, {
         name: fullName,
         phone,
         email: email || 'noreply@helperhome.in',
@@ -199,10 +199,21 @@ module.exports = async function handler(req, res) {
         source_page: sourcePage,
         enquiry_id: enquiryCode,
         submitted_at: `${submittedAt} IST`,
+        subject: `New Helper Home Enquiry — ${serviceLabel}`,
         _subject: `New Helper Home Enquiry — ${serviceLabel}`,
-        _template: 'table',
-        _captcha: 'false',
-        ...(email ? { _replyto: email } : {}),
+        message: [
+          `Enquiry ID: ${enquiryCode}`,
+          `Name: ${fullName}`,
+          `Phone: ${phone}`,
+          `Email: ${email || '—'}`,
+          `City / Area: ${cityArea}`,
+          `Service: ${serviceLabel}`,
+          `Duty Hours: ${dutyLabel}`,
+          `Preferred Start: ${startDate || 'Not specified'}`,
+          `Requirements: ${requirements || '—'}`,
+          `Source: ${sourcePage}`,
+          `Submitted: ${submittedAt} IST`,
+        ].join('\n'),
       });
     }
 
