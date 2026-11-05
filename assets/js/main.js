@@ -626,7 +626,7 @@ function enquiryApiUrl() {
     return `${configured.replace(/\/$/, '')}/public/enquiries`;
   }
   // Vercel serverless mailer (works on static hosting)
-  return '/api/send-enquiry';
+  return '/api/enquiry';
 }
 
 let publicCatalog = {
